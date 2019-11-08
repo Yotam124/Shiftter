@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "120913041973",
+    "firebase_url": "https://shiftter-a543f.firebaseio.com",
+    "project_id": "shiftter-a543f",
+    "storage_bucket": "shiftter-a543f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120913041973:android:743c3824f04e27a0362f7c",
+        "android_client_info": {
+          "package_name": "com.example.shiftter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120913041973-dbfa1pbuaj9k3dnf2pk3pgrkm99tau31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shiftter",
+            "certificate_hash": "1cd80ebe0a51fc88e15fd8af3c035af58b70874a"
+          }
+        },
+        {
+          "client_id": "120913041973-s98vti12fh2d56jgi7t53qis3ip4n3ql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhwdC1O476xnuqC1_-lHNkupGwjldXyL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120913041973-s98vti12fh2d56jgi7t53qis3ip4n3ql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
