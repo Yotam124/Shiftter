@@ -8,10 +8,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
   //  private String userId = "";
@@ -65,13 +69,25 @@ public class RegisterActivity extends AppCompatActivity {
         }else if (!p.equals(p2)){
             Toast.makeText(this, "Your passwords do not match", Toast.LENGTH_LONG).show();
         }else{
-            user = new User(fn,ln,us,p);
-            db.child(us).setValue(user);
-            Toast.makeText(RegisterActivity.this, "User created sucessfull", Toast.LENGTH_LONG).show();
+            db.child(us).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()){
+                        user = new User(fn, ln, us, p);
+                        db.child(us).setValue(user);
+                        Toast.makeText(RegisterActivity.this, "User created sucessfull", Toast.LENGTH_LONG).show();
 
-            Intent backToMain = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(backToMain);
+                        Intent backToMain = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(backToMain);
+                    }else{
+                        Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_LONG).show();
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
-
     }
 }
