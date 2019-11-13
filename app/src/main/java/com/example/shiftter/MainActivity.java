@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +48,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-        private void signIn(final String username, final String password){
+
+    private void signIn(final String userName, final String password){
+        db = FirebaseDatabase.getInstance().getReference();
+        db.child("Users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    if (!userName.isEmpty()) {
+                        User login = dataSnapshot.getValue(User.class);
+                        if (login.getPassword().equals(password)) {
+                            Toast.makeText(MainActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+                            Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
+                            startActivity(homePage);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(MainActivity.this, "Username box is empty", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(MainActivity.this, "Username isn't registered", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+        /*private void signIn(final String username, final String password){
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -56,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                             User login = dataSnapshot.child(username).getValue(User.class);
                             if (login.getPassword().equals(password)) {
                                 Toast.makeText(MainActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+                                *//*Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
+                                startActivity(homePage);*//*
                             } else {
                                 Toast.makeText(MainActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
                             }
@@ -71,5 +104,5 @@ public class MainActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-        }
+        }*/
 }

@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Your passwords do not match", Toast.LENGTH_LONG).show();
         }else{
             user = new User(fn,ln,us,p);
-            db.push().setValue(user);
+            db.child(us).setValue(user);
             Toast.makeText(RegisterActivity.this, "User created sucessfull", Toast.LENGTH_LONG).show();
 
             Intent backToMain = new Intent(getApplicationContext(),MainActivity.class);
