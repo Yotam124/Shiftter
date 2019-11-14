@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
                         User login = dataSnapshot.getValue(User.class);
                         if (login.getPassword().equals(password)) {
                             Toast.makeText(MainActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+                            //Save to Current user.
+                            CurrentUser.setUserName(userName);
+                            CurrentUser.setFirstName(login.getFirstName());
+                            CurrentUser.setLastName(login.getLastName());
+                            //Move to homePage Activity
                             Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
                             startActivity(homePage);
                         } else {
