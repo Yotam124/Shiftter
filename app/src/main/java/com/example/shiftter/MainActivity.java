@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
                         User login = dataSnapshot.getValue(User.class);
                         if (login.getPassword().equals(password)) {
                             Toast.makeText(MainActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+                            //Save to Current user.
+                            CurrentUser.setUserName(userName);
+                            CurrentUser.setFirstName(login.getFirstName());
+                            CurrentUser.setLastName(login.getLastName());
+                            //Move to homePage Activity
                             Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
                             startActivity(homePage);
                         } else {
@@ -78,31 +83,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-        /*private void signIn(final String username, final String password){
-            db.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.child(username).exists()) {
-                        if (!username.isEmpty()) {
-                            User login = dataSnapshot.child(username).getValue(User.class);
-                            if (login.getPassword().equals(password)) {
-                                Toast.makeText(MainActivity.this, "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                *//*Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
-                                startActivity(homePage);*//*
-                            } else {
-                                Toast.makeText(MainActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(MainActivity.this, "Username box is empty", Toast.LENGTH_SHORT).show();
-                        }
-                    } else{
-                        Toast.makeText(MainActivity.this, "Username isn't registered", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
-        }*/
 }
