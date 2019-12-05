@@ -1,6 +1,8 @@
 package com.example.shiftter;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,5 +22,24 @@ public class HomePageActivity extends AppCompatActivity {
                 Toast.makeText(HomePageActivity.this,""+CurrentUser.getUserName(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.personalDetails_item:
+                // do your code
+                return true;
+            case R.id.logout_item:
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
