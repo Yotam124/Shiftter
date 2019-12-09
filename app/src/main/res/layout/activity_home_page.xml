@@ -8,12 +8,43 @@
 
     <ImageButton
         android:id="@+id/fingerPrintBtn"
-        android:layout_width="137dp"
-        android:layout_height="127dp"
+        android:layout_width="135dp"
+        android:layout_height="144dp"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fingerprint" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <!-- Main content -->
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/cardview_dark_background"
+            app:itemTextColor="@color/cardview_dark_background"
+            app:menu="@menu/bottom_navigation_menu" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="100dp"
+            android:textSize="30sp" />
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

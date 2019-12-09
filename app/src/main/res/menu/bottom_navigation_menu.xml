@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/navigation_shifts"
+        android:icon="@drawable/ic_toc_black_24dp"
+        android:title="shifts" />
+    <item android:id="@+id/navigation_workGroups"
+        android:icon="@drawable/ic_group_work_black_24dp"
+        android:title="workGroups" />
+    <item android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="search" />
+
+</menu>
