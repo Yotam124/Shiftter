@@ -14,8 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
 
 public class HomePageActivity extends AppCompatActivity {
+
+    DatabaseReference db;
 
     private ImageButton fingerPrintBtn;
     BottomNavigationView bottomNavigationView;
