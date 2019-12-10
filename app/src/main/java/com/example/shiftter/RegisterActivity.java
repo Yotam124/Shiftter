@@ -42,7 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
         password2 = (EditText) findViewById(R.id.password2);
 
 
+
         db = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
 
         createBtn = (Button) findViewById(R.id.createBtn);
