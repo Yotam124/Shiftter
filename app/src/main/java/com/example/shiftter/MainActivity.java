@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         registerBtn = (Button) findViewById(R.id.registerBtn);
         loginBtn = (Button) findViewById(R.id.loginBtn);
 
+
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

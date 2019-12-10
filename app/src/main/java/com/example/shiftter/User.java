@@ -1,5 +1,7 @@
 package com.example.shiftter;
 
+import java.util.ArrayList;
+
 public class User {
     private String firstName, lastName, userName, password;
 
@@ -43,4 +45,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }
