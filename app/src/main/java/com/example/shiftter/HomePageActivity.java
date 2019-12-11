@@ -1,7 +1,6 @@
 package com.example.shiftter;
 
 import android.content.Intent;
-import android.icu.text.DateTimePatternGenerator;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,9 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
-
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -41,6 +39,8 @@ public class HomePageActivity extends AppCompatActivity {
     private boolean running;
     private long pauseOffset;
 
+    private Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class HomePageActivity extends AppCompatActivity {
         fingerPrintBtn = (ImageButton) findViewById(R.id.fingerPrintBtn);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         chronometer = findViewById(R.id.chronometer);
+        spinner = findViewById(R.id.spinner);
 
 
         fingerPrintBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +79,13 @@ public class HomePageActivity extends AppCompatActivity {
                     case R.id.navigation_shifts:
                         Intent shiftsActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
                         startActivity(shiftsActivity);
+                        break;
                     case R.id.navigation_workGroups:
-
+                        Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
+                        startActivity(WorkgroupActivity);
+                        break;
                     case R.id.navigation_search:
+                        break;
 
                 }
                 return false;
@@ -131,7 +136,8 @@ public class HomePageActivity extends AppCompatActivity {
                 // do your code
                 return true;
             case R.id.logout_item:
-                // do your code
+                Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(loginActivity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
