@@ -7,12 +7,12 @@ public class Shift {
     private String userName;
     private WorkGroup workGroup;
     private Date date;
-    private Time clockIn;
-    private Time clockOut;
+    private String clockIn;
+    private String clockOut;
 
     public Shift(){
     }
-    public Shift(String userName, WorkGroup workGroup, Date date, Time clockIn, Time clockOut){
+    public Shift(String userName, WorkGroup workGroup, Date date, String clockIn, String clockOut){
         this.userName = userName;
         this.workGroup = workGroup;
         this.date = date;
@@ -44,19 +44,19 @@ public class Shift {
         this.date = date;
     }
 
-    public Time getClockIn() {
+    public String getClockIn() {
         return clockIn;
     }
 
-    public void setClockIn(Time clockIn) {
+    public void setClockIn(String clockIn) {
         this.clockIn = clockIn;
     }
 
-    public Time getClockOut() {
+    public String getClockOut() {
         return clockOut;
     }
 
-    public void setClockOut(Time clockOut) {
+    public void setClockOut(String clockOut) {
         this.clockOut = clockOut;
     }
 }

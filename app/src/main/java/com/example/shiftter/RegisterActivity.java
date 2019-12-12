@@ -42,7 +42,9 @@ public class RegisterActivity extends AppCompatActivity {
         password2 = (EditText) findViewById(R.id.password2);
 
 
+
         db = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
 
         createBtn = (Button) findViewById(R.id.createBtn);
@@ -77,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                         db.child(us).setValue(user);
                         Toast.makeText(RegisterActivity.this, "User created sucessfull", Toast.LENGTH_LONG).show();
 
-                        Intent backToMain = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent backToMain = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(backToMain);
                     }else{
                         Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_LONG).show();

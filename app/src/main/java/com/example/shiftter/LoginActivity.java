@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private Button registerBtn;
     private Button loginBtn;
     private EditText userName, password;
@@ -25,13 +25,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
 
         registerBtn = (Button) findViewById(R.id.registerBtn);
         loginBtn = (Button) findViewById(R.id.loginBtn);
+
+
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!userName.isEmpty()) {
                         User login = dataSnapshot.getValue(User.class);
                         if (login.getPassword().equals(password)) {
-                            Toast.makeText(MainActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
                             //Save to Current user.
                             CurrentUser.setUserName(userName);
                             CurrentUser.setFirstName(login.getFirstName());
@@ -67,13 +69,13 @@ public class MainActivity extends AppCompatActivity {
                             Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
                             startActivity(homePage);
                         } else {
-                            Toast.makeText(MainActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
                         }
                     }else{
-                        Toast.makeText(MainActivity.this, "Username box is empty", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Username box is empty", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Toast.makeText(MainActivity.this, "Username isn't registered", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Username isn't registered", Toast.LENGTH_SHORT).show();
                 }
             }
 
