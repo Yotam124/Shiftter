@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,23 +17,39 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class WorkGroupsActivity extends AppCompatActivity {
     DatabaseReference db;
     private Dialog popup;
-    WorkGroup wg;
-
+    private String groupNameString;
     BottomNavigationView bottomNavigationView;
+    //private ArrayList<String> myDataset;
 
+    private static final String TAG = "WorkGroupsActivity";
+
+    //vars
+    private ArrayList<String> mNames = new ArrayList<>();
+    private ArrayList<String> mImageUrls = new ArrayList<>();
+
+
+    //private RecyclerView recyclerView;
+   // private RecyclerView.Adapter mAdapter;
+   // private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_groups);
+        db = FirebaseDatabase.getInstance().getReference().child("WorkGroups").child(CurrentUser.getUserName());
+
+
+
         popup = new Dialog(this);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
-
-        db = FirebaseDatabase.getInstance().getReference().child("WorkGroups");
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -43,11 +58,19 @@ public class WorkGroupsActivity extends AppCompatActivity {
                     case R.id.navigation_create:
                         ShowPopup(menuItem);
                         break;
+                    case R.id.navigation_delete:
+                        db.child(groupNameString).removeValue();
+                        break;
                 }
                 return false;
             }
         });
+
     }
+
+
+
+
     public void ShowPopup(MenuItem v){
         Button createPopup;
         final EditText groupName;
@@ -57,17 +80,27 @@ public class WorkGroupsActivity extends AppCompatActivity {
         createPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String groupNameString = groupName.getText().toString();
+                groupNameString = groupName.getText().toString();
                 popup.dismiss();
-                db.child("WorkGroups").child(groupNameString).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                db.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (!dataSnapshot.exists()){
-                            wg = new WorkGroup(CurrentUser.getUserName(),groupNameString,1);
-                            db.child(groupNameString).setValue(wg);
-                        }else{
-                            Toast.makeText(WorkGroupsActivity.this, "Group name already exists", Toast.LENGTH_LONG).show();
+                        if(!dataSnapshot.exists()){
+                            WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
+                            db.setValue(workGroup);
+                        }else {
+                            WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+                            String temp1 = wg.getGroupName();
+                            String temp2 = temp1 + "," +groupNameString;
+                            Map<String, Object> postValues = new HashMap<String, Object>();
+                            postValues.put(dataSnapshot.getKey(), dataSnapshot.getValue());
+                            groupNameString = groupNameString + "," + dataSnapshot.getValue();
+                            postValues.put("groupName", temp2);
+                            db.updateChildren(postValues);
+                            db.child(CurrentUser.getUserName()).removeValue();
                         }
+
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {

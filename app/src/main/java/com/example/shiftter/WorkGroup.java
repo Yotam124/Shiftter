@@ -3,29 +3,23 @@ package com.example.shiftter;
 import java.util.ArrayList;
 
 public class WorkGroup {
-    private String managerUserName;
-    private String groupName;
-    private int groupID;
-    private ArrayList<EmployeeNode> employees;
+    private String managerName, groupName;
+    private ArrayList<String> workList;
 
-    public WorkGroup(){
-    }
+    WorkGroup(){ }
 
-    public WorkGroup(String managerUserName, String groupName, int groupID){
-
-        this.managerUserName = managerUserName;
+    WorkGroup(String managerName, String groupName){
+        this.managerName = managerName;
         this.groupName = groupName;
-        this.groupID = groupID;
-        this.employees = new ArrayList<>();
-
+        workList = new ArrayList<>();
     }
 
-    public String getManagerUserName() {
-        return managerUserName;
+    public String getManagerName() {
+        return managerName;
     }
 
-    public void setManagerUserName(String managerUserName) {
-        this.managerUserName = managerUserName;
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 
     public String getGroupName() {
@@ -36,19 +30,11 @@ public class WorkGroup {
         this.groupName = groupName;
     }
 
-    public int getGroupID() {
-        return groupID;
+    public ArrayList<String> getWorkList() {
+        return workList;
     }
 
-    public void setGroupID(int groupID) {
-        this.groupID = groupID;
-    }
-
-    public ArrayList<EmployeeNode> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(ArrayList<EmployeeNode> employees) {
-        this.employees = employees;
+    public void setWorkList(ArrayList<String> workList) {
+        this.workList = workList;
     }
 }

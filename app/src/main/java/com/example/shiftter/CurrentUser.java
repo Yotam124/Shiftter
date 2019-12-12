@@ -5,7 +5,6 @@ import android.app.Application;
 public class CurrentUser extends Application {
     private static String userName, firstName, lastName;
 
-
     @Override
     public void onCreate() {
         super.onCreate();
