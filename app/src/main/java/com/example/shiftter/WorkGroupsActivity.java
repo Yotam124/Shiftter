@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -26,28 +28,25 @@ public class WorkGroupsActivity extends AppCompatActivity {
     private Dialog popup;
     private String groupNameString;
     BottomNavigationView bottomNavigationView;
-    //private ArrayList<String> myDataset;
+
+    //recycle_view_vars
+    private ArrayList<String> list = new ArrayList<>();
+    Ad_RecyclerView ad_recyclerView;
 
     private static final String TAG = "WorkGroupsActivity";
 
-    //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
-
-
-    //private RecyclerView recyclerView;
-   // private RecyclerView.Adapter mAdapter;
-   // private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_groups);
+
         db = FirebaseDatabase.getInstance().getReference().child("WorkGroups").child(CurrentUser.getUserName());
-
-
-
         popup = new Dialog(this);
+        showGroupNamesList();
+
+
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
 
@@ -89,6 +88,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
                         if(!dataSnapshot.exists()){
                             WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
                             db.setValue(workGroup);
+                            showGroupNamesList();
                         }else {
                             WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
                             String temp1 = wg.getGroupName();
@@ -109,6 +109,36 @@ public class WorkGroupsActivity extends AppCompatActivity {
             }
         });
         popup.show();
+
+    }
+
+    public void showGroupNamesList(){
+        //Fill list
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+
+                    String[] sArr = wg.getGroupName().split(",");
+                    for (int i = 0; i < sArr.length; i++) {
+                        list.add(sArr[i]);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ad_recyclerView = new Ad_RecyclerView(this, list);
+        recyclerView.setAdapter(ad_recyclerView);
 
     }
 }
