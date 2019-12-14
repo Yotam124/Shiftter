@@ -58,6 +58,7 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.text_view);
+
         }
     }
 
