@@ -6,9 +6,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -18,36 +21,39 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WorkGroupsActivity extends AppCompatActivity {
     DatabaseReference db;
     private Dialog popup;
     private String groupNameString;
     BottomNavigationView bottomNavigationView;
-    //private ArrayList<String> myDataset;
+
+    //recycle_view_vars
+    private ArrayList<String> list = new ArrayList<>();
+    Ad_RecyclerView ad_recyclerView;
 
     private static final String TAG = "WorkGroupsActivity";
 
-    //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
-
-
-    //private RecyclerView recyclerView;
-   // private RecyclerView.Adapter mAdapter;
-   // private RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_groups);
-        db = FirebaseDatabase.getInstance().getReference().child("WorkGroups").child(CurrentUser.getUserName());
 
+        // set up the RecyclerView
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ad_recyclerView = new Ad_RecyclerView(this, list);
+        recyclerView.setAdapter(ad_recyclerView);
 
+        // get db
+        db = FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(CurrentUser.getUserName())
+                .child("WorkGroups");
 
         popup = new Dialog(this);
+        getListOnPageCreate();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
 
@@ -68,9 +74,6 @@ public class WorkGroupsActivity extends AppCompatActivity {
 
     }
 
-
-
-
     public void ShowPopup(MenuItem v){
         Button createPopup;
         final EditText groupName;
@@ -83,24 +86,26 @@ public class WorkGroupsActivity extends AppCompatActivity {
                 groupNameString = groupName.getText().toString();
                 popup.dismiss();
 
-                db.addListenerForSingleValueEvent(new ValueEventListener() {
+               db.child(groupNameString).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(!dataSnapshot.exists()){
                             WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
-                            db.setValue(workGroup);
+                            db.child(groupNameString).setValue(workGroup);
                         }else {
-                            WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
-                            String temp1 = wg.getGroupName();
+                            Toast.makeText(WorkGroupsActivity.this,"This name already taken", Toast.LENGTH_LONG).show();
+                            //WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+                            /*String temp1 = wg.getGroupName();
                             String temp2 = temp1 + "," +groupNameString;
                             Map<String, Object> postValues = new HashMap<String, Object>();
                             postValues.put(dataSnapshot.getKey(), dataSnapshot.getValue());
-                            groupNameString = groupNameString + "," + dataSnapshot.getValue();
                             postValues.put("groupName", temp2);
+                            // TODO : if failed to add to database throw exceptions
                             db.updateChildren(postValues);
-                            db.child(CurrentUser.getUserName()).removeValue();
+                            db.child(CurrentUser.getUserName()).removeValue();*/
                         }
-
+                        getListOnPageCreate();
+                        ad_recyclerView.notifyDataSetChanged();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -111,4 +116,32 @@ public class WorkGroupsActivity extends AppCompatActivity {
         popup.show();
 
     }
+
+    public void getListOnPageCreate(){
+
+        //Fill list
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    list.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        list.add(ds.getKey());
+                    }
+                    /*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+                    List<String> items = new ArrayList<>();
+                    items = Arrays.asList(wg.getGroupName().split(","));
+                    list.addAll(items);*/
+                    ad_recyclerView.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 }

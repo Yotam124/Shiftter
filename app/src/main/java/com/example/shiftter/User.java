@@ -1,8 +1,5 @@
 package com.example.shiftter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class User {
     private String firstName, lastName, userName, password, workList;
 
@@ -13,7 +10,6 @@ public class User {
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.workList = "";
     }
 
     public String getFirstName() {
@@ -56,13 +52,4 @@ public class User {
         this.workList = workList;
     }
 
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("firstName", firstName);
-        result.put("lastName", lastName);
-        result.put("userName", userName);
-        result.put("password", password);
-
-        return result;
-    }
 }
