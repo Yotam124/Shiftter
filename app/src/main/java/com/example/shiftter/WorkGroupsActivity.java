@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class WorkGroupsActivity extends AppCompatActivity {
     DatabaseReference db;
@@ -50,7 +47,11 @@ public class WorkGroupsActivity extends AppCompatActivity {
         recyclerView.setAdapter(ad_recyclerView);
 
         // get db
-        db = FirebaseDatabase.getInstance().getReference().child("WorkGroups").child(CurrentUser.getUserName());
+        db = FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(CurrentUser.getUserName())
+                .child("WorkGroups");
+
         popup = new Dialog(this);
         getListOnPageCreate();
 
@@ -85,24 +86,25 @@ public class WorkGroupsActivity extends AppCompatActivity {
                 groupNameString = groupName.getText().toString();
                 popup.dismiss();
 
-               db.addListenerForSingleValueEvent(new ValueEventListener() {
+               db.child(groupNameString).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(!dataSnapshot.exists()){
                             WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
-                            db.setValue(workGroup);
+                            db.child(groupNameString).setValue(workGroup);
                         }else {
-                            WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
-                            String temp1 = wg.getGroupName();
+                            Toast.makeText(WorkGroupsActivity.this,"This name already taken", Toast.LENGTH_LONG).show();
+                            //WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+                            /*String temp1 = wg.getGroupName();
                             String temp2 = temp1 + "," +groupNameString;
                             Map<String, Object> postValues = new HashMap<String, Object>();
                             postValues.put(dataSnapshot.getKey(), dataSnapshot.getValue());
                             postValues.put("groupName", temp2);
                             // TODO : if failed to add to database throw exceptions
                             db.updateChildren(postValues);
-                            db.child(CurrentUser.getUserName()).removeValue();
+                            db.child(CurrentUser.getUserName()).removeValue();*/
                         }
-                        list.add(groupNameString);
+                        getListOnPageCreate();
                         ad_recyclerView.notifyDataSetChanged();
                     }
                     @Override
@@ -122,11 +124,14 @@ public class WorkGroupsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
                     list.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        list.add(ds.getKey());
+                    }
+                    /*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
                     List<String> items = new ArrayList<>();
                     items = Arrays.asList(wg.getGroupName().split(","));
-                    list.addAll(items);
+                    list.addAll(items);*/
                     ad_recyclerView.notifyDataSetChanged();
                 }
             }
