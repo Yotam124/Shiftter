@@ -1,6 +1,7 @@
 package com.example.shiftter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,16 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.text_view);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String groupName = myTextView.getText().toString();
+                    Intent intoGroupDetails = new Intent(mContext, intoWorkGroupOptions.class);
+                    intoGroupDetails.putExtra("groupName", groupName);
+                    mContext.startActivity(intoGroupDetails);
+                    Toast.makeText(v.getContext(), groupName+"", Toast.LENGTH_LONG).show();
+                }
+            });
 
         }
     }
