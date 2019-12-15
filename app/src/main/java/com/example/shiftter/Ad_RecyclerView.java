@@ -36,14 +36,8 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
-        holder.myTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "item clicked at " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
+        String order = mData.get(position);
+        holder.myTextView.setText(order);
     }
 
     // total number of items
@@ -62,13 +56,13 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String groupName = myTextView.getText().toString();
-                    Intent intoGroupDetails = new Intent(mContext, intoWorkGroupOptions.class);
-                    intoGroupDetails.putExtra("groupName", groupName);
-                    mContext.startActivity(intoGroupDetails);
-                    Toast.makeText(v.getContext(), groupName+"", Toast.LENGTH_LONG).show();
-                }
-            });
+                String groupName = myTextView.getText().toString();
+                Intent intoGroupDetails = new Intent(mContext, intoWorkGroupOptions.class);
+                intoGroupDetails.putExtra("groupName", groupName);
+                mContext.startActivity(intoGroupDetails);
+                Toast.makeText(v.getContext(), groupName+"", Toast.LENGTH_LONG).show();
+            }
+        });
 
         }
     }

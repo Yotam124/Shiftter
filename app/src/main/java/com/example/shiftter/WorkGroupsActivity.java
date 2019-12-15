@@ -48,8 +48,6 @@ public class WorkGroupsActivity extends AppCompatActivity {
 
         // get db
         db = FirebaseDatabase.getInstance().getReference()
-                .child("Users")
-                .child(CurrentUser.getUserName())
                 .child("WorkGroups");
 
         popup = new Dialog(this);
@@ -86,14 +84,14 @@ public class WorkGroupsActivity extends AppCompatActivity {
                 groupNameString = groupName.getText().toString();
                 popup.dismiss();
 
-               db.child(groupNameString).addListenerForSingleValueEvent(new ValueEventListener() {
+               db.child(CurrentUser.getUserName()).child(groupNameString).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if(!dataSnapshot.exists()){
                             WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
-                            db.child(groupNameString).setValue(workGroup);
+                            db.child(CurrentUser.getUserName()).child(groupNameString).setValue(workGroup);
                         }else {
-                            Toast.makeText(WorkGroupsActivity.this,"This name already taken", Toast.LENGTH_LONG).show();
+                            Toast.makeText(WorkGroupsActivity.this,"Be more specific", Toast.LENGTH_LONG).show();
                             //WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
                             /*String temp1 = wg.getGroupName();
                             String temp2 = temp1 + "," +groupNameString;
@@ -120,7 +118,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
     public void getListOnPageCreate(){
 
         //Fill list
-        db.addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child(CurrentUser.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
