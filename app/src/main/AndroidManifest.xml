@@ -1,4 +1,3 @@
-<<<<<<< Original
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shiftter">
@@ -11,13 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-<<<<<<< HEAD
-            android:name=".ui.login.LoginActivity2"
-            android:label="@string/title_activity_login2" />
-=======
             android:name=".ShiftsActivity"
             android:label="@string/title_activity_shifts"></activity>
->>>>>>> acdeff904d125ac41e1030d76f00c49babeb932b
         <activity android:name=".intoWorkGroupOptions" />
         <activity android:name=".WorkGroupsActivity" />
         <activity android:name=".HomePageActivity" />
@@ -41,13 +35,3 @@
     </application>
 
 </manifest>
-=======
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <application>
-        <activity android:name="com.example.shiftter.ShiftsActivity"
->
-        </activity>
-    </application>
-</manifest>
->>>>>>> Added

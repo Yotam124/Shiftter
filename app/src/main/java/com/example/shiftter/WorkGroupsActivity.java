@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class WorkGroupsActivity extends AppCompatActivity {
-    DatabaseReference db;
+    DatabaseReference db, dbForMembers;
     private Dialog popup;
     private String groupNameString;
     BottomNavigationView bottomNavigationView;
@@ -149,6 +149,29 @@ public class WorkGroupsActivity extends AppCompatActivity {
                     items = Arrays.asList(wg.getGroupName().split(","));
                     list.addAll(items);*/
                     ad_recyclerView.notifyDataSetChanged();
+                }
+                else {
+                    dbForMembers.child("Users").child(CurrentUser.getUserName()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                list.clear();
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    list.add(ds.getKey());
+                                }
+                    /*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+                    List<String> items = new ArrayList<>();
+                    items = Arrays.asList(wg.getGroupName().split(","));
+                    list.addAll(items);*/
+                                ad_recyclerView.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
 
