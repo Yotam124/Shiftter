@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +29,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
     private Dialog popup;
     private String groupNameString;
     BottomNavigationView bottomNavigationView;
+    FloatingActionButton addFab;
 
     //recycle_view_vars
     private ArrayList<String> list = new ArrayList<>();
@@ -54,14 +56,24 @@ public class WorkGroupsActivity extends AppCompatActivity {
         popup = new Dialog(this);
         getListOnPageCreate();
 
+        addFab = findViewById(R.id.fab);
+        addFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowPopup(v);
+            }
+        });
+
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                    case R.id.navigation_shifts:
+                  case R.id.nabigation_shifts:
                         break;
+               
                     case R.id.navigation_workGroups:
                         Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
                         startActivity(WorkgroupActivity);
@@ -77,7 +89,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
 
     }
 
-    public void ShowPopup(MenuItem v){
+    public void ShowPopup(View v){
         Button createPopup;
         final EditText groupName;
         popup.setContentView(R.layout.workgroup_popup);
