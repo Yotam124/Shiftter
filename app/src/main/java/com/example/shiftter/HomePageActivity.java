@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class HomePageActivity extends AppCompatActivity {
@@ -40,16 +42,28 @@ public class HomePageActivity extends AppCompatActivity {
     private long pauseOffset;
 
     private Spinner spinner;
+    private ValueEventListener listener;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> spinnerDataList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        db = FirebaseDatabase.getInstance().getReference().child("WorkGroups");
+
 
         fingerPrintBtn = (ImageButton) findViewById(R.id.fingerPrintBtn);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         chronometer = findViewById(R.id.chronometer);
         spinner = findViewById(R.id.spinner);
+        spinnerDataList = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(HomePageActivity.this, android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
+        spinner.setAdapter(adapter);
+        retrieveDataForSpinner();
+
+
 
 
         fingerPrintBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +107,27 @@ public class HomePageActivity extends AppCompatActivity {
         });
     }
 
+    public void retrieveDataForSpinner(){
 
+        db.child(CurrentUser.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        spinnerDataList.add(ds.getKey());
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 
 
     //Chronometer functions
@@ -113,14 +147,6 @@ public class HomePageActivity extends AppCompatActivity {
             pauseOffset = 0;
         }
     }
-
-
-
-
-
-
-
-
 
     //Top Menu
     @Override

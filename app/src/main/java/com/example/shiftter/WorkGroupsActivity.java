@@ -71,7 +71,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
-                  case R.id.nabigation_shifts:
+                  case R.id.navigation_shifts:
                         break;
                
                     case R.id.navigation_workGroups:
