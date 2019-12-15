@@ -72,8 +72,9 @@ public class WorkGroupsActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_shifts:
+                        Intent shiftActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
+                        startActivity(shiftActivity);
                         break;
-               
                     case R.id.navigation_workGroups:
                         Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
                         startActivity(WorkgroupActivity);
