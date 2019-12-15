@@ -84,7 +84,7 @@ public class HomePageActivity extends AppCompatActivity {
                         Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
                         startActivity(WorkgroupActivity);
                         break;
-                    case R.id.navigation_search:
+                    case R.id.navigation_homePage:
                         break;
 
                 }
