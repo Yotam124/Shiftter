@@ -109,6 +109,8 @@ public class WorkGroupsActivity extends AppCompatActivity {
                         if(!dataSnapshot.exists()){
                             WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
                             db.child(CurrentUser.getUserName()).child(groupNameString).setValue(workGroup);
+                            dbForMembers.child("Users").child(CurrentUser.getUserName()).child("Groups").child(workGroup.getGroupName()).setValue(workGroup);
+
                         }else {
                             Toast.makeText(WorkGroupsActivity.this,"Alredy used by you", Toast.LENGTH_LONG).show();
                             // TODO : if failed to add to database throw exceptions

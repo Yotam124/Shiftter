@@ -10,6 +10,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.List;
 
 public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHolder> {
@@ -48,6 +54,7 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView myTextView;
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -56,10 +63,31 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
                 @Override
                 public void onClick(View v) {
                 String groupName = myTextView.getText().toString();
-                Intent intoGroupDetails = new Intent(mContext, intoWorkGroupOptions.class);
-                intoGroupDetails.putExtra("groupName", groupName);
-                mContext.startActivity(intoGroupDetails);
-                CurrentUser.setCurrentJob(groupName);
+
+
+                db.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        WorkGroup groupOnUser = dataSnapshot.child("Users").child(CurrentUser.getUserName())
+                                .child("Groups")
+                                .child(groupName).getValue(WorkGroup.class);
+                        if(groupOnUser.getManagerUserName().equals(CurrentUser.getUserName())){
+
+                            Intent intoGroupAsManager = new Intent(mContext, intoWorkGroupManager.class);
+                            mContext.startActivity(intoGroupAsManager);
+                            CurrentUser.setCurrentJob(groupName);
+                        }else{
+                            Intent intoGroupAsMember = new Intent(mContext, intoWorkGroupAsMember.class);
+                            mContext.startActivity(intoGroupAsMember);
+                            CurrentUser.setCurrentJob(groupName);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
