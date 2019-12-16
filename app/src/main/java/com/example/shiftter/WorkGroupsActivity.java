@@ -71,7 +71,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
+                switch (menuItem.getItemId()) {  
                     case R.id.navigation_shifts:
                         Intent shiftActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
                         startActivity(shiftActivity);
