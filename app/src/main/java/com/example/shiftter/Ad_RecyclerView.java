@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +59,7 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
                 Intent intoGroupDetails = new Intent(mContext, intoWorkGroupOptions.class);
                 intoGroupDetails.putExtra("groupName", groupName);
                 mContext.startActivity(intoGroupDetails);
-                Toast.makeText(v.getContext(), groupName+"", Toast.LENGTH_LONG).show();
+                CurrentUser.setCurrentJob(groupName);
             }
         });
 

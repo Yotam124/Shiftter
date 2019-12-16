@@ -1,13 +1,16 @@
 package com.example.shiftter;
 
-public class EmployeeNode {
+public class GroupMember {
+
     private String userName;
+    private String position;
     private float salary;
 
-    public EmployeeNode(){
-    }
-    public EmployeeNode(String userName, float salary){
+    public GroupMember(){}
+
+    public GroupMember(String userName, String position, float salary) {
         this.userName = userName;
+        this.position = position;
         this.salary = salary;
     }
 
@@ -25,5 +28,13 @@ public class EmployeeNode {
 
     public void setSalary(float salary) {
         this.salary = salary;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }
