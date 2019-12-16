@@ -52,6 +52,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
         // get db
         db = FirebaseDatabase.getInstance().getReference()
                 .child("WorkGroups");
+        dbForMembers = FirebaseDatabase.getInstance().getReference();
 
         popup = new Dialog(this);
         getListOnPageCreate();
@@ -109,16 +110,8 @@ public class WorkGroupsActivity extends AppCompatActivity {
                             WorkGroup workGroup = new WorkGroup(CurrentUser.getUserName(), groupNameString);
                             db.child(CurrentUser.getUserName()).child(groupNameString).setValue(workGroup);
                         }else {
-                            Toast.makeText(WorkGroupsActivity.this,"Be more specific", Toast.LENGTH_LONG).show();
-                            //WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
-                            /*String temp1 = wg.getGroupName();
-                            String temp2 = temp1 + "," +groupNameString;
-                            Map<String, Object> postValues = new HashMap<String, Object>();
-                            postValues.put(dataSnapshot.getKey(), dataSnapshot.getValue());
-                            postValues.put("groupName", temp2);
+                            Toast.makeText(WorkGroupsActivity.this,"Alredy used by you", Toast.LENGTH_LONG).show();
                             // TODO : if failed to add to database throw exceptions
-                            db.updateChildren(postValues);
-                            db.child(CurrentUser.getUserName()).removeValue();*/
                         }
                         getListOnPageCreate();
                         ad_recyclerView.notifyDataSetChanged();
@@ -136,21 +129,18 @@ public class WorkGroupsActivity extends AppCompatActivity {
     public void getListOnPageCreate(){
 
         //Fill list
-        db.child(CurrentUser.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
+                if (dataSnapshot.child(CurrentUser.getUserName()).exists()) {
                     list.clear();
-                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    for (DataSnapshot ds : dataSnapshot.child(CurrentUser.getUserName()).getChildren()){
                         list.add(ds.getKey());
                     }
-                    /*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
-                    List<String> items = new ArrayList<>();
-                    items = Arrays.asList(wg.getGroupName().split(","));
-                    list.addAll(items);*/
                     ad_recyclerView.notifyDataSetChanged();
                 }
-                else {
+                else{
+                    Toast.makeText(WorkGroupsActivity.this, "else", Toast.LENGTH_SHORT).show();
                     dbForMembers.child("Users").child(CurrentUser.getUserName()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -159,10 +149,6 @@ public class WorkGroupsActivity extends AppCompatActivity {
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     list.add(ds.getKey());
                                 }
-                    /*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
-                    List<String> items = new ArrayList<>();
-                    items = Arrays.asList(wg.getGroupName().split(","));
-                    list.addAll(items);*/
                                 ad_recyclerView.notifyDataSetChanged();
                             }
                         }
