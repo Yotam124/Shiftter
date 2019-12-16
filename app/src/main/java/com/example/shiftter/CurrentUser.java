@@ -3,7 +3,7 @@ package com.example.shiftter;
 import android.app.Application;
 
 public class CurrentUser extends Application {
-    private static String userName, firstName, lastName;
+    private static String userName, firstName, lastName, currentJob;
 
     @Override
     public void onCreate() {
@@ -11,6 +11,15 @@ public class CurrentUser extends Application {
         userName = "";
         firstName = "";
         lastName = "";
+        currentJob = "";
+    }
+
+    public static String getCurrentJob() {
+        return currentJob;
+    }
+
+    public static void setCurrentJob(String currentJob) {
+        CurrentUser.currentJob = currentJob;
     }
 
     public static String getUserName() {

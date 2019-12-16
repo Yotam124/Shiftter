@@ -1,21 +1,21 @@
 package com.example.shiftter;
 
 public class WorkGroup {
-    private String managerName, groupName;
+    private String managerUserName, groupName;
 
     WorkGroup(){ }
 
     WorkGroup(String managerName, String groupName){
-        this.managerName = managerName;
+        this.managerUserName = managerName;
         this.groupName = groupName;
     }
 
-    public String getManagerName() {
-        return managerName;
+    public String getManagerUserName() {
+        return managerUserName;
     }
 
-    public void setManagerName(String managerName) {
-        this.managerName = managerName;
+    public void setManagerUserName(String managerUserName) {
+        this.managerUserName = managerUserName;
     }
 
     public String getGroupName() {
