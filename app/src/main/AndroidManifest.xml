@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".intoWorkGroupAsMember"></activity>
         <activity
             android:name=".ShiftsActivity"
-            android:label="@string/title_activity_shifts"></activity>
-        <activity android:name=".intoWorkGroupOptions" />
+            android:label="@string/title_activity_shifts" />
+        <activity android:name=".intoWorkGroupManager" />
         <activity android:name=".WorkGroupsActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".RegisterActivity" />

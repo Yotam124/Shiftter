@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class intoWorkGroupOptions extends AppCompatActivity {
-    DatabaseReference db, db2;
+public class intoWorkGroupManager extends AppCompatActivity {
+    DatabaseReference db;
     private FloatingActionButton add, delete;
     private Dialog popup;
     private String memberToAdd, position;
@@ -33,18 +34,22 @@ public class intoWorkGroupOptions extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     private ArrayList<String> list = new ArrayList<>();
-    Ad_RecyclerView ad_recyclerView;
+    Ad_RecyclerView_Manager ad_recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_into_work_group_options);
+        setContentView(R.layout.activity_into_work_group_manager);
+
+        TextView title = (TextView) findViewById(R.id.group_title);
+        title.setText(CurrentUser.getCurrentJob());
+
 
 
         // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ad_recyclerView = new Ad_RecyclerView(this, list);
+        ad_recyclerView = new Ad_RecyclerView_Manager(this, list);
         recyclerView.setAdapter(ad_recyclerView);
 
         // get db
@@ -54,6 +59,7 @@ public class intoWorkGroupOptions extends AppCompatActivity {
         delete = findViewById(R.id.delete_group_fab);
 
         popup = new Dialog(this);
+        getMembersListOnPageCreate();
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,21 +148,26 @@ public class intoWorkGroupOptions extends AppCompatActivity {
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        WorkGroup groupForUser = dataSnapshot.child("WorkGroups").child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob()).getValue(WorkGroup.class);
+
                         if(dataSnapshot.child("WorkGroups")
                                 .child(CurrentUser.getUserName())
                                 .child(CurrentUser.getCurrentJob())
                                 .child("Members").child(memberToAdd).exists()){
-                            Toast.makeText(intoWorkGroupOptions.this,"Member is alredy in the group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(intoWorkGroupManager.this,"Member is alredy in the group", Toast.LENGTH_LONG).show();
                         }
                         else {
                             if (!dataSnapshot.child("Users").child(memberToAdd).exists()){
-                                Toast.makeText(intoWorkGroupOptions.this, "User isn't exist", Toast.LENGTH_LONG).show();
+                                Toast.makeText(intoWorkGroupManager.this, "User isn't exist", Toast.LENGTH_LONG).show();
                             }
                             else{
                                 GroupMember newMember = new GroupMember(memberToAdd, position, salary);
-                                db.child("WorkGroups").child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob()).child("Members").child(memberToAdd).setValue(newMember);
-                                GroupName g = new GroupName(CurrentUser.getCurrentJob());
-                                db.child("Users").child(memberToAdd).child("Groups").child(g.groupName).setValue(g);
+                                db.child("WorkGroups").child(CurrentUser.getUserName())
+                                        .child(CurrentUser.getCurrentJob())
+                                        .child("Members")
+                                        .child(memberToAdd).setValue(newMember);
+                                //GroupName g = new GroupName(CurrentUser.getCurrentJob());
+                                db.child("Users").child(memberToAdd).child("Groups").child(CurrentUser.getCurrentJob()).setValue(groupForUser);
                             }
                         }
                     }
@@ -182,12 +193,37 @@ public class intoWorkGroupOptions extends AppCompatActivity {
             public void onClick(View v) {
 
                 popup.dismiss();
-                db.child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob()).removeValue();
+                db.child("WorkGroups").child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob()).removeValue();
                 Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
                 startActivity(WorkgroupActivity);
             }
         });
         popup.show();
+
+    }
+
+    public void getMembersListOnPageCreate(){
+
+        //Fill list
+        db.child("WorkGroups").child(CurrentUser.getUserName())
+                .child(CurrentUser.getCurrentJob())
+                .child("Members").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    list.clear();
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        list.add(ds.getKey());
+                    }
+                    ad_recyclerView.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 }
