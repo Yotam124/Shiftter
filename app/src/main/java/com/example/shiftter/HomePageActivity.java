@@ -30,7 +30,7 @@ import java.util.Date;
 
 public class HomePageActivity extends AppCompatActivity {
 
-    DatabaseReference db;
+    DatabaseReference db,db2;
     private String clockIn, clockOut;
 
 
@@ -52,6 +52,7 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         db = FirebaseDatabase.getInstance().getReference().child("WorkGroups");
+        db2 = FirebaseDatabase.getInstance().getReference();
 
 
         fingerPrintBtn = (ImageButton) findViewById(R.id.fingerPrintBtn);
@@ -62,9 +63,6 @@ public class HomePageActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(HomePageActivity.this, android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
         spinner.setAdapter(adapter);
         retrieveDataForSpinner();
-
-
-
 
         fingerPrintBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -109,7 +107,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void retrieveDataForSpinner(){
 
-        db.child(CurrentUser.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+        db2.child("Users").child(CurrentUser.getUserName()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
