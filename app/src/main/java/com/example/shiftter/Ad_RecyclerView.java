@@ -66,24 +66,28 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
 
                     // TODO: 12/19/2019 retriving data for recycleView (workgroup list)
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
+                    WorkGroup workGroup;
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         db.child("WorkGroups").orderByChild("groupName").equalTo(groupName);
-                        for (DataSnapshot ds : dataSnapshot.getChildren()){
 
+                        for (DataSnapshot ds : dataSnapshot.child("Users").child(CurrentUser.getUserID()).child("Groups").getChildren()) {
+                            PK pk = ds.getValue(PK.class);
+                            workGroup = dataSnapshot.child("WorkGroups").child(pk.getPk()).getValue(WorkGroup.class);
+                            if (workGroup.getGroupName().equals(groupName)){
+                                break;
+                            }
                         }
-                        WorkGroup groupOnUser = dataSnapshot.child("Users").child(CurrentUser.getEmail())
-                                .child("Groups")
-                                .child(groupName).getValue(WorkGroup.class);
-                        if(groupOnUser.getManagerUserName().equals(CurrentUser.getEmail())){
+
+                        if(workGroup.getManagerUserID().equals(CurrentUser.getUserID())){
 
                             Intent intoGroupAsManager = new Intent(mContext, intoWorkGroupManager.class);
+                            intoGroupAsManager.putExtra("groupKEY", workGroup.getGroupKey());
                             mContext.startActivity(intoGroupAsManager);
-                            CurrentUser.setGroupKey(groupName);
                         }else{
                             Intent intoGroupAsMember = new Intent(mContext, intoWorkGroupAsMember.class);
+                            intoGroupAsMember.putExtra("groupKEY", workGroup.getGroupKey());
                             mContext.startActivity(intoGroupAsMember);
-                            CurrentUser.setGroupKey(groupName);
                         }
                     }
                     @Override
