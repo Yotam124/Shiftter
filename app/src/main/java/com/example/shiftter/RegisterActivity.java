@@ -11,6 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,15 +24,14 @@ import com.google.firebase.database.ValueEventListener;
 public class RegisterActivity extends AppCompatActivity {
   //  private String userId = "";
     private Button createBtn;
-    private EditText firstName, lastName, password, password2 , userName;
-    String fn, ln, us, p, p2;
-
-    /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference db = database.getReference("Users");*/
+    private EditText firstName, lastName, password, password2 , emailId;
+    String fn, ln, email, pwd, p2;
 
     User user;
-    DatabaseReference db;
 
+    DatabaseReference db;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,59 +40,82 @@ public class RegisterActivity extends AppCompatActivity {
 
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
-        userName = (EditText) findViewById(R.id.userName);
+        emailId =  (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         password2 = (EditText) findViewById(R.id.password2);
 
 
-
+        auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
 
         createBtn = (Button) findViewById(R.id.createBtn);
+
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddUser();
+
+                fn = firstName.getText().toString().trim();
+                ln = lastName.getText().toString().trim();
+                email = emailId.getText().toString().trim();
+                pwd = password.getText().toString().trim();
+                p2 = password2.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    emailId.setError("Please enter a Email");
+                    emailId.requestFocus();
+                }else if (TextUtils.isEmpty((pwd))){
+                    password.setError("Please enter a Password");
+                    password.requestFocus();
+                }else if (pwd.length() < 6){
+                        password.setError("Password must be at least 6 letters");
+                }else if (!pwd.equals(p2)){
+                    password2.setError("Your passwords do not match");
+                    password2.requestFocus();
+                }else{
+
+                    auth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()){
+                                db.child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if (!dataSnapshot.exists()){
+                                            String codedEmail = encodeUserEmail(email);
+                                            user = new User(fn, ln, codedEmail, pwd, auth.getUid());
+                                            db.child(auth.getUid()).setValue(user);
+                                            Intent backToMain = new Intent(getApplicationContext(), LoginActivity.class);
+                                            startActivity(backToMain);
+
+                                            Toast.makeText(RegisterActivity.this, "User created sucessfull", Toast.LENGTH_LONG).show();
+                                        }else{
+                                            Toast.makeText(RegisterActivity.this, "Email already exists", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(RegisterActivity.this,"SignUp Unsuccessful, Please Try Again. ", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
+                }
             }
         });
     }
-    public void AddUser(){
-        fn = firstName.getText().toString();
-        ln = lastName.getText().toString();
-        us = userName.getText().toString();
-        p = password.getText().toString();
-        p2 = password2.getText().toString();
 
-        if (TextUtils.isEmpty(us) && TextUtils.isEmpty(p)){
-            Toast.makeText(this, "Please enter a Username and Password", Toast.LENGTH_LONG).show();
-        }else if (TextUtils.isEmpty((us))){
-            Toast.makeText(this, "Please enter a Username", Toast.LENGTH_LONG).show();
-        }else if (TextUtils.isEmpty(p)){
-            Toast.makeText(this, "Please enter a Password", Toast.LENGTH_LONG).show();
-        }else if (!p.equals(p2)){
-            Toast.makeText(this, "Your passwords do not match", Toast.LENGTH_LONG).show();
-        }else{
-            db.child(us).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (!dataSnapshot.exists()){
-                        user = new User(fn, ln, us, p);
-                        db.child(us).setValue(user);
-                        Toast.makeText(RegisterActivity.this, "User created sucessfull", Toast.LENGTH_LONG).show();
+    static String encodeUserEmail(String userEmail) {
+        return userEmail.replace(".", ",");
+    }
 
-                        Intent backToMain = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(backToMain);
-                    }else{
-                        Toast.makeText(RegisterActivity.this, "Username already exists", Toast.LENGTH_LONG).show();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
+    static String decodeUserEmail(String userEmail) {
+        return userEmail.replace(",", ".");
     }
 }

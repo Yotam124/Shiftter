@@ -64,23 +64,26 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
                 public void onClick(View v) {
                 String groupName = myTextView.getText().toString();
 
-
+                    // TODO: 12/19/2019 retriving data for recycleView (workgroup list)
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        db.child("WorkGroups").orderByChild("groupName").equalTo(groupName);
+                        for (DataSnapshot ds : dataSnapshot.getChildren()){
 
-                        WorkGroup groupOnUser = dataSnapshot.child("Users").child(CurrentUser.getUserName())
+                        }
+                        WorkGroup groupOnUser = dataSnapshot.child("Users").child(CurrentUser.getEmail())
                                 .child("Groups")
                                 .child(groupName).getValue(WorkGroup.class);
-                        if(groupOnUser.getManagerUserName().equals(CurrentUser.getUserName())){
+                        if(groupOnUser.getManagerUserName().equals(CurrentUser.getEmail())){
 
                             Intent intoGroupAsManager = new Intent(mContext, intoWorkGroupManager.class);
                             mContext.startActivity(intoGroupAsManager);
-                            CurrentUser.setCurrentJob(groupName);
+                            CurrentUser.setGroupKey(groupName);
                         }else{
                             Intent intoGroupAsMember = new Intent(mContext, intoWorkGroupAsMember.class);
                             mContext.startActivity(intoGroupAsMember);
-                            CurrentUser.setCurrentJob(groupName);
+                            CurrentUser.setGroupKey(groupName);
                         }
                     }
                     @Override

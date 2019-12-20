@@ -19,8 +19,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -51,9 +49,7 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        db = FirebaseDatabase.getInstance().getReference().child("WorkGroups");
-        db2 = FirebaseDatabase.getInstance().getReference();
-
+        db = FirebaseDatabase.getInstance().getReference();
 
         fingerPrintBtn = (ImageButton) findViewById(R.id.fingerPrintBtn);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -62,7 +58,9 @@ public class HomePageActivity extends AppCompatActivity {
         spinnerDataList = new ArrayList<>();
         adapter = new ArrayAdapter<String>(HomePageActivity.this, android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
         spinner.setAdapter(adapter);
-        retrieveDataForSpinner();
+
+        // TODO: Fixing the function (un //)
+        //retrieveDataForSpinner();
 
         fingerPrintBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -81,7 +79,6 @@ public class HomePageActivity extends AppCompatActivity {
                     Toast.makeText(HomePageActivity.this,clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
                 }
-                Toast.makeText(HomePageActivity.this,""+CurrentUser.getUserName(), Toast.LENGTH_LONG).show();
             }
         });
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -105,9 +102,10 @@ public class HomePageActivity extends AppCompatActivity {
         });
     }
 
-    public void retrieveDataForSpinner(){
+    // TODO: 12/19/2019 Fixing the function after the new database (retrieveDataForSpinner).
+    /*public void retrieveDataForSpinner(){
 
-        db2.child("Users").child(CurrentUser.getUserName()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("Users").child(CurrentUser.getEmail()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -125,7 +123,7 @@ public class HomePageActivity extends AppCompatActivity {
         });
 
 
-    }
+    }*/
 
 
     //Chronometer functions
@@ -168,8 +166,10 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
-    public void addShift(String clockIn, String clockOut){
-        String userName = CurrentUser.getUserName();
+
+    // TODO: 12/19/2019 Fixing the function after the new database (addShifts).
+    /*public void addShift(String clockIn, String clockOut){
+        String userName = CurrentUser.getEmail();
         db = FirebaseDatabase.getInstance().getReference();
         db.child("Users").child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -182,5 +182,5 @@ public class HomePageActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 }

@@ -61,7 +61,8 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    popup.setContentView(R.layout.user_handel_popup);
+                    // TODO: 12/19/2019 retriving data for recycleView (Manager) 
+                    /*popup.setContentView(R.layout.user_handel_popup);
                     deleteMember = (Button) popup.findViewById(R.id.delete_member);
                     editMember = (Button) popup.findViewById(R.id.edit_member);
                     editPosition = (EditText) popup.findViewById(R.id.edit_position);
@@ -74,7 +75,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                         @Override
                         public void onClick(View v) {
                             popup.dismiss();
-                            db.child("WorkGroups").child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob())
+                            db.child("WorkGroups").child(CurrentUser.getEmail()).child(CurrentUser.getCurrentJob())
                                     .child("Members").child(memberName).removeValue();
                             db.child("Users").child(CurrentUser.getCurrentMember()).child("Groups")
                                     .child(CurrentUser.getCurrentJob()).removeValue();
@@ -87,7 +88,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
 
                         }
                     });
-                    popup.show();
+                    popup.show();*/
                 }
             });
 
