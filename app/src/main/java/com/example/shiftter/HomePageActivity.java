@@ -51,8 +51,10 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         db = FirebaseDatabase.getInstance().getReference();
 
-        fingerPrintBtn = (ImageButton) findViewById(R.id.fingerPrintBtn);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+        fingerPrintBtn = (ImageButton) findViewById(R.id.fingerPrintBtn);
+
         chronometer = findViewById(R.id.chronometer);
         spinner = findViewById(R.id.spinner);
         spinnerDataList = new ArrayList<>();
