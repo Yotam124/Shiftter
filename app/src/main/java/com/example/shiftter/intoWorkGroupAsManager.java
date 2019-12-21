@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class intoWorkGroupManager extends AppCompatActivity {
+public class intoWorkGroupAsManager extends AppCompatActivity {
     DatabaseReference db;
     private FloatingActionButton add, delete;
     private Dialog popup;
@@ -121,7 +121,7 @@ public class intoWorkGroupManager extends AppCompatActivity {
         });
 
     }*/
-// TODO: 12/19/2019 fixing the function "ShowAddPopup" (intoWorkGroupManager)
+// TODO: 12/19/2019 fixing the function "ShowAddPopup" (intoWorkGroupAsManager)
     /*public void ShowAddPopup(View v){
         Button AddBtn;
         final EditText memberName, memberPos, memberSalary;
@@ -148,11 +148,11 @@ public class intoWorkGroupManager extends AppCompatActivity {
                                 .child(CurrentUser.getEmail())
                                 .child(CurrentUser.getCurrentJob())
                                 .child("Members").child(memberToAdd).exists()){
-                            Toast.makeText(intoWorkGroupManager.this,"Member is alredy in the group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(intoWorkGroupAsManager.this,"Member is alredy in the group", Toast.LENGTH_LONG).show();
                         }
                         else {
                             if (!dataSnapshot.child("Users").child(memberToAdd).exists()){
-                                Toast.makeText(intoWorkGroupManager.this, "User isn't exist", Toast.LENGTH_LONG).show();
+                                Toast.makeText(intoWorkGroupAsManager.this, "User isn't exist", Toast.LENGTH_LONG).show();
                             }
                             else{
                                 GroupMember newMember = new GroupMember(memberToAdd, position, salary);

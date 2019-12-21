@@ -2,24 +2,24 @@ package com.example.shiftter;
 
 public class GroupMember {
 
-    private String userName;
+    private String UserID;
     private String position;
     private float salary;
 
     public GroupMember(){}
 
-    public GroupMember(String userName, String position, float salary) {
-        this.userName = userName;
+    public GroupMember(String UserID, String position, float salary) {
+        this.UserID = UserID;
         this.position = position;
         this.salary = salary;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserID() {
+        return UserID;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserID(String userID) {
+        this.UserID = userID;
     }
 
     public float getSalary() {

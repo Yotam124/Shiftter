@@ -15,7 +15,7 @@
         <activity
             android:name=".ShiftsActivity"
             android:label="@string/title_activity_shifts" />
-        <activity android:name=".intoWorkGroupManager" />
+        <activity android:name=".intoWorkGroupAsManager" />
         <activity android:name=".WorkGroupsActivity" />
         <activity android:name=".HomePageActivity" />
         <activity android:name=".RegisterActivity" />

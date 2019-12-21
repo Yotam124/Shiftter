@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WorkGroupsActivity extends AppCompatActivity {
     DatabaseReference db, dbForMembers;
@@ -55,7 +58,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference();
 
         popup = new Dialog(this);
-        //getListOnPageCreate();
+        getListOnPageCreate();
 
         addFab = findViewById(R.id.fab);
         addFab.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +106,13 @@ public class WorkGroupsActivity extends AppCompatActivity {
                 popup.dismiss();
                 groupNameString = groupName.getText().toString().trim();
                 String groupKey = db.push().getKey();
-
-                WorkGroup workGroup = new WorkGroup(auth.getCurrentUser().getUid(), groupNameString, 0);
-                db.child("WorkGroups").child(groupKey).setValue(workGroup);
-                db.child("Users").child(CurrentUser.getUserID()).child("Groups").setValue(new PK(groupKey));
-
+                //Date of group creation
+                Date date = new Date();
+                SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+                String stringDate = dt.format(date);
+                //Create WorkGroup and sate to db
+                WorkGroup workGroup = new WorkGroup(groupKey, auth.getCurrentUser().getUid(), groupNameString, 0,stringDate);
+                db.child("MemberToGroups").child(auth.getCurrentUser().getUid()).child(groupKey).setValue(workGroup);
                 ad_recyclerView.notifyDataSetChanged();
 
             }
@@ -124,34 +129,16 @@ public class WorkGroupsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("Users").child(CurrentUser.getUserID()).exists()) {
                     list.clear();
-                    for (DataSnapshot ds : dataSnapshot.child("Users").child(CurrentUser.getUserID()).child("Groups").getChildren()){
-                        PK pk = ds.getValue(PK.class);
-                        WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(pk.getPk()).getValue(WorkGroup.class);
+                    for (DataSnapshot ds : dataSnapshot.child("MemberToGroups").child(CurrentUser.getUserID()).getChildren()){
+                        //PK pk = ds.getValue(PK.class);
+                        WorkGroup workGroup = ds.getValue(WorkGroup.class);
                         list.add(workGroup.getGroupName());
                     }
                     ad_recyclerView.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(WorkGroupsActivity.this, "Error",Toast.LENGTH_SHORT).show();
                 }
-                /*else{
-                    dbForMembers.child("Users").child(CurrentUser.getUserID()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                list.clear();
-                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                    list.add(ds.getKey());
-                                }
-                                ad_recyclerView.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }*/
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

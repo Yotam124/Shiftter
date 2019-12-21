@@ -1,16 +1,17 @@
 package com.example.shiftter;
 
 public class WorkGroup {
-    private String groupKey, managerUserID, groupName;
+    private String groupKey, managerUserID, groupName, dateOfCreation;
     private int numOfMembers;
 
     WorkGroup(){ }
 
-    WorkGroup(String groupKey, String managerName, String groupName, int numOfMembers){
+    WorkGroup(String groupKey, String managerName, String groupName, int numOfMembers, String dateOfCreation){
         this.groupKey = groupKey;
         this.managerUserID = managerName;
         this.groupName = groupName;
         this.numOfMembers = numOfMembers;
+        this.dateOfCreation = dateOfCreation;
     }
 
 
@@ -41,8 +42,15 @@ public class WorkGroup {
     public String getGroupKey() {
         return groupKey;
     }
-
     public void setGroupKey(String groupKey) {
         this.groupKey = groupKey;
+    }
+
+    public String getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(String dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
     }
 }
