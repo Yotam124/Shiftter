@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 CurrentUser.setUserID(auth.getCurrentUser().getUid());
-                                Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
+                                Intent homePage = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(homePage);
                             } else {
                                 Toast.makeText(LoginActivity.this, "Login Error, Please Login Again", Toast.LENGTH_SHORT).show();

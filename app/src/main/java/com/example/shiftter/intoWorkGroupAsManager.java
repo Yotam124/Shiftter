@@ -1,13 +1,10 @@
 package com.example.shiftter;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,30 +65,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                 //ShowDeletePopup(v);
             }
         });
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_shifts:
-                        Intent shiftActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
-                        startActivity(shiftActivity);
-                        break;
-                    case R.id.navigation_workGroups:
-                        Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
-                        startActivity(WorkgroupActivity);
-                        break;
-                    case R.id.navigation_homePage:
-                        Intent homePageActivity = new Intent(getApplicationContext(), HomePageActivity.class);
-                        startActivity(homePageActivity);
-                        break;
-                }
-                return false;
-            }
-        });
-
-
     }
 
 // TODO: 12/19/2019 fixing the function "getListOnCreate"

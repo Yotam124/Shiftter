@@ -6,7 +6,7 @@ public class WorkGroup {
 
     WorkGroup(){ }
 
-    WorkGroup(String groupKey, String managerName, String groupName, int numOfMembers, String dateOfCreation){
+    public WorkGroup(String groupKey, String managerName, String groupName, int numOfMembers, String dateOfCreation){
         this.groupKey = groupKey;
         this.managerUserID = managerName;
         this.groupName = groupName;

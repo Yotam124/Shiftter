@@ -1,12 +1,9 @@
 package com.example.shiftter;
 
-import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Chronometer;
@@ -14,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -83,25 +79,6 @@ public class HomePageActivity extends AppCompatActivity {
                 }
             }
         });
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_shifts:
-                        Intent shiftsActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
-                        startActivity(shiftsActivity);
-                        break;
-                    case R.id.navigation_workGroups:
-                        Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
-                        startActivity(WorkgroupActivity);
-                        break;
-                    case R.id.navigation_homePage:
-                        break;
-
-                }
-                return false;
-            }
-        });
     }
 
     // TODO: 12/19/2019 Fixing the function after the new database (retrieveDataForSpinner).
@@ -147,7 +124,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     //Top Menu
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
         return true;
@@ -166,7 +143,7 @@ public class HomePageActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
 
     // TODO: 12/19/2019 Fixing the function after the new database (addShifts).

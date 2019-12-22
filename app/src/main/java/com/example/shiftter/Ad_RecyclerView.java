@@ -25,7 +25,7 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
     private Context mContext;
 
     // data is passed into the constructor
-    Ad_RecyclerView(Context context, List<String> data) {
+    public Ad_RecyclerView(Context context, List<String> data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;

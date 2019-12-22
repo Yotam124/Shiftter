@@ -15,20 +15,6 @@
         android:orientation="vertical">
 
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnm_work_groups"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/cardview_dark_background"
-        app:itemTextColor="@color/cardview_dark_background"
-        app:layout_behavior=".BottomNavigationBehavior"
-        app:menu="@menu/bottom_navigation_menu" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/exit_group_fab"
             android:layout_width="wrap_content"
@@ -36,10 +22,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|end"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="70dp"
+            android:layout_margin="16dp"
             android:src="@android:drawable/btn_minus" />
 
         <TextView

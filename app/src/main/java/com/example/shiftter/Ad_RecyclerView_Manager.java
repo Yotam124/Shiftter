@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,6 +51,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
 
     public class ViewHolderManager extends RecyclerView.ViewHolder {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         TextView myTextView;
         private Dialog popup = new Dialog(mContext);
         EditText editPosition, editSalary;
@@ -58,25 +60,26 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
             super(itemView);
             myTextView = itemView.findViewById(R.id.text_view);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            /*itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO: 12/19/2019 retriving data for recycleView (Manager) 
-                    /*popup.setContentView(R.layout.user_handel_popup);
+                    popup.setContentView(R.layout.user_handel_popup);
                     deleteMember = (Button) popup.findViewById(R.id.delete_member);
                     editMember = (Button) popup.findViewById(R.id.edit_member);
                     editPosition = (EditText) popup.findViewById(R.id.edit_position);
                     editSalary = (EditText) popup.findViewById(R.id.edit_salary);
 
-                    String memberName = myTextView.getText().toString();
-                    CurrentUser.setCurrentMember(memberName);
-
+                    String memberEmail = myTextView.getText().toString();
+                    //UserRecord userRecord = (UserRecord) FirebaseAuth.getInstance().getUserByEmailAsync(memberEmail);
+                    //CurrentUser.setMemberID(userRecord.getUid());
+                    // TODO: 12/22/2019 continue after dealing with add user
                     deleteMember.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             popup.dismiss();
-                            db.child("WorkGroups").child(CurrentUser.getEmail()).child(CurrentUser.getCurrentJob())
-                                    .child("Members").child(memberName).removeValue();
+                            db.child("WorkGroups").child(CurrentUser.getMemberID()).child(CurrentUser.getCurrentJob())
+                                    .child("Members").child(memberEmail).removeValue();
                             db.child("Users").child(CurrentUser.getCurrentMember()).child("Groups")
                                     .child(CurrentUser.getCurrentJob()).removeValue();
                         }
@@ -88,9 +91,9 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
 
                         }
                     });
-                    popup.show();*/
+                    popup.show();
                 }
-            });
+            });*/
 
         }
     }
