@@ -1,20 +1,24 @@
-package com.example.shiftter;
+package com.example.shiftter.ui.groups;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.shiftter.Ad_RecyclerView;
+import com.example.shiftter.CurrentUser;
+import com.example.shiftter.R;
+import com.example.shiftter.WorkGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,13 +31,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class WorkGroupsActivity extends AppCompatActivity {
+public class GroupsFragment extends Fragment {
+
+    private GroupsViewModel groupsViewModel;
+
     DatabaseReference db, dbForMembers;
     FirebaseAuth auth;
 
     private Dialog popup;
     private String groupNameString;
-    BottomNavigationView bottomNavigationView;
     FloatingActionButton addFab;
 
     //recycle_view_vars
@@ -41,26 +47,28 @@ public class WorkGroupsActivity extends AppCompatActivity {
     Ad_RecyclerView ad_recyclerView;
 
 
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        groupsViewModel =
+                ViewModelProviders.of(this).get(GroupsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_groups, container, false);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_groups);
 
-        // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ad_recyclerView = new Ad_RecyclerView(this, list);
+        //start Code
+
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ad_recyclerView = new Ad_RecyclerView(getActivity(), list);
         recyclerView.setAdapter(ad_recyclerView);
 
         // get db
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference();
 
-        popup = new Dialog(this);
+        popup = new Dialog(getActivity());
         getListOnPageCreate();
 
-        addFab = findViewById(R.id.fab);
+        addFab = root.findViewById(R.id.fab);
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,29 +77,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
         });
 
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {  
-                    case R.id.navigation_shifts:
-                        Intent shiftActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
-                        startActivity(shiftActivity);
-                        break;
-                    case R.id.navigation_workGroups:
-                        Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
-                        startActivity(WorkgroupActivity);
-                        break;
-                    case R.id.navigation_homePage:
-                        Intent homePageActivity = new Intent(getApplicationContext(), HomePageActivity.class);
-                        startActivity(homePageActivity);
-                        break;
-                }
-                return false;
-            }
-        });
-
+        return root;
     }
 
     public void ShowPopup(View v){
@@ -136,7 +122,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
                     }
                     ad_recyclerView.notifyDataSetChanged();
                 }else{
-                    Toast.makeText(WorkGroupsActivity.this, "Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error",Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -146,5 +132,7 @@ public class WorkGroupsActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 }
