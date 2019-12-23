@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shiftter.Ad_RecyclerView;
 import com.example.shiftter.CurrentUser;
+import com.example.shiftter.GroupMember;
 import com.example.shiftter.R;
 import com.example.shiftter.WorkGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -98,7 +99,11 @@ public class GroupsFragment extends Fragment {
                 String stringDate = dt.format(date);
                 //Create WorkGroup and sate to db
                 WorkGroup workGroup = new WorkGroup(groupKey, auth.getCurrentUser().getUid(), groupNameString, 0,stringDate);
+                //Update Firebase "MemberToGroups", "GroupToMembers", adding manager as member.
                 db.child("MemberToGroups").child(auth.getCurrentUser().getUid()).child(groupKey).setValue(workGroup);
+                GroupMember groupMember = new GroupMember(CurrentUser.getUserID(),"Manager", 0);
+                db.child("GroupToMembers").child(groupKey).child("ListOfMembers").setValue(groupMember);
+                // TODO: 12/23/2019 add increment func to numOfMembers in a group
                 ad_recyclerView.notifyDataSetChanged();
 
             }

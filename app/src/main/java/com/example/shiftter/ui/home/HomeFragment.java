@@ -18,8 +18,12 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.shiftter.CurrentUser;
 import com.example.shiftter.R;
+import com.example.shiftter.WorkGroup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -66,7 +70,7 @@ public class HomeFragment extends Fragment {
 
 
         // TODO: Fixing the function (un //)
-        //retrieveDataForSpinner();
+        retrieveDataForSpinner();
 
         fingerPrintBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -91,14 +95,16 @@ public class HomeFragment extends Fragment {
     }
 
     // TODO: 12/19/2019 Fixing the function after the new database (retrieveDataForSpinner).
-    /*public void retrieveDataForSpinner(){
+    public void retrieveDataForSpinner(){
 
-        db.child("Users").child(CurrentUser.getEmail()).child("Groups").addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("MemberToGroups").child(CurrentUser.getUserID()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        spinnerDataList.add(ds.getKey());
+                        WorkGroup workGroup = ds.getValue(WorkGroup.class);
+                        String groupName = workGroup.getGroupName();
+                        spinnerDataList.add(groupName);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -111,7 +117,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-    }*/
+    }
     //Chronometer functions
     public void startChronometer(View v){
         if (!running) {
