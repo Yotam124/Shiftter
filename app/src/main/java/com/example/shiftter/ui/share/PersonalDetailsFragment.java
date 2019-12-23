@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.shiftter.R;
 
-public class ShareFragment extends Fragment {
+public class PersonalDetailsFragment extends Fragment {
 
-    private ShareViewModel shareViewModel;
+    private PersonalDetailsViewModel personalDetailsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        shareViewModel =
-                ViewModelProviders.of(this).get(ShareViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_share, container, false);
+        personalDetailsViewModel =
+                ViewModelProviders.of(this).get(PersonalDetailsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_personal_details, container, false);
         final TextView textView = root.findViewById(R.id.text_share);
-        shareViewModel.getText().observe(this, new Observer<String>() {
+        personalDetailsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

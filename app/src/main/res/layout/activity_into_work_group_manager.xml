@@ -37,14 +37,15 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
+            android:backgroundTint="@color/colorBlue"
             android:src="@android:drawable/ic_input_add" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/delete_group_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/add_user_fab"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@android:drawable/ic_delete" />
