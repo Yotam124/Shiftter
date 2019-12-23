@@ -1,31 +1,22 @@
 package com.example.shiftter;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class intoWorkGroupManager extends AppCompatActivity {
+public class intoWorkGroupAsManager extends AppCompatActivity {
     DatabaseReference db;
     private FloatingActionButton add, delete;
     private Dialog popup;
@@ -42,7 +33,7 @@ public class intoWorkGroupManager extends AppCompatActivity {
         setContentView(R.layout.activity_into_work_group_manager);
 
         TextView title = (TextView) findViewById(R.id.group_title);
-        title.setText(CurrentUser.getCurrentJob());
+        //title.setText(CurrentUser.getCurrentJob());
 
 
 
@@ -59,52 +50,28 @@ public class intoWorkGroupManager extends AppCompatActivity {
         delete = findViewById(R.id.delete_group_fab);
 
         popup = new Dialog(this);
-        getMembersListOnPageCreate();
+        //getMembersListOnPageCreate();
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowAddPopup(v);
+                //ShowAddPopup(v);
             }
         });
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ShowDeletePopup(v);
+                //ShowDeletePopup(v);
             }
         });
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bnm_work_groups);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_shifts:
-                        Intent shiftActivity = new Intent(getApplicationContext(), ShiftsActivity.class);
-                        startActivity(shiftActivity);
-                        break;
-                    case R.id.navigation_workGroups:
-                        Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
-                        startActivity(WorkgroupActivity);
-                        break;
-                    case R.id.navigation_homePage:
-                        Intent homePageActivity = new Intent(getApplicationContext(), HomePageActivity.class);
-                        startActivity(homePageActivity);
-                        break;
-                }
-                return false;
-            }
-        });
-
-
     }
 
-
-    public void getListOnPageCreate(){
+// TODO: 12/19/2019 fixing the function "getListOnCreate"
+    /*public void getListOnPageCreate(){
 
         //Fill list
-        db.child(CurrentUser.getUserName()).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child(CurrentUser.getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -112,10 +79,10 @@ public class intoWorkGroupManager extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()){
                         list.add(ds.getKey());
                     }
-                    /*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
+                    *//*WorkGroup wg = dataSnapshot.getValue(WorkGroup.class);
                     List<String> items = new ArrayList<>();
                     items = Arrays.asList(wg.getGroupName().split(","));
-                    list.addAll(items);*/
+                    list.addAll(items);*//*
                     ad_recyclerView.notifyDataSetChanged();
                 }
             }
@@ -126,9 +93,9 @@ public class intoWorkGroupManager extends AppCompatActivity {
             }
         });
 
-    }
-
-    public void ShowAddPopup(View v){
+    }*/
+// TODO: 12/19/2019 fixing the function "ShowAddPopup" (intoWorkGroupAsManager)
+    /*public void ShowAddPopup(View v){
         Button AddBtn;
         final EditText memberName, memberPos, memberSalary;
         popup.setContentView(R.layout.add_member_popup);
@@ -148,21 +115,21 @@ public class intoWorkGroupManager extends AppCompatActivity {
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        WorkGroup groupForUser = dataSnapshot.child("WorkGroups").child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob()).getValue(WorkGroup.class);
+                        WorkGroup groupForUser = dataSnapshot.child("WorkGroups").child(CurrentUser.getEmail()).child(CurrentUser.getCurrentJob()).getValue(WorkGroup.class);
 
                         if(dataSnapshot.child("WorkGroups")
-                                .child(CurrentUser.getUserName())
+                                .child(CurrentUser.getEmail())
                                 .child(CurrentUser.getCurrentJob())
                                 .child("Members").child(memberToAdd).exists()){
-                            Toast.makeText(intoWorkGroupManager.this,"Member is alredy in the group", Toast.LENGTH_LONG).show();
+                            Toast.makeText(intoWorkGroupAsManager.this,"Member is alredy in the group", Toast.LENGTH_LONG).show();
                         }
                         else {
                             if (!dataSnapshot.child("Users").child(memberToAdd).exists()){
-                                Toast.makeText(intoWorkGroupManager.this, "User isn't exist", Toast.LENGTH_LONG).show();
+                                Toast.makeText(intoWorkGroupAsManager.this, "User isn't exist", Toast.LENGTH_LONG).show();
                             }
                             else{
                                 GroupMember newMember = new GroupMember(memberToAdd, position, salary);
-                                db.child("WorkGroups").child(CurrentUser.getUserName())
+                                db.child("WorkGroups").child(CurrentUser.getEmail())
                                         .child(CurrentUser.getCurrentJob())
                                         .child("Members")
                                         .child(memberToAdd).setValue(newMember);
@@ -193,7 +160,7 @@ public class intoWorkGroupManager extends AppCompatActivity {
             public void onClick(View v) {
 
                 popup.dismiss();
-                db.child("WorkGroups").child(CurrentUser.getUserName()).child(CurrentUser.getCurrentJob()).removeValue();
+                db.child("WorkGroups").child(CurrentUser.getEmail()).child(CurrentUser.getCurrentJob()).removeValue();
                 Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
                 startActivity(WorkgroupActivity);
             }
@@ -205,7 +172,7 @@ public class intoWorkGroupManager extends AppCompatActivity {
     public void getMembersListOnPageCreate(){
 
         //Fill list
-        db.child("WorkGroups").child(CurrentUser.getUserName())
+        db.child("WorkGroups").child(CurrentUser.getEmail())
                 .child(CurrentUser.getCurrentJob())
                 .child("Members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -225,5 +192,5 @@ public class intoWorkGroupManager extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 }

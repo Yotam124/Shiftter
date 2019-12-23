@@ -1,15 +1,16 @@
 package com.example.shiftter;
 
 public class User {
-    private String firstName, lastName, userName, password, workList;
+    private String firstName, lastName, email, password, userID;
 
     public User(){}
 
-    public User(String firstName, String lastName, String userName, String password){
+    public User(String firstName, String lastName, String email, String password, String userID){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.email = email;
         this.password = password;
+        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -28,12 +29,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -44,12 +45,11 @@ public class User {
         this.password = password;
     }
 
-    public String getWorkList() {
-        return workList;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setWorkList(String workList) {
-        this.workList = workList;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
-
 }

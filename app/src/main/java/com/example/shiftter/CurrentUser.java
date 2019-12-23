@@ -3,56 +3,40 @@ package com.example.shiftter;
 import android.app.Application;
 
 public class CurrentUser extends Application {
-    private static String userName, firstName, lastName, currentJob, currentMember;
+    private static String userID;
+    private static String memberID;
+    private static String currentGroupID;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        userName = "";
-        firstName = "";
-        lastName = "";
-        currentJob = "";
-        currentMember = "";
+        userID = "";
+        memberID = "";
+        currentGroupID = "";
     }
 
-    public static String getCurrentMember() {
-        return currentMember;
+    public static String getUserID() {
+        return userID;
     }
 
-    public static void setCurrentMember(String currentMember) {
-        CurrentUser.currentMember = currentMember;
+    public static void setUserID(String userID) {
+        CurrentUser.userID = userID;
     }
 
-    public static String getCurrentJob() {
-        return currentJob;
+    public static String getMemberID() {
+        return memberID;
     }
 
-    public static void setCurrentJob(String currentJob) {
-        CurrentUser.currentJob = currentJob;
+    public static void setMemberID(String memberID) {
+        CurrentUser.memberID = memberID;
     }
 
-    public static String getUserName() {
-        return userName;
+    public static String getCurrentGroupID() {
+        return currentGroupID;
     }
 
-    public static void setUserName(String userName) {
-        CurrentUser.userName = userName;
-    }
-
-    public static String getFirstName() {
-        return firstName;
-    }
-
-    public static void setFirstName(String firstName) {
-        CurrentUser.firstName = firstName;
-    }
-
-    public static String getLastName() {
-        return lastName;
-    }
-
-    public static void setLastName(String lastName) {
-        CurrentUser.lastName = lastName;
+    public static void setCurrentGroupID(String currentGroupID) {
+        CurrentUser.currentGroupID = currentGroupID;
     }
 }
 
