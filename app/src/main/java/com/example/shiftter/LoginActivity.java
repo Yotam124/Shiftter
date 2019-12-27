@@ -84,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                CurrentUser.setUserID(auth.getCurrentUser().getUid());
+                                CurrentUser.setUserEmail(auth.getCurrentUser().getEmail());
+                                CurrentUser.setUserCodedEmail(Functions.encodeUserEmail(auth.getCurrentUser().getEmail()));
                                 Intent homePage = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(homePage);
                             } else {

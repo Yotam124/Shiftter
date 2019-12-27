@@ -31,13 +31,13 @@
 
     <fragment
         android:id="@+id/nav_personal_details"
-        android:name="com.example.shiftter.ui.share.PersonalDetailsFragment"
+        android:name="com.example.shiftter.ui.personaldetails.PersonalDetailsFragment"
         android:label="@string/menu_personal_details"
         tools:layout="@layout/fragment_personal_details" />
 
     <fragment
         android:id="@+id/nav_logout"
-        android:name="com.example.shiftter.ui.send.SendFragment"
+        android:name="com.example.shiftter.ui.logout.LogoutFragment"
         android:label="@string/menu_logout"
-        tools:layout="@layout/fragment_send"/>
+        tools:layout="@layout/fragment_logout"/>
 </navigation>

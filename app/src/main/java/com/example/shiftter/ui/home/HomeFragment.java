@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.shiftter.CurrentUser;
 import com.example.shiftter.R;
 import com.example.shiftter.WorkGroup;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,12 +34,11 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
-    DatabaseReference db,db2;
+    DatabaseReference db;
     private String clockIn, clockOut;
 
 
     private ImageButton fingerPrintBtn;
-    BottomNavigationView bottomNavigationView;
 
     private Chronometer chronometer;
     private boolean running;
@@ -57,7 +55,6 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         db = FirebaseDatabase.getInstance().getReference();
 
         fingerPrintBtn = (ImageButton) root.findViewById(R.id.fingerPrintBtn);
@@ -65,7 +62,7 @@ public class HomeFragment extends Fragment {
         chronometer = root.findViewById(R.id.chronometer);
         spinner = root.findViewById(R.id.spinner);
         spinnerDataList = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,spinnerDataList);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
         spinner.setAdapter(adapter);
 
 
@@ -76,17 +73,17 @@ public class HomeFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                if (!running){
+                if (!running) {
                     startChronometer(v);
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     Date date = new Date();
                     clockIn = format.format(date);
-                    Toast.makeText(getActivity(),clockIn, Toast.LENGTH_LONG).show();
-                }else{
+                    Toast.makeText(getActivity(), clockIn, Toast.LENGTH_LONG).show();
+                } else {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     Date date = new Date();
                     clockOut = format.format(date);
-                    Toast.makeText(getActivity(),clockOut, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
                 }
             }
@@ -97,7 +94,7 @@ public class HomeFragment extends Fragment {
     // TODO: 12/19/2019 Fixing the function after the new database (retrieveDataForSpinner).
     public void retrieveDataForSpinner(){
 
-        db.child("MemberToGroups").child(CurrentUser.getUserID()).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child("Members").child(CurrentUser.getUserCodedEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -115,9 +112,8 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-
     }
+
     //Chronometer functions
     public void startChronometer(View v){
         if (!running) {

@@ -60,7 +60,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
             super(itemView);
             myTextView = itemView.findViewById(R.id.text_view);
 
-            /*itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO: 12/19/2019 retriving data for recycleView (Manager) 
@@ -69,19 +69,22 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                     editMember = (Button) popup.findViewById(R.id.edit_member);
                     editPosition = (EditText) popup.findViewById(R.id.edit_position);
                     editSalary = (EditText) popup.findViewById(R.id.edit_salary);
-
                     String memberEmail = myTextView.getText().toString();
-                    //UserRecord userRecord = (UserRecord) FirebaseAuth.getInstance().getUserByEmailAsync(memberEmail);
-                    //CurrentUser.setMemberID(userRecord.getUid());
+                    String codedMemberEmail = Functions.encodeUserEmail(memberEmail);
                     // TODO: 12/22/2019 continue after dealing with add user
                     deleteMember.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             popup.dismiss();
-                            db.child("WorkGroups").child(CurrentUser.getMemberID()).child(CurrentUser.getCurrentJob())
-                                    .child("Members").child(memberEmail).removeValue();
-                            db.child("Users").child(CurrentUser.getCurrentMember()).child("Groups")
-                                    .child(CurrentUser.getCurrentJob()).removeValue();
+                            WorkGroup workGroup = CurrentUser.getCurrentGroup();
+                            db.child("WorkGroups")
+                                    .child(workGroup.getGroupKey())
+                                    .child("ListOfMembers")
+                                    .child(codedMemberEmail).removeValue();
+                            db.child("Members")
+                                    .child(codedMemberEmail)
+                                    .child(workGroup.getGroupKey()).removeValue();
+                            // TODO: 12/26/2019 Notify dataChanged
                         }
                     });
 
@@ -89,12 +92,16 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                         @Override
                         public void onClick(View v) {
 
+
                         }
                     });
                     popup.show();
                 }
-            });*/
+            });
+
+
 
         }
+
     }
 }

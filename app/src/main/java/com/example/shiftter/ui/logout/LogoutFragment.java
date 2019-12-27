@@ -1,4 +1,4 @@
-package com.example.shiftter.ui.share;
+package com.example.shiftter.ui.logout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.shiftter.R;
 
-public class PersonalDetailsFragment extends Fragment {
+public class LogoutFragment extends Fragment {
 
-    private PersonalDetailsViewModel personalDetailsViewModel;
+    private LogoutViewModel logoutViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        personalDetailsViewModel =
-                ViewModelProviders.of(this).get(PersonalDetailsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_personal_details, container, false);
-        final TextView textView = root.findViewById(R.id.text_share);
-        personalDetailsViewModel.getText().observe(this, new Observer<String>() {
+        logoutViewModel =
+                ViewModelProviders.of(this).get(LogoutViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_logout, container, false);
+        final TextView textView = root.findViewById(R.id.text_send);
+        logoutViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

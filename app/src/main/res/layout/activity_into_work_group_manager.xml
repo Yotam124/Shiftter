@@ -25,9 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/bnm_work_groups"
             android:layout_below="@+id/group_title"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="79dp"
             android:layout_marginBottom="270dp" />
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_user_fab"
