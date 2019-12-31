@@ -25,7 +25,7 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
     private Context mContext;
 
     // data is passed into the constructor
-    Ad_RecyclerView(Context context, List<String> data) {
+    public Ad_RecyclerView(Context context, List<String> data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -64,23 +64,30 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
                 public void onClick(View v) {
                 String groupName = myTextView.getText().toString();
 
-
+                    // TODO: 12/19/2019 retriving data for recycleView (workgroup list)
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
+                    WorkGroup workGroup;
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        WorkGroup groupOnUser = dataSnapshot.child("Users").child(CurrentUser.getUserName())
-                                .child("Groups")
-                                .child(groupName).getValue(WorkGroup.class);
-                        if(groupOnUser.getManagerUserName().equals(CurrentUser.getUserName())){
+                        for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()) {
+                            workGroup = ds.getValue(WorkGroup.class);
+                            if (workGroup.getGroupName().equals(groupName)){
+                                break;
+                            }
+                        }
 
-                            Intent intoGroupAsManager = new Intent(mContext, intoWorkGroupManager.class);
+                        if(workGroup.getManagerEmail().equals(CurrentUser.getUserEmail())){
+
+                            Intent intoGroupAsManager = new Intent(mContext, intoWorkGroupAsManager.class);
+                            CurrentUser.setCurrentGroup(workGroup);
+                            //intoGroupAsManager.putExtra("groupKEY", workGroup.getGroupKey());
                             mContext.startActivity(intoGroupAsManager);
-                            CurrentUser.setCurrentJob(groupName);
                         }else{
                             Intent intoGroupAsMember = new Intent(mContext, intoWorkGroupAsMember.class);
+                            CurrentUser.setCurrentGroup(workGroup);
+                            //intoGroupAsMember.putExtra("groupKEY", workGroup.getGroupKey());
                             mContext.startActivity(intoGroupAsMember);
-                            CurrentUser.setCurrentJob(groupName);
                         }
                     }
                     @Override

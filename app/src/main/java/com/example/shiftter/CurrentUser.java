@@ -3,56 +3,50 @@ package com.example.shiftter;
 import android.app.Application;
 
 public class CurrentUser extends Application {
-    private static String userName, firstName, lastName, currentJob, currentMember;
+    private static String userEmail;
+    private static String userCodedEmail;
+    private static String memberEmail;
+    private static WorkGroup currentGroup;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        userName = "";
-        firstName = "";
-        lastName = "";
-        currentJob = "";
-        currentMember = "";
+        userEmail = "";
+        userCodedEmail = "";
+        memberEmail = "";
+        currentGroup = new WorkGroup();
     }
 
-    public static String getCurrentMember() {
-        return currentMember;
+    public static String getUserEmail() {
+        return userEmail;
     }
 
-    public static void setCurrentMember(String currentMember) {
-        CurrentUser.currentMember = currentMember;
+    public static void setUserEmail(String userEmail) {
+        CurrentUser.userEmail = userEmail;
     }
 
-    public static String getCurrentJob() {
-        return currentJob;
+    public static String getMemberEmail() {
+        return memberEmail;
     }
 
-    public static void setCurrentJob(String currentJob) {
-        CurrentUser.currentJob = currentJob;
+    public static void setMemberEmail(String memberEmail) {
+        CurrentUser.memberEmail = memberEmail;
     }
 
-    public static String getUserName() {
-        return userName;
+    public static WorkGroup getCurrentGroup() {
+        return currentGroup;
     }
 
-    public static void setUserName(String userName) {
-        CurrentUser.userName = userName;
+    public static void setCurrentGroup(WorkGroup currentGroup) {
+        CurrentUser.currentGroup = currentGroup;
     }
 
-    public static String getFirstName() {
-        return firstName;
+    public static String getUserCodedEmail() {
+        return userCodedEmail;
     }
 
-    public static void setFirstName(String firstName) {
-        CurrentUser.firstName = firstName;
-    }
-
-    public static String getLastName() {
-        return lastName;
-    }
-
-    public static void setLastName(String lastName) {
-        CurrentUser.lastName = lastName;
+    public static void setUserCodedEmail(String userCodedEmail) {
+        CurrentUser.userCodedEmail = userCodedEmail;
     }
 }
 

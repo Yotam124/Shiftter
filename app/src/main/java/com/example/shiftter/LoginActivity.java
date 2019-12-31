@@ -2,6 +2,7 @@ package com.example.shiftter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,29 +11,37 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private Button registerBtn;
     private Button loginBtn;
-    private EditText userName, password;
+    private EditText emailId, password;
 
+    FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userName = (EditText) findViewById(R.id.userName);
+        db = FirebaseDatabase.getInstance().getReference();
+        auth = FirebaseAuth.getInstance();
+
+
+        emailId = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
         registerBtn = (Button) findViewById(R.id.registerBtn);
         loginBtn = (Button) findViewById(R.id.loginBtn);
-
 
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -43,46 +52,56 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser authUser = auth.getCurrentUser();
+                if (authUser != null){
+                    Toast.makeText(LoginActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(LoginActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(userName.getText().toString(), password.getText().toString());
-            }
-        });
-    }
 
-    private void signIn(final String userName, final String password){
-        db = FirebaseDatabase.getInstance().getReference();
-        db.child("Users").child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    if (!userName.isEmpty()) {
-                        User login = dataSnapshot.getValue(User.class);
-                        if (login.getPassword().equals(password)) {
-                            Toast.makeText(LoginActivity.this, "Welcome " + userName, Toast.LENGTH_SHORT).show();
-                            //Save to Current user.
-                            CurrentUser.setUserName(userName);
-                            CurrentUser.setFirstName(login.getFirstName());
-                            CurrentUser.setLastName(login.getLastName());
-                            //Move to homePage Activity
-                            Intent homePage = new Intent(getApplicationContext(), HomePageActivity.class);
-                            startActivity(homePage);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Incorrect password", Toast.LENGTH_SHORT).show();
+                String email = emailId.getText().toString().trim();
+                String pwd = password.getText().toString().trim();
+                if (TextUtils.isEmpty(email)) {
+                    emailId.setError("Please enter a Email");
+                    emailId.requestFocus();
+                }else if (TextUtils.isEmpty((pwd))){
+                    password.setError("Please enter a Password");
+                    password.requestFocus();
+                }else if (pwd.length() < 6){
+                    password.setError("Password must be at least 6 letters");
+                }else{
+                    auth.signInWithEmailAndPassword(email, pwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                CurrentUser.setUserEmail(auth.getCurrentUser().getEmail());
+                                CurrentUser.setUserCodedEmail(Functions.encodeUserEmail(auth.getCurrentUser().getEmail()));
+                                Intent homePage = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(homePage);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Login Error, Please Login Again", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Username box is empty", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    Toast.makeText(LoginActivity.this, "Username isn't registered", Toast.LENGTH_SHORT).show();
+                    });
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authStateListener);
+    }
+
 }
