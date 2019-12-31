@@ -1,25 +1,19 @@
 package com.example.shiftter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.internal.GetAccountInfoResponse.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
   //  private String userId = "";
@@ -31,7 +25,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     DatabaseReference db;
     private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +67,22 @@ public class RegisterActivity extends AppCompatActivity {
                     password2.setError("Your passwords do not match");
                     password2.requestFocus();
                 }else{
+                    try {
+                        UserRecord.CreateRequest request = new UserRecord.CreateRequest();
+                                request.setEmail(email)
+                                .setEmailVerified(false)
+                                .setPassword(pwd)
+                                .setPhoneNumber("+1111")
+                                .setDisplayName(fn +" "+ ln)
+                                .setPhotoUrl("http://")
+                                .setDisabled(false);
+                         UserRecord user = auth.createUser(request);
+                    } catch (FirebaseAuthException a){
 
-                    auth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+                    }
+
+
+                   /* auth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -104,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this,"SignUp Unsuccessful, Please Try Again. ", Toast.LENGTH_LONG).show();
                             }
                         }
-                    });
+                    });*/
 
                 }
             }
