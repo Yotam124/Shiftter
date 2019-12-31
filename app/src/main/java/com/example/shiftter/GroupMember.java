@@ -2,31 +2,33 @@ package com.example.shiftter;
 
 public class GroupMember {
 
-    private String UserID;
+    private String MemberEmail;
     private String position;
-    private float salary;
+    private String salary;
+    private String entryDate;
 
     public GroupMember(){}
 
-    public GroupMember(String UserID, String position, float salary) {
-        this.UserID = UserID;
+    public GroupMember(String MemberEmail, String position, String salary, String entryDate) {
+        this.MemberEmail = MemberEmail;
         this.position = position;
         this.salary = salary;
+        this.entryDate = entryDate;
     }
 
-    public String getUserID() {
-        return UserID;
+    public String getMemberEmail() {
+        return MemberEmail;
     }
 
-    public void setUserID(String userID) {
-        this.UserID = userID;
+    public void setMemberEmail(String memberEmail) {
+        this.MemberEmail = memberEmail;
     }
 
-    public float getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(float salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
@@ -36,5 +38,13 @@ public class GroupMember {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
     }
 }

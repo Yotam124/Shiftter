@@ -69,23 +69,24 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
                     WorkGroup workGroup;
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        //db.child("WorkGroups").orderByChild("groupName").equalTo(groupName);
 
-                        for (DataSnapshot ds : dataSnapshot.child("MemberToGroups").child(CurrentUser.getUserID()).getChildren()) {
+                        for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()) {
                             workGroup = ds.getValue(WorkGroup.class);
                             if (workGroup.getGroupName().equals(groupName)){
                                 break;
                             }
                         }
 
-                        if(workGroup.getManagerUserID().equals(CurrentUser.getUserID())){
+                        if(workGroup.getManagerEmail().equals(CurrentUser.getUserEmail())){
 
                             Intent intoGroupAsManager = new Intent(mContext, intoWorkGroupAsManager.class);
-                            intoGroupAsManager.putExtra("groupKEY", workGroup.getGroupKey());
+                            CurrentUser.setCurrentGroup(workGroup);
+                            //intoGroupAsManager.putExtra("groupKEY", workGroup.getGroupKey());
                             mContext.startActivity(intoGroupAsManager);
                         }else{
                             Intent intoGroupAsMember = new Intent(mContext, intoWorkGroupAsMember.class);
-                            intoGroupAsMember.putExtra("groupKEY", workGroup.getGroupKey());
+                            CurrentUser.setCurrentGroup(workGroup);
+                            //intoGroupAsMember.putExtra("groupKEY", workGroup.getGroupKey());
                             mContext.startActivity(intoGroupAsMember);
                         }
                     }

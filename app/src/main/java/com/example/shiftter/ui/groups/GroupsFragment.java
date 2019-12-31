@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shiftter.Ad_RecyclerView;
 import com.example.shiftter.CurrentUser;
+import com.example.shiftter.GroupMember;
 import com.example.shiftter.R;
 import com.example.shiftter.WorkGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -91,14 +92,21 @@ public class GroupsFragment extends Fragment {
             public void onClick(View v) {
                 popup.dismiss();
                 groupNameString = groupName.getText().toString().trim();
-                String groupKey = db.push().getKey();
+                String groupID = db.push().getKey();
                 //Date of group creation
                 Date date = new Date();
                 SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
                 String stringDate = dt.format(date);
                 //Create WorkGroup and sate to db
-                WorkGroup workGroup = new WorkGroup(groupKey, auth.getCurrentUser().getUid(), groupNameString, 0,stringDate);
-                db.child("MemberToGroups").child(auth.getCurrentUser().getUid()).child(groupKey).setValue(workGroup);
+                String codedEmail = CurrentUser.getUserCodedEmail();
+                WorkGroup workGroup = new WorkGroup(groupID, groupNameString, CurrentUser.getUserEmail(), 0, stringDate);
+                //Update Firebase "MemberToGroups", "GroupToMembers", adding manager as member.
+                GroupMember groupMember = new GroupMember(CurrentUser.getUserEmail(),"Manager", "0", stringDate);
+                db.child("WorkGroups").child(groupID).setValue(workGroup);
+                db.child("WorkGroups").child(groupID).child("ListOfMembers").child(codedEmail).setValue(groupMember);
+                db.child("Members").child(codedEmail).child(groupID).setValue(workGroup);
+                Toast.makeText(getActivity(), "WorkGroup Created Successfully", Toast.LENGTH_SHORT).show();
+                // TODO: 12/23/2019 add increment func to numOfMembers in a group
                 ad_recyclerView.notifyDataSetChanged();
 
             }
@@ -113,16 +121,15 @@ public class GroupsFragment extends Fragment {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("Users").child(CurrentUser.getUserID()).exists()) {
+                if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
                     list.clear();
-                    for (DataSnapshot ds : dataSnapshot.child("MemberToGroups").child(CurrentUser.getUserID()).getChildren()){
-                        //PK pk = ds.getValue(PK.class);
+                    for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
                         WorkGroup workGroup = ds.getValue(WorkGroup.class);
                         list.add(workGroup.getGroupName());
                     }
                     ad_recyclerView.notifyDataSetChanged();
                 }else{
-                    Toast.makeText(getActivity(), "Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "There is no WorkGroups.",Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

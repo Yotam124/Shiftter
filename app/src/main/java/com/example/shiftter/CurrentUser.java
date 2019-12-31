@@ -3,40 +3,50 @@ package com.example.shiftter;
 import android.app.Application;
 
 public class CurrentUser extends Application {
-    private static String userID;
-    private static String memberID;
-    private static String currentGroupID;
+    private static String userEmail;
+    private static String userCodedEmail;
+    private static String memberEmail;
+    private static WorkGroup currentGroup;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        userID = "";
-        memberID = "";
-        currentGroupID = "";
+        userEmail = "";
+        userCodedEmail = "";
+        memberEmail = "";
+        currentGroup = new WorkGroup();
     }
 
-    public static String getUserID() {
-        return userID;
+    public static String getUserEmail() {
+        return userEmail;
     }
 
-    public static void setUserID(String userID) {
-        CurrentUser.userID = userID;
+    public static void setUserEmail(String userEmail) {
+        CurrentUser.userEmail = userEmail;
     }
 
-    public static String getMemberID() {
-        return memberID;
+    public static String getMemberEmail() {
+        return memberEmail;
     }
 
-    public static void setMemberID(String memberID) {
-        CurrentUser.memberID = memberID;
+    public static void setMemberEmail(String memberEmail) {
+        CurrentUser.memberEmail = memberEmail;
     }
 
-    public static String getCurrentGroupID() {
-        return currentGroupID;
+    public static WorkGroup getCurrentGroup() {
+        return currentGroup;
     }
 
-    public static void setCurrentGroupID(String currentGroupID) {
-        CurrentUser.currentGroupID = currentGroupID;
+    public static void setCurrentGroup(WorkGroup currentGroup) {
+        CurrentUser.currentGroup = currentGroup;
+    }
+
+    public static String getUserCodedEmail() {
+        return userCodedEmail;
+    }
+
+    public static void setUserCodedEmail(String userCodedEmail) {
+        CurrentUser.userCodedEmail = userCodedEmail;
     }
 }
 
