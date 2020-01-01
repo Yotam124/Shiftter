@@ -192,7 +192,13 @@ public class HomeFragment extends Fragment {
                 WGToShiftID wgToShiftID = dataSnapshot.child("Members")
                         .child(CurrentUser.getUserCodedEmail())
                         .child(CurrentGroup.getGroupID()).getValue(WGToShiftID.class);
-                db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).setValue(shift);
+                if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).exists()){
+                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).setValue(shift);
+                }else if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").exists()){
+                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").setValue(shift);
+                }else{
+                    Toast.makeText(getActivity(),"To many shifts today", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -201,5 +207,4 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 }
