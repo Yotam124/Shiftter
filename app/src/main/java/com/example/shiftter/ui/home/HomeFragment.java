@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
 
     DatabaseReference db;
-    private String clockIn, clockOut;
+    private String clockIn, clockOut, date;
 
 
     private ImageButton fingerPrintBtn;
@@ -75,14 +75,20 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 if (!running) {
                     startChronometer(v);
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    Date date = new Date();
-                    clockIn = format.format(date);
+                    SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date clock = new Date();
+                    Date calander = new Date();
+                    clockIn = time.format(clock);
+                    date = day.format(calander);
                     Toast.makeText(getActivity(), clockIn, Toast.LENGTH_LONG).show();
                 } else {
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    Date date = new Date();
-                    clockOut = format.format(date);
+                    SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
+                    Date clock = new Date();
+                    Date calander = new Date();
+                    clockOut = time.format(clock);
+                    date = day.format(calander);
                     Toast.makeText(getActivity(), clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
                 }
