@@ -103,8 +103,8 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                         String stringDate = dt.format(date);
                                         GroupMember groupMember = new GroupMember(memberToAddEmail, position, salary, stringDate);
                                         db.child("WorkGroups").child(groupID).child("ListOfMembers").child(codedEmail).setValue(groupMember);
-                                        WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
-                                        db.child("Members").child(codedEmail).child(groupID).setValue(workGroup);
+                                        WGToShiftID wgToShiftID = new WGToShiftID(db.push().getKey());
+                                        db.child("Members").child(codedEmail).child(groupID).setValue(wgToShiftID);
                                         popup.dismiss();
                                         Toast.makeText(intoWorkGroupAsManager.this, "Member Added Successfully", Toast.LENGTH_SHORT).show();
                                     } else {
