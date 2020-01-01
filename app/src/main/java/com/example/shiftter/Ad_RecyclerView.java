@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +21,12 @@ import java.util.List;
 
 public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHolder> {
 
-    private List<String> mData;
+    private List<WorkGroup> mData;
     private LayoutInflater mInflater;
     private Context mContext;
 
     // data is passed into the constructor
-    public Ad_RecyclerView(Context context, List<String> data) {
+    public Ad_RecyclerView(Context context, List<WorkGroup> data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -41,8 +42,10 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String order = mData.get(position);
-        holder.myTextView.setText(order);
+        WorkGroup workGroupData = mData.get(position);
+        holder.textViewDateOfCreation.setText("Date of creation: : " + workGroupData.getDateOfCreation());
+        holder.textViewGroupName.setText("Group name: " + workGroupData.getGroupName());
+        holder.textViewManagerEmail.setText("Manager email: " + workGroupData.getManagerEmail());
     }
 
     // total number of items
@@ -53,16 +56,20 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView myTextView;
+        TextView textViewGroupName,textViewDateOfCreation,textViewManagerEmail;
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.text_view);
+            textViewGroupName = itemView.findViewById(R.id.GroupNameTextView);
+            textViewDateOfCreation = itemView.findViewById(R.id.TextViewDateOfCreation);
+            textViewManagerEmail = itemView.findViewById(R.id.TextViewManagerEmail);
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                String groupName = myTextView.getText().toString();
+                String groupName = textViewGroupName.getText().toString();
 
                     // TODO: 12/19/2019 retriving data for recycleView (workgroup list)
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
