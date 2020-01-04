@@ -76,14 +76,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                         @Override
                         public void onClick(View v) {
                             popup.dismiss();
-                            WorkGroup workGroup = CurrentUser.getCurrentGroup();
-                            db.child("WorkGroups")
-                                    .child(workGroup.getGroupKey())
-                                    .child("ListOfMembers")
-                                    .child(codedMemberEmail).removeValue();
-                            db.child("Members")
-                                    .child(codedMemberEmail)
-                                    .child(workGroup.getGroupKey()).removeValue();
+                            Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(), codedMemberEmail);
                             // TODO: 12/26/2019 Notify dataChanged
                         }
                     });
