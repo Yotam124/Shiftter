@@ -2,13 +2,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="0dp">
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="GroupName"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:id="@+id/GroupNameTextView"
+            />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="dateOfCreation"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextViewDateOfCreation"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="managerEmail"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextViewManagerEmail"
+                ></TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
+            android:padding="10dp"
+            android:layout_height="1dp">
+
+        </View>
+    </LinearLayout>
 
 
 
-    <androidx.cardview.widget.CardView
+    <!--<androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +76,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp" />
 
-    </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>-->
 
 
 

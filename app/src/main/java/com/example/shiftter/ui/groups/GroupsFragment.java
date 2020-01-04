@@ -44,7 +44,7 @@ public class GroupsFragment extends Fragment {
     FloatingActionButton addFab;
 
     //recycle_view_vars
-    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<WorkGroup> list = new ArrayList<>();
     Ad_RecyclerView ad_recyclerView;
 
 
@@ -126,9 +126,11 @@ public class GroupsFragment extends Fragment {
                 if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
                     list.clear();
                     for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
+
                         String groupID = ds.getKey();
                         WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
                         list.add(workGroup.getGroupName());
+
                     }
                     ad_recyclerView.notifyDataSetChanged();
                 }else{

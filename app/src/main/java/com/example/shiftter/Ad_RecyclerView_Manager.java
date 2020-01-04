@@ -58,7 +58,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
         Button deleteMember, editMember;
         ViewHolderManager(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.text_view);
+            myTextView = itemView.findViewById(R.id.GroupNameTextView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
