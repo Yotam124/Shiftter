@@ -19,6 +19,7 @@ import com.example.shiftter.Ad_RecyclerView;
 import com.example.shiftter.CurrentUser;
 import com.example.shiftter.GroupMember;
 import com.example.shiftter.R;
+import com.example.shiftter.WGToShiftID;
 import com.example.shiftter.WorkGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -101,10 +102,11 @@ public class GroupsFragment extends Fragment {
                 String codedEmail = CurrentUser.getUserCodedEmail();
                 WorkGroup workGroup = new WorkGroup(groupID, groupNameString, CurrentUser.getUserEmail(), 0, stringDate);
                 //Update Firebase "MemberToGroups", "GroupToMembers", adding manager as member.
-                GroupMember groupMember = new GroupMember(CurrentUser.getUserEmail(),"Manager", "0", stringDate);
+                GroupMember groupMember = new GroupMember(CurrentUser.getUserEmail(), auth.getCurrentUser().getDisplayName(),"Manager", "0", stringDate);
                 db.child("WorkGroups").child(groupID).setValue(workGroup);
                 db.child("WorkGroups").child(groupID).child("ListOfMembers").child(codedEmail).setValue(groupMember);
-                db.child("Members").child(codedEmail).child(groupID).setValue(workGroup);
+                WGToShiftID wgToShiftID = new WGToShiftID(db.push().getKey());
+                db.child("Members").child(codedEmail).child(groupID).setValue(wgToShiftID);
                 Toast.makeText(getActivity(), "WorkGroup Created Successfully", Toast.LENGTH_SHORT).show();
                 // TODO: 12/23/2019 add increment func to numOfMembers in a group
                 ad_recyclerView.notifyDataSetChanged();
@@ -124,7 +126,11 @@ public class GroupsFragment extends Fragment {
                 if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
                     list.clear();
                     for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
-                        list.add(ds.getValue(WorkGroup.class));
+
+                        String groupID = ds.getKey();
+                        WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
+                        list.add(workGroup.getGroupName());
+
                     }
                     ad_recyclerView.notifyDataSetChanged();
                 }else{

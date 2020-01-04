@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -18,8 +19,11 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.shiftter.CurrentGroup;
 import com.example.shiftter.CurrentUser;
 import com.example.shiftter.R;
+import com.example.shiftter.Shift;
+import com.example.shiftter.WGToShiftID;
 import com.example.shiftter.WorkGroup;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,7 +39,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
 
     DatabaseReference db;
-    private String clockIn, clockOut;
+    private String clockIn, clockOut, dateString;
 
 
     private ImageButton fingerPrintBtn;
@@ -45,7 +49,6 @@ public class HomeFragment extends Fragment {
     private long pauseOffset;
 
     private Spinner spinner;
-    private ValueEventListener listener;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> spinnerDataList;
 
@@ -65,6 +68,20 @@ public class HomeFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerDataList);
         spinner.setAdapter(adapter);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String selectedItem = parent.getItemAtPosition(position).toString();
+                updateCurrGroup(selectedItem);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         // TODO: Fixing the function (un //)
         retrieveDataForSpinner();
@@ -76,32 +93,37 @@ public class HomeFragment extends Fragment {
                 if (!running) {
                     startChronometer(v);
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                    Date time = new Date();
                     Date date = new Date();
-                    clockIn = format.format(date);
-                    Toast.makeText(getActivity(), clockIn, Toast.LENGTH_LONG).show();
+                    clockIn = format.format(time);
+                    dateString = formatDate.format(date);
+                    Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
                 } else {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    Date date = new Date();
-                    clockOut = format.format(date);
-                    Toast.makeText(getActivity(), clockOut, Toast.LENGTH_LONG).show();
+                    Date time = new Date();
+                    clockOut = format.format(time);
+                    Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
+                    addShift(clockIn, clockOut, dateString);
                 }
             }
         });
         return root;
     }
 
+
     // TODO: 12/19/2019 Fixing the function after the new database (retrieveDataForSpinner).
     public void retrieveDataForSpinner(){
 
-        db.child("Members").child(CurrentUser.getUserCodedEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        WorkGroup workGroup = ds.getValue(WorkGroup.class);
-                        String groupName = workGroup.getGroupName();
-                        spinnerDataList.add(groupName);
+                if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
+                    for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
+                        String groupID = ds.getKey();
+                        WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
+                        spinnerDataList.add(workGroup.getGroupName());
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -112,7 +134,11 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+
     }
+
+
 
     //Chronometer functions
     public void startChronometer(View v){
@@ -133,14 +159,46 @@ public class HomeFragment extends Fragment {
     }
 
 
+    public void updateCurrGroup(String groupNameSelected){
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
+                            WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(ds.getKey()).getValue(WorkGroup.class);
+                            if (workGroup.getGroupName().equals(groupNameSelected)){
+                                CurrentGroup.setGroupID(workGroup.getGroupKey());
+                                CurrentGroup.setGroupMame(groupNameSelected);
+                                CurrentGroup.setGroupManagerID(workGroup.getManagerEmail());
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+
+
+
     // TODO: 12/19/2019 Fixing the function after the new database (addShifts).
-    /*public void addShift(String clockIn, String clockOut){
-        String userName = CurrentUser.getEmail();
-        db = FirebaseDatabase.getInstance().getReference();
-        db.child("Users").child("userName").addListenerForSingleValueEvent(new ValueEventListener() {
+    public void addShift(String clockIn, String clockOut, String dateString){
+        Shift shift = new Shift(CurrentUser.getUserEmail(), dateString, clockIn, clockOut);
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                WGToShiftID wgToShiftID = dataSnapshot.child("Members")
+                        .child(CurrentUser.getUserCodedEmail())
+                        .child(CurrentGroup.getGroupID()).getValue(WGToShiftID.class);
+                if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).exists()){
+                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).setValue(shift);
+                }else if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").exists()){
+                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").setValue(shift);
+                }else{
+                    Toast.makeText(getActivity(),"To many shifts today", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -148,6 +206,5 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }*/
-
+    }
 }

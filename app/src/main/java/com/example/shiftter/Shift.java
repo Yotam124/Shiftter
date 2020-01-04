@@ -1,20 +1,15 @@
 package com.example.shiftter;
 
-import java.sql.Time;
-import java.util.Date;
-
 public class Shift {
     private String userName;
-    private WorkGroup workGroup;
-    private Date date;
+    private String date;
     private String clockIn;
     private String clockOut;
 
     public Shift(){
     }
-    public Shift(String userName, WorkGroup workGroup, Date date, String clockIn, String clockOut){
+    public Shift(String userName, String date, String clockIn, String clockOut){
         this.userName = userName;
-        this.workGroup = workGroup;
         this.date = date;
         this.clockIn = clockIn;
         this.clockOut = clockOut;
@@ -28,19 +23,11 @@ public class Shift {
         this.userName = userName;
     }
 
-    public WorkGroup getWorkGroup() {
-        return workGroup;
-    }
-
-    public void setWorkGroup(WorkGroup workGroup) {
-        this.workGroup = workGroup;
-    }
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

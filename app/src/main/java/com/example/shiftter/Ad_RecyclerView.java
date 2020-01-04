@@ -78,7 +78,8 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()) {
-                            workGroup = ds.getValue(WorkGroup.class);
+                            String groupID = ds.getKey();
+                            workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
                             if (workGroup.getGroupName().equals(groupName)){
                                 break;
                             }
