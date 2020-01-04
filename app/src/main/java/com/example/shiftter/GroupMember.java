@@ -3,14 +3,16 @@ package com.example.shiftter;
 public class GroupMember {
 
     private String MemberEmail;
+    private String memberFullName;
     private String position;
     private String salary;
     private String entryDate;
 
     public GroupMember(){}
 
-    public GroupMember(String MemberEmail, String position, String salary, String entryDate) {
+    public GroupMember(String MemberEmail, String memberFullName, String position, String salary, String entryDate) {
         this.MemberEmail = MemberEmail;
+        this.memberFullName = memberFullName;
         this.position = position;
         this.salary = salary;
         this.entryDate = entryDate;
@@ -46,5 +48,13 @@ public class GroupMember {
 
     public void setEntryDate(String entryDate) {
         this.entryDate = entryDate;
+    }
+
+    public String getMemberFullName() {
+        return memberFullName;
+    }
+
+    public void setMemberFullName(String memberFullName) {
+        this.memberFullName = memberFullName;
     }
 }
