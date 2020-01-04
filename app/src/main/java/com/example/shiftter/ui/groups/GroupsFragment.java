@@ -102,7 +102,7 @@ public class GroupsFragment extends Fragment {
                 String codedEmail = CurrentUser.getUserCodedEmail();
                 WorkGroup workGroup = new WorkGroup(groupID, groupNameString, CurrentUser.getUserEmail(), 0, stringDate);
                 //Update Firebase "MemberToGroups", "GroupToMembers", adding manager as member.
-                GroupMember groupMember = new GroupMember(CurrentUser.getUserEmail(),"Manager", "0", stringDate);
+                GroupMember groupMember = new GroupMember(CurrentUser.getUserEmail(), auth.getCurrentUser().getDisplayName(),"Manager", "0", stringDate);
                 db.child("WorkGroups").child(groupID).setValue(workGroup);
                 db.child("WorkGroups").child(groupID).child("ListOfMembers").child(codedEmail).setValue(groupMember);
                 WGToShiftID wgToShiftID = new WGToShiftID(db.push().getKey());
