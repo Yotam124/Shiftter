@@ -18,7 +18,7 @@
             android:text="GroupName"
             android:textSize="40dp"
             android:gravity="center"
-            android:id="@+id/GroupNameTextView"
+            android:id="@+id/TextView1"
             />
 
         <LinearLayout
@@ -34,7 +34,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:id="@+id/TextViewDateOfCreation"
+                android:id="@+id/TextView2"
                 ></TextView>
 
             <TextView
@@ -45,7 +45,7 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:id="@+id/TextViewManagerEmail"
+                android:id="@+id/TextView3"
                 ></TextView>
         </LinearLayout>
 

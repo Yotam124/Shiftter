@@ -20,12 +20,12 @@ import java.util.List;
 
 public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerView_Manager.ViewHolderManager>  {
 
-    private List<String> mData;
+    private List<GroupMember> mData;
     private LayoutInflater mInflater;
     private Context mContext;
 
 
-    Ad_RecyclerView_Manager(Context context, List<String> data) {
+    Ad_RecyclerView_Manager(Context context, List<GroupMember> data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -40,8 +40,10 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderManager holder, int position) {
-        String order = mData.get(position);
-        holder.myTextView.setText(order);
+        GroupMember order = mData.get(position);
+        holder.fullName.setText("full name");
+        holder.position.setText("position: " + order.getPosition());
+        holder.email.setText("email: " + order.getMemberEmail());
     }
 
     @Override
@@ -52,13 +54,15 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
     public class ViewHolderManager extends RecyclerView.ViewHolder {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        TextView myTextView;
+        TextView fullName, email,position;
         private Dialog popup = new Dialog(mContext);
         EditText editPosition, editSalary;
         Button deleteMember, editMember;
         ViewHolderManager(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.GroupNameTextView);
+            fullName = itemView.findViewById(R.id.TextView1);
+            email = itemView.findViewById(R.id.TextView2);
+            position = itemView.findViewById(R.id.TextView3);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,7 +73,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                     editMember = (Button) popup.findViewById(R.id.edit_member);
                     editPosition = (EditText) popup.findViewById(R.id.edit_position);
                     editSalary = (EditText) popup.findViewById(R.id.edit_salary);
-                    String memberEmail = myTextView.getText().toString();
+                    String memberEmail = fullName.getText().toString();
                     String codedMemberEmail = Functions.encodeUserEmail(memberEmail);
                     // TODO: 12/22/2019 continue after dealing with add user
                     deleteMember.setOnClickListener(new View.OnClickListener() {
