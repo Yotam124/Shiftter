@@ -34,16 +34,18 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
     @NonNull
     @Override
     public ViewHolderManager onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_recyclerview, parent, false);
+        View view = mInflater.inflate(R.layout.item_recyclerview_into_work_group_as__manager, parent, false);
         return new ViewHolderManager(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderManager holder, int position) {
         GroupMember order = mData.get(position);
-        holder.fullName.setText("full name");
-        holder.position.setText("position: " + order.getPosition());
-        holder.email.setText("email: " + order.getMemberEmail());
+        holder.fullName.setText(order.getMemberFullName());
+        holder.position.setText(order.getPosition());
+        holder.email.setText(order.getMemberEmail());
+        holder.entryDate.setText(order.getEntryDate());
+        holder.salary.setText(order.getSalary());
     }
 
     @Override
@@ -54,7 +56,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
     public class ViewHolderManager extends RecyclerView.ViewHolder {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        TextView fullName, email,position;
+        TextView fullName, email,position, salary, entryDate;
         private Dialog popup = new Dialog(mContext);
         EditText editPosition, editSalary;
         Button deleteMember, editMember;
@@ -63,6 +65,8 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
             fullName = itemView.findViewById(R.id.TextView1);
             email = itemView.findViewById(R.id.TextView2);
             position = itemView.findViewById(R.id.TextView3);
+            salary = itemView.findViewById(R.id.TextView4);
+            entryDate = itemView.findViewById(R.id.TextView5);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

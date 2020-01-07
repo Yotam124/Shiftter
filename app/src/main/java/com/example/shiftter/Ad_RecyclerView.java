@@ -43,9 +43,9 @@ public class Ad_RecyclerView extends RecyclerView.Adapter<Ad_RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         WorkGroup workGroupData = mData.get(position);
-        holder.textViewDateOfCreation.setText("Date of creation: : " + workGroupData.getDateOfCreation());
-        holder.textViewGroupName.setText("Group name: " + workGroupData.getGroupName());
-        holder.textViewManagerEmail.setText("Manager email: " + workGroupData.getManagerEmail());
+        holder.textViewDateOfCreation.setText(workGroupData.getDateOfCreation());
+        holder.textViewGroupName.setText(workGroupData.getGroupName());
+        holder.textViewManagerEmail.setText(workGroupData.getManagerEmail());
     }
 
     // total number of items

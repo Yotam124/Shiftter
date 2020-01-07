@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -21,6 +20,33 @@
             android:id="@+id/TextView1"
             />
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Date of creation:"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Manager email:"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                ></TextView>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -57,6 +83,14 @@
             android:layout_height="1dp">
 
         </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="40dp"
+            android:gravity="center"
+            ></TextView>
     </LinearLayout>
 
 

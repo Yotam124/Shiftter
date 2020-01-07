@@ -36,9 +36,10 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     @Override
     public void onBindViewHolder(@NonNull ViewHolderShifts holder, int position) {
         Shift order = mData.get(position);
-        holder.userName.setText("user name: " + order.getUserName());
-        holder.date.setText("date: " + order.getDate());
-        holder.clockIn.setText("clock in: " + order.getClockIn());
+        holder.email.setText(order.getUserName());
+        holder.date.setText(order.getDate());
+        holder.clockIn.setText(order.getClockIn());
+        holder.clockOut.setText(order.getClockOut());
     }
 
     @Override
@@ -49,13 +50,14 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     public class ViewHolderShifts extends RecyclerView.ViewHolder {
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        TextView userName, date,clockIn,clockOut;
+        TextView email, date,clockIn,clockOut;
 
         public ViewHolderShifts(@NonNull View itemView) {
             super(itemView);
-            userName = itemView.findViewById(R.id.TextView1);
+            email = itemView.findViewById(R.id.TextView1);
             date = itemView.findViewById(R.id.TextView2);
             clockIn = itemView.findViewById(R.id.TextView3);
+            clockOut = itemView.findViewById(R.id.TextView4);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
