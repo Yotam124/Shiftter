@@ -129,7 +129,7 @@ public class GroupsFragment extends Fragment {
 
                         String groupID = ds.getKey();
                         WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
-                        list.add(workGroup.getGroupName());
+                        list.add(workGroup);
 
                     }
                     ad_recyclerView.notifyDataSetChanged();
