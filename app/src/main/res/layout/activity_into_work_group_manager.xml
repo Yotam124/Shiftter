@@ -11,22 +11,46 @@
     <RelativeLayout
         android:id="@+id/recyclerViewwithBottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-83dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <!-- Main content -->
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/bnm_work_groups"
-            android:layout_below="@+id/group_title"
-            android:layout_marginTop="79dp"
-            android:layout_marginBottom="270dp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/group_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="40dp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorBlue"
+                android:padding="10dp"
+                android:layout_height="1dp">
+
+            </View>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bnm_work_groups"
+                android:layout_below="@+id/group_title" />
+
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_user_fab"
@@ -49,20 +73,6 @@
             android:layout_margin="16dp"
             android:src="@android:drawable/ic_delete" />
 
-        <TextView
-            android:id="@+id/group_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:text="TextView"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="40dp" />
 
 
     </RelativeLayout>

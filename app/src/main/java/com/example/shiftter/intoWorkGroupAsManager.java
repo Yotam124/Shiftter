@@ -34,7 +34,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
     private WorkGroup workGroup;
     private String groupID;
 
-    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<GroupMember> list = new ArrayList<>();
     Ad_RecyclerView_Manager ad_recyclerView;
 
     @Override
@@ -177,7 +177,8 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         String memberEmail = Functions.decodeUserEmail(ds.getKey());
                         if (!memberEmail.equals(workGroup.getManagerEmail())){
-                            list.add(memberEmail);
+                            list.add(ds.getValue(GroupMember.class));
+                            //list.add(memberEmail);
                         }
                     }
                     ad_recyclerView.notifyDataSetChanged();
