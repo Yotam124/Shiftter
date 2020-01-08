@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/recyclerViewwithBottom"
+        android:id="@+id/recyclerViewRelative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,7 +17,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/bnm_work_groups"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentTop="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

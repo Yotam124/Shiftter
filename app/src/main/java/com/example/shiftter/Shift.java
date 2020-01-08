@@ -1,26 +1,26 @@
 package com.example.shiftter;
 
 public class Shift {
-    private String userName;
+    private String email;
     private String date;
     private String clockIn;
     private String clockOut;
 
     public Shift(){
     }
-    public Shift(String userName, String date, String clockIn, String clockOut){
-        this.userName = userName;
+    public Shift(String email, String date, String clockIn, String clockOut){
+        this.email = email;
         this.date = date;
         this.clockIn = clockIn;
         this.clockOut = clockOut;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDate() {
