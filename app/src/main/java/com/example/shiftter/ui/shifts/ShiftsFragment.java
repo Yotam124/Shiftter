@@ -46,7 +46,7 @@ public class ShiftsFragment extends Fragment {
         db = FirebaseDatabase.getInstance().getReference();
 
 
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView_Shifts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ad_recyclerView = new Ad_RecyclerView_Shifts(getActivity(), list);
         recyclerView.setAdapter(ad_recyclerView);
@@ -71,8 +71,7 @@ public class ShiftsFragment extends Fragment {
 
                     for (DataSnapshot ds : dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).getChildren()){
                         Shift shift = ds.getValue(Shift.class);
-                        Toast.makeText(getActivity(), shift.getClockIn()+", "+shift.getClockOut()+", "+shift.getDate()+", "+shift.getEmail(),Toast.LENGTH_SHORT).show();
-                        //list.add(shift);
+                        list.add(shift);
 
                     }
                     ad_recyclerView.notifyDataSetChanged();

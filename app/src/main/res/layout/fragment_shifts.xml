@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/recyclerViewRelative"
+        android:id="@+id/recyclerViewRelative_Shifts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -14,7 +14,7 @@
         <!-- Main content -->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerView_Shifts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
