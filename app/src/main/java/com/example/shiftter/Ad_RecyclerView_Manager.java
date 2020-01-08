@@ -20,12 +20,12 @@ import java.util.List;
 
 public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerView_Manager.ViewHolderManager>  {
 
-    private List<String> mData;
+    private List<GroupMember> mData;
     private LayoutInflater mInflater;
     private Context mContext;
 
 
-    Ad_RecyclerView_Manager(Context context, List<String> data) {
+    Ad_RecyclerView_Manager(Context context, List<GroupMember> data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -34,14 +34,18 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
     @NonNull
     @Override
     public ViewHolderManager onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_recyclerview, parent, false);
+        View view = mInflater.inflate(R.layout.item_recyclerview_into_work_group_as__manager, parent, false);
         return new ViewHolderManager(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderManager holder, int position) {
-        String order = mData.get(position);
-        holder.myTextView.setText(order);
+        GroupMember order = mData.get(position);
+        holder.fullName.setText(order.getMemberFullName());
+        holder.position.setText(order.getPosition());
+        holder.email.setText(order.getMemberEmail());
+        holder.entryDate.setText(order.getEntryDate());
+        holder.salary.setText(order.getSalary());
     }
 
     @Override
@@ -52,13 +56,17 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
     public class ViewHolderManager extends RecyclerView.ViewHolder {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        TextView myTextView;
+        TextView fullName, email,position, salary, entryDate;
         private Dialog popup = new Dialog(mContext);
         EditText editPosition, editSalary;
         Button deleteMember, editMember;
         ViewHolderManager(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.text_view);
+            fullName = itemView.findViewById(R.id.TextView1);
+            email = itemView.findViewById(R.id.TextView2);
+            position = itemView.findViewById(R.id.TextView3);
+            salary = itemView.findViewById(R.id.TextView4);
+            entryDate = itemView.findViewById(R.id.TextView5);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,21 +77,14 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                     editMember = (Button) popup.findViewById(R.id.edit_member);
                     editPosition = (EditText) popup.findViewById(R.id.edit_position);
                     editSalary = (EditText) popup.findViewById(R.id.edit_salary);
-                    String memberEmail = myTextView.getText().toString();
+                    String memberEmail = fullName.getText().toString();
                     String codedMemberEmail = Functions.encodeUserEmail(memberEmail);
                     // TODO: 12/22/2019 continue after dealing with add user
                     deleteMember.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             popup.dismiss();
-                            WorkGroup workGroup = CurrentUser.getCurrentGroup();
-                            db.child("WorkGroups")
-                                    .child(workGroup.getGroupKey())
-                                    .child("ListOfMembers")
-                                    .child(codedMemberEmail).removeValue();
-                            db.child("Members")
-                                    .child(codedMemberEmail)
-                                    .child(workGroup.getGroupKey()).removeValue();
+                            Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(), codedMemberEmail);
                             // TODO: 12/26/2019 Notify dataChanged
                         }
                     });

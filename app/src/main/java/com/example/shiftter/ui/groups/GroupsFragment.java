@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shiftter.Ad_RecyclerView;
 import com.example.shiftter.CurrentUser;
-import com.example.shiftter.GroupMember;
+import com.example.shiftter.Functions;
 import com.example.shiftter.R;
 import com.example.shiftter.WorkGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +44,7 @@ public class GroupsFragment extends Fragment {
     FloatingActionButton addFab;
 
     //recycle_view_vars
-    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<WorkGroup> list = new ArrayList<>();
     Ad_RecyclerView ad_recyclerView;
 
 
@@ -100,11 +100,13 @@ public class GroupsFragment extends Fragment {
                 //Create WorkGroup and sate to db
                 String codedEmail = CurrentUser.getUserCodedEmail();
                 WorkGroup workGroup = new WorkGroup(groupID, groupNameString, CurrentUser.getUserEmail(), 0, stringDate);
-                //Update Firebase "MemberToGroups", "GroupToMembers", adding manager as member.
-                GroupMember groupMember = new GroupMember(CurrentUser.getUserEmail(),"Manager", "0", stringDate);
+
+                //Open WorkGroup
                 db.child("WorkGroups").child(groupID).setValue(workGroup);
-                db.child("WorkGroups").child(groupID).child("ListOfMembers").child(codedEmail).setValue(groupMember);
-                db.child("Members").child(codedEmail).child(groupID).setValue(workGroup);
+
+                //Adding manager as member.
+                Functions.AddGroupMember(groupID, CurrentUser.getUser(), "Manager", "0");
+
                 Toast.makeText(getActivity(), "WorkGroup Created Successfully", Toast.LENGTH_SHORT).show();
                 // TODO: 12/23/2019 add increment func to numOfMembers in a group
                 ad_recyclerView.notifyDataSetChanged();
@@ -124,8 +126,11 @@ public class GroupsFragment extends Fragment {
                 if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
                     list.clear();
                     for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
-                        WorkGroup workGroup = ds.getValue(WorkGroup.class);
-                        list.add(workGroup.getGroupName());
+
+                        String groupID = ds.getKey();
+                        WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
+                        list.add(workGroup);
+
                     }
                     ad_recyclerView.notifyDataSetChanged();
                 }else{

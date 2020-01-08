@@ -1,24 +1,18 @@
 package com.example.shiftter;
 
-import java.util.Date;
-
 public class Shift {
     private String userName;
-    private WorkGroup workGroup;
-    private Date date;
+    private String date;
     private String clockIn;
     private String clockOut;
-    private String shiftID;
 
     public Shift(){
     }
-    public Shift(String userName, WorkGroup workGroup, Date date, String clockIn, String clockOut, String shiftID){
+    public Shift(String userName, String date, String clockIn, String clockOut){
         this.userName = userName;
-        this.workGroup = workGroup;
         this.date = date;
         this.clockIn = clockIn;
         this.clockOut = clockOut;
-        this.shiftID = shiftID;
     }
 
     public String getUserName() {
@@ -29,19 +23,11 @@ public class Shift {
         this.userName = userName;
     }
 
-    public WorkGroup getWorkGroup() {
-        return workGroup;
-    }
-
-    public void setWorkGroup(WorkGroup workGroup) {
-        this.workGroup = workGroup;
-    }
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -60,8 +46,4 @@ public class Shift {
     public void setClockOut(String clockOut) {
         this.clockOut = clockOut;
     }
-
-    public String getShiftID() { return shiftID; }
-
-    public void setShiftID(String shiftID) { this.shiftID = shiftID; }
 }

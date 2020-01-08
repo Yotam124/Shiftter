@@ -3,6 +3,8 @@ package com.example.shiftter;
 import android.app.Application;
 
 public class CurrentUser extends Application {
+    private static User user;
+
     private static String userEmail;
     private static String userCodedEmail;
     private static String memberEmail;
@@ -15,6 +17,7 @@ public class CurrentUser extends Application {
         userCodedEmail = "";
         memberEmail = "";
         currentGroup = new WorkGroup();
+        user = new User();
     }
 
     public static String getUserEmail() {
@@ -47,6 +50,14 @@ public class CurrentUser extends Application {
 
     public static void setUserCodedEmail(String userCodedEmail) {
         CurrentUser.userCodedEmail = userCodedEmail;
+    }
+
+    public static User getUser() {
+        return user;
+    }
+
+    public static void setUser(User user) {
+        CurrentUser.user = user;
     }
 }
 
