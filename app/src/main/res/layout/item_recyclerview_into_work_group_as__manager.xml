@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:text="Member full name"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:id="@+id/TextView1"
+            />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="email:"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="position:"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                ></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="email"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextView2"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="position"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextView3"
+                ></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                ></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="salary:"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="entry date:"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                ></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="salary"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextView4"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="entry date"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextView5"
+                ></TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
+            android:padding="10dp"
+            android:layout_height="1dp">
+        </View>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="50dp"
+            android:gravity="center"
+            ></TextView>
+    </LinearLayout>
+</LinearLayout>
