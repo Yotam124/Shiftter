@@ -54,6 +54,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
     }
 
     public class ViewHolderManager extends RecyclerView.ViewHolder {
+
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         TextView fullName, email,position, salary, entryDate;

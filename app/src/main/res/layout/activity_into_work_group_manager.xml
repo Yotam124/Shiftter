@@ -12,7 +12,11 @@
         android:id="@+id/recyclerViewwithBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Main content -->
 
@@ -36,18 +40,18 @@
 
             <View
                 android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/colorBlue"
-                android:padding="10dp"
-                android:layout_height="1dp">
+                android:padding="10dp">
 
             </View>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/bnm_work_groups"
+                android:layout_height="215dp"
+                android:layout_above="@+id/add_user_fab"
                 android:layout_below="@+id/group_title" />
 
         </LinearLayout>
@@ -72,7 +76,6 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@android:drawable/ic_delete" />
-
 
 
     </RelativeLayout>
