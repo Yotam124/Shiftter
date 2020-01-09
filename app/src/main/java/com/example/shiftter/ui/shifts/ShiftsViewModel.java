@@ -10,7 +10,7 @@ public class ShiftsViewModel extends ViewModel {
 
     public ShiftsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("There are no shifts");
     }
 
     public LiveData<String> getText() {

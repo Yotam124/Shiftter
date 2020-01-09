@@ -22,7 +22,7 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     private LayoutInflater mInflater;
     private Context mContext;
 
-    Ad_RecyclerView_Shifts(Context context, List<Shift> data) {
+    public Ad_RecyclerView_Shifts(Context context, List<Shift> data) {
         this.mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
@@ -38,7 +38,7 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     @Override
     public void onBindViewHolder(@NonNull ViewHolderShifts holder, int position) {
         Shift order = mData.get(position);
-        holder.email.setText(order.getUserName());
+        holder.email.setText(order.getEmail());
         holder.date.setText(order.getDate());
         holder.clockIn.setText(order.getClockIn());
         holder.clockOut.setText(order.getClockOut());
