@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:text="TextView"
@@ -42,42 +43,81 @@
             android:textColor="@color/colorPrimary"
             android:textSize="40dp" />
 
-        <TextView
-            android:id="@+id/manager_name"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/group_title"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
-            android:text="Manager name" />
+        <LinearLayout
+            android:id="@+id/first"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_below="@+id/group_title">
 
-        <TextView
-            android:id="@+id/member_position"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/manager_name"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
-            android:text="position" />
+            <TextView
+                android:id="@+id/manager_name_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="Manager name"
+                android:textColor="@color/colorBlack" />
+            <TextView
+                android:id="@+id/manager_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="name_to_change" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/member_salary"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/member_position"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
-            android:text="Salary" />
+        <LinearLayout
+            android:id="@+id/second"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_below="@+id/first">
 
+            <TextView
+                android:id="@+id/position_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="Position"
+                android:textColor="@color/colorBlack" />
+            <TextView
+                android:id="@+id/member_position"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="position_to_change" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/third"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_below="@+id/second"
+            android:layout_above="@+id/add_user_fab">
 
-
+            <TextView
+                android:id="@+id/salary_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="Salary"
+                android:textColor="@color/colorBlack" />
+            <TextView
+                android:id="@+id/member_salary"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="salary_to_change" />
+        </LinearLayout>
     </RelativeLayout>
 
 
