@@ -75,8 +75,9 @@ public class ShiftsFragment extends Fragment {
 
                     }
                     ad_recyclerView.notifyDataSetChanged();
+
                 }else{
-                    Toast.makeText(getActivity(), "There is no WorkGroups.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "There are no shifts.",Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
