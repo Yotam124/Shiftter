@@ -161,12 +161,5 @@
             android:padding="10dp"
             android:layout_height="1dp">
         </View>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:textSize="50dp"
-            android:gravity="center"
-            ></TextView>
     </LinearLayout>
 </LinearLayout>

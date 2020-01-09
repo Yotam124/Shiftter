@@ -27,9 +27,9 @@ import java.util.ArrayList;
 
 public class intoWorkGroupAsManager extends AppCompatActivity {
     private DatabaseReference db;
-    private FloatingActionButton addUser, deleteWorkGroup;
+    private FloatingActionButton addUser, deleteWorkGroup, editManagerDetails;
     private Dialog popup;
-    private String memberToAddEmail, position, salary;
+    private String memberToAddEmail, position, salary, stManagerSalary,stManagerPosition;
 
     private WorkGroup workGroup;
     private String groupID;
@@ -47,6 +47,9 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
 
         TextView title = findViewById(R.id.group_title);
         title.setText(CurrentUser.getCurrentGroup().getGroupName());
+        TextView groupDateOfCreation = findViewById(R.id.group_DateOfCreation);
+        groupDateOfCreation.setText(CurrentUser.getCurrentGroup().getDateOfCreation());
+
 
 
         // set up the RecyclerView
@@ -60,9 +63,70 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
 
         addUser = findViewById(R.id.add_user_fab);
         deleteWorkGroup = findViewById(R.id.delete_group_fab);
+        editManagerDetails = findViewById(R.id.edit_manager_details);
 
         popup = new Dialog(this);
         getListOnPageCreate();
+
+        editManagerDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button EditBtn;
+                final EditText managerSalary,managerPosition;
+                popup.setContentView(R.layout.edit_manager_details_popup);
+                TextView TextViewManagerCurrentPosition = (TextView) popup.findViewById(R.id.TextViewManagerCurrentPosition);
+                TextView TextViewManagerCurrentSalary = (TextView) popup.findViewById(R.id.TextViewManagerCurrentSalary);
+                EditBtn = (Button) popup.findViewById(R.id.EditManagerDetailsBtn);
+                managerPosition = (EditText) popup.findViewById(R.id.ManagerPosition);
+                managerSalary = (EditText) popup.findViewById(R.id.ManagerSalary);
+                db.child("WorkGroups").child(groupID).child("ListOfMembers").child(CurrentUser.getUserCodedEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        GroupMember gm = dataSnapshot.getValue(GroupMember.class);
+                        Toast.makeText(intoWorkGroupAsManager.this, gm.getPosition() + " " + gm.getSalary(), Toast.LENGTH_SHORT).show();
+                        TextViewManagerCurrentPosition.setText("Position: " + gm.getPosition());
+                        TextViewManagerCurrentSalary.setText("Salary: " + gm.getSalary());
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                EditBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        stManagerPosition = managerPosition.getText().toString().trim();
+                        stManagerSalary = managerSalary.getText().toString().trim();
+                        if (TextUtils.isEmpty(stManagerPosition)){
+                            managerPosition.setError("Please enter position");
+                            managerPosition.requestFocus();
+                        }else if (TextUtils.isEmpty(stManagerSalary)){
+                            managerSalary.setError("Please enter salary");
+                            managerSalary.requestFocus();
+                        }else {
+                            db.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
+                                    Functions.AddGroupMember(groupID,CurrentUser.getUser(),stManagerPosition,stManagerSalary);
+                                    popup.dismiss();
+                                    Toast.makeText(intoWorkGroupAsManager.this, "Manager data changed", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+                    }
+                });
+                popup.show();
+            }
+        });
 
 
         //Add User Button
@@ -99,14 +163,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                     if (dataSnapshot.child("Users").child(codedEmail).exists()) {
                                         User user = dataSnapshot.child("Users").child(codedEmail).getValue(User.class);
                                         Functions.AddGroupMember(groupID, user, position, salary);
-                                        /*String memberFullName = user.getFirstName() + " " + user.getLastName();
-                                        Date date = new Date();
-                                        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-                                        String stringDate = dt.format(date);
-                                        GroupMember groupMember = new GroupMember(memberToAddEmail, memberFullName, position, salary, stringDate);
-                                        db.child("WorkGroups").child(groupID).child("ListOfMembers").child(codedEmail).setValue(groupMember);
-                                        WGToShiftID wgToShiftID = new WGToShiftID(db.push().getKey());
-                                        db.child("Members").child(codedEmail).child(groupID).setValue(wgToShiftID);*/
+
                                         popup.dismiss();
                                         Toast.makeText(intoWorkGroupAsManager.this, "Member Added Successfully", Toast.LENGTH_SHORT).show();
                                     } else {
