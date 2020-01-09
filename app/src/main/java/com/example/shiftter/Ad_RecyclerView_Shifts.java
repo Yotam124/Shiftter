@@ -29,7 +29,7 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     @NonNull
     @Override
     public ViewHolderShifts onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_recyclerview, parent, false);
+        View view = mInflater.inflate(R.layout.item_recyclerview_shifts, parent, false);
         return new ViewHolderShifts(view);
     }
 
