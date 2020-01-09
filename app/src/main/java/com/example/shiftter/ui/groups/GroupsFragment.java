@@ -36,12 +36,12 @@ public class GroupsFragment extends Fragment {
 
     private GroupsViewModel groupsViewModel;
 
-    DatabaseReference db, dbForMembers;
+    DatabaseReference db;
     FirebaseAuth auth;
 
     private Dialog popup;
     private String groupNameString;
-    FloatingActionButton addFab;
+    private FloatingActionButton addFab;
 
     //recycle_view_vars
     private ArrayList<WorkGroup> list = new ArrayList<>();
@@ -57,6 +57,7 @@ public class GroupsFragment extends Fragment {
 
         //start Code
 
+        //Init RecycleView
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         ad_recyclerView = new Ad_RecyclerView(getActivity(), list);
