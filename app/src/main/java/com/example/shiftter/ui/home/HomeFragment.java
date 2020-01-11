@@ -99,6 +99,7 @@ public class HomeFragment extends Fragment {
                     clockIn = format.format(time);
                     dateString = formatDate.format(date);
                     Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
+
                 } else {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     Date time = new Date();
@@ -207,4 +208,5 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 }
