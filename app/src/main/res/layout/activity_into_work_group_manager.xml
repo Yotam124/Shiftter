@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".intoWorkGroupAsManager">
 
+    //Bottom_Navigation_View
+
     <RelativeLayout
-        android:id="@+id/recyclerViewRelative"
+        android:id="@+id/recyclerViewwithBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <!-- Main content -->
 
@@ -32,24 +30,67 @@
                 android:layout_alignParentEnd="true"
                 android:text="TextView"
                 android:textAlignment="center"
-                android:textColor="@color/colorBlack"
+                android:background="@color/colorGray"
+                android:textColor="@color/colorAccent"
                 android:textSize="40dp" />
 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Date of creation:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:background="@color/colorGray"
+                    android:textStyle="bold"
+                    ></TextView>
+
+                <TextView
+                    android:id="@+id/group_DateOfCreation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="DateOfCreation"
+                    android:textColor="@color/colorBlack"
+                    android:background="@color/colorGray"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    ></TextView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:text="Member list:"
+                android:textAlignment="center"
+                android:background="@color/colorGray"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:textSize="20dp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/colorBlue"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:layout_height="1dp">
 
             </View>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="215dp"
-                android:layout_above="@+id/add_user_fab"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bnm_work_groups"
                 android:layout_below="@+id/group_title" />
 
         </LinearLayout>
@@ -74,6 +115,16 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@android:drawable/ic_delete" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/edit_manager_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:src="@android:drawable/btn_star" />
+
 
 
     </RelativeLayout>
