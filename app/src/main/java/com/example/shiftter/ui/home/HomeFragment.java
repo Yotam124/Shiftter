@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment {
                     //Notification
                     showNotification(getContext(),001);
                     Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
+
                 } else {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     Date time = new Date();
@@ -222,7 +223,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 
     public void showNotification(Context context, int reqCode) {
 

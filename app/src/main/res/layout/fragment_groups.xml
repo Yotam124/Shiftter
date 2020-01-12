@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/recyclerViewRelative"
+        android:id="@+id/recyclerViewwithBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,8 +17,9 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true" />
+            android:layout_marginBottom="0dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -28,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:backgroundTint="@color/colorBlue"
             android:layout_gravity="bottom|end"
-            android:layout_margin="16dp"
+            android:layout_margin="0dp"
             android:src="@android:drawable/ic_input_add" />
 
     </RelativeLayout>

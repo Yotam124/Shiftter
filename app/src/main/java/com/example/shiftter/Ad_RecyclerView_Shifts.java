@@ -1,6 +1,9 @@
 package com.example.shiftter;
 
+import android.app.Notification;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +65,15 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent calendar = new Intent();
+                    ComponentName cn
+                            = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
+                    calendar.setComponent(cn);
+                    mContext.startActivity(calendar);
                 }
             });
         }
     }
+
+
 }

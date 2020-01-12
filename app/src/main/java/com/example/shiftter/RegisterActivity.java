@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                     password.setError("Please enter a Password");
                     password.requestFocus();
                 }else if (pwd.length() < 6){
-                        password.setError("Password must be at least 6 letters");
+                    password.setError("Password must be at least 6 letters");
                 }else if (!pwd.equals(p2)){
                     password2.setError("Your passwords do not match");
                     password2.requestFocus();
