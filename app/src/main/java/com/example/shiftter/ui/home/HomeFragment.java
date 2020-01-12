@@ -1,9 +1,16 @@
 package com.example.shiftter.ui.home;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +23,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.shiftter.CurrentGroup;
 import com.example.shiftter.CurrentUser;
+import com.example.shiftter.MainActivity;
 import com.example.shiftter.R;
 import com.example.shiftter.Shift;
 import com.example.shiftter.WGToShiftID;
@@ -40,6 +49,9 @@ public class HomeFragment extends Fragment {
 
     DatabaseReference db;
     private String clockIn, clockOut, dateString;
+
+    private final String CHANNEL_ID = "notifications";
+    private final int NOTIFICATION_ID = 001;
 
 
     private ImageButton fingerPrintBtn;
@@ -98,6 +110,9 @@ public class HomeFragment extends Fragment {
                     Date date = new Date();
                     clockIn = format.format(time);
                     dateString = formatDate.format(date);
+
+                    //Notification
+                    showNotification(getContext(),001);
                     Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
 
                 } else {
@@ -209,4 +224,31 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    public void showNotification(Context context, int reqCode) {
+
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        String title = "You started a shift";
+        String message = "Start: "+clockIn;
+
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, reqCode, intent, PendingIntent.FLAG_ONE_SHOT);
+        String CHANNEL_ID = "channel_name";// The id of the channel.
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_sms_black_24dp)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setAutoCancel(true)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Channel Name";// The user-visible name of the channel.
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationManager.createNotificationChannel(mChannel);
+        }
+        notificationManager.notify(reqCode, notificationBuilder.build()); // 0 is the request code, it should be unique id
+
+        Log.d("showNotification", "showNotification: " + reqCode);
+    }
 }
