@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="Manager name"
+                android:text="Manager email"
                 android:textColor="@color/colorBlack" />
             <TextView
                 android:id="@+id/manager_name"

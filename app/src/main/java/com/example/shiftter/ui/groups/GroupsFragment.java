@@ -100,7 +100,7 @@ public class GroupsFragment extends Fragment {
                 String stringDate = dt.format(date);
                 //Create WorkGroup and sate to db
                 String codedEmail = CurrentUser.getUserCodedEmail();
-                WorkGroup workGroup = new WorkGroup(groupID, groupNameString, CurrentUser.getUserEmail(), 0, stringDate);
+                WorkGroup workGroup = new WorkGroup(groupID, groupNameString, CurrentUser.getUserEmail(), stringDate);
 
                 //Open WorkGroup
                 db.child("WorkGroups").child(groupID).setValue(workGroup);
@@ -111,6 +111,7 @@ public class GroupsFragment extends Fragment {
                 Toast.makeText(getActivity(), "WorkGroup Created Successfully", Toast.LENGTH_SHORT).show();
                 // TODO: 12/23/2019 add increment func to numOfMembers in a group
                 ad_recyclerView.notifyDataSetChanged();
+                getListOnPageCreate();
 
             }
         });

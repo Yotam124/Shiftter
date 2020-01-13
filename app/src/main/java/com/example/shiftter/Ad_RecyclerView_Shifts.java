@@ -1,5 +1,6 @@
 package com.example.shiftter;
 
+import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -64,17 +65,15 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent();
-
-//Froyo or greater (mind you I just tested this on CM7 and the less than froyo one worked so it depends on the phone...)
-                    ComponentName cn = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
-
-//less than Froyo
-                    //  ComponentName = new ComponentName("com.android.calendar", "com.android.calendar.LaunchActivity");
-                    i.setComponent(cn);
-                    mContext.startActivity(i);
+                    Intent calendar = new Intent();
+                    ComponentName cn
+                            = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
+                    calendar.setComponent(cn);
+                    mContext.startActivity(calendar);
                 }
             });
         }
     }
+
+
 }
