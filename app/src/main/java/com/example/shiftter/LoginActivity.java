@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailId, password;
 
     FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference db;
 
     @Override
@@ -54,19 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(goToRegister);
             }
         });
-
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser authUser = auth.getCurrentUser();
-                if (authUser != null){
-                    Toast.makeText(LoginActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
-
-                }else{
-                    Toast.makeText(LoginActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,11 +97,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authStateListener);
-    }
-
 }
