@@ -204,7 +204,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                                         .child("ListOfMembers").getChildren()){
 
                                     Functions.DeleteGroupMember(workGroup, ds.getKey());
-                                    recyclerView.notifyAll();
                                 }
                                 db.child("WorkGroups").child(CurrentUser.getCurrentGroup().getGroupKey()).removeValue();
                             }
