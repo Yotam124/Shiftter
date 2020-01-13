@@ -83,7 +83,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         GroupMember gm = dataSnapshot.getValue(GroupMember.class);
-                        Toast.makeText(intoWorkGroupAsManager.this, gm.getPosition() + " " + gm.getSalary(), Toast.LENGTH_SHORT).show();
                         TextViewManagerCurrentPosition.setText("Position: " + gm.getPosition());
                         TextViewManagerCurrentSalary.setText("Salary: " + gm.getSalary());
                     }

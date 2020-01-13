@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -17,127 +16,46 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Email:"
+                android:layout_weight="0.25"
+                android:text="date"
                 android:textColor="@color/colorBlack"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:id="@+id/TextViewDate"
+                ></TextView>
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:text="clock in"
+                android:textColor="@color/colorBlack"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:id="@+id/TextViewClockIn"
                 ></TextView>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Date:"
+                android:layout_weight="0.25"
+                android:text="clock out"
                 android:textColor="@color/colorBlack"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:textStyle="bold"
-                ></TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="email"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:id="@+id/TextView1"
+                android:id="@+id/TextViewClockOut"
                 ></TextView>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="position"
+                android:layout_weight="0.25"
+                android:text="hours"
                 android:textColor="@color/colorBlack"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:id="@+id/TextView2"
-                ></TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                ></TextView>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                ></TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Clock in:"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                ></TextView>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="Clock out:"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                ></TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="salary"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:id="@+id/TextView3"
-                ></TextView>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:text="entry date"
-                android:textColor="@color/colorBlack"
-                android:textSize="20dp"
-                android:gravity="center"
-                android:id="@+id/TextView4"
+                android:id="@+id/TextViewHours"
                 ></TextView>
         </LinearLayout>
 
@@ -148,13 +66,6 @@
             android:padding="10dp"
             android:layout_height="1dp">
         </View>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:textSize="50dp"
-            android:gravity="center"
-            ></TextView>
     </LinearLayout>
 
 </LinearLayout>
