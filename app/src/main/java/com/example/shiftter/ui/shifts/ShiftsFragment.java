@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class ShiftsFragment extends Fragment {
     //recycle_view_vars
     private ArrayList<Shift> list = new ArrayList<>();
     Ad_RecyclerView_Shifts ad_recyclerView;
+    TextView groupName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class ShiftsFragment extends Fragment {
         //start Code
 
         db = FirebaseDatabase.getInstance().getReference();
+        groupName = root.findViewById(R.id.group_title_shifts);
+        groupName.setText(CurrentGroup.getGroupMame());
 
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView_Shifts);

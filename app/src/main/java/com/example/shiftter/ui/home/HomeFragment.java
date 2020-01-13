@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.shiftter.CurrentGroup;
 import com.example.shiftter.CurrentUser;
+import com.example.shiftter.GroupMember;
 import com.example.shiftter.R;
 import com.example.shiftter.Shift;
 import com.example.shiftter.WGToShiftID;
@@ -41,8 +42,9 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
-    DatabaseReference db;
+    private DatabaseReference db;
     private String clockIn, clockOut, dateString,hoursForShift;
+    private double wage;
 
 
     private ImageButton fingerPrintBtn;
@@ -107,6 +109,7 @@ public class HomeFragment extends Fragment {
                     }
                     dateString = formatDate.format(date);
                     Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
+
                 } else {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     Date time = new Date();
@@ -145,10 +148,24 @@ public class HomeFragment extends Fragment {
                             hoursForShift = hours + ":" + min;
                         }
                     }
-                    Toast.makeText(getActivity(), hoursForShift, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), "fck", Toast.LENGTH_LONG).show();
+                    db.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            GroupMember gm = dataSnapshot.child("WorkGroups").child(CurrentGroup.getGroupID())
+                                    .child("ListOfMembers").child(CurrentUser.getUserCodedEmail()).getValue(GroupMember.class);
+                            wage = Double.parseDouble(gm.getSalary());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    wage = (wage/60*min) + (wage*hours);
                     Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
-                    addShift(clockIn, clockOut, dateString,hoursForShift);
+                    addShift(clockIn, clockOut, dateString,hoursForShift,wage);
 
                 }
             }
@@ -228,8 +245,8 @@ public class HomeFragment extends Fragment {
 
 
     // TODO: 12/19/2019 Fixing the function after the new database (addShifts).
-    public void addShift(String clockIn, String clockOut, String dateString, String hoursForShift){
-        Shift shift = new Shift(CurrentUser.getUserEmail(), dateString, clockIn, clockOut, hoursForShift);
+    public void addShift(String clockIn, String clockOut, String dateString, String hoursForShift,double wage){
+        Shift shift = new Shift(CurrentUser.getUserEmail(), dateString, clockIn, clockOut, hoursForShift,wage);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
