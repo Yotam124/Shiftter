@@ -56,9 +56,6 @@ public class ShiftsFragment extends Fragment {
 
         return root;
     }
-
-
-
     public void getListOnPageCreate(){
 
         //Fill list
