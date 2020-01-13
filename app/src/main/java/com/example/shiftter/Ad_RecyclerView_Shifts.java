@@ -1,5 +1,6 @@
 package com.example.shiftter;
 
+import android.app.Dialog;
 import android.app.Notification;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,13 +8,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -57,6 +63,8 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         TextView date,clockIn,clockOut,hours,wage;
 
+        private Dialog popup = new Dialog(mContext);
+
         public ViewHolderShifts(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.TextViewDate);
@@ -68,6 +76,23 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if (CurrentGroup.getGroupManagerID() == CurrentUser.getUser().getUserID()){
+                        popup.setContentView(R.layout.edit_members_shifts_details);
+                        Button SaveChanges = (Button) popup.findViewById(R.id.editMembersShiftDetails_SaveChanges);
+                        Button DeleteShift = (Button) popup.findViewById(R.id.editMembersShiftDetails_DeleteShift);
+                        EditText editTextDate = (EditText) popup.findViewById(R.id.editMembersShiftDetails_Date);
+                        EditText editTextClockIn = (EditText) popup.findViewById(R.id.editMembersShiftDetails_ClockIn);
+                        EditText editTextClockOut = (EditText) popup.findViewById(R.id.editMembersShiftDetails_ClockOut);
+
+                        DeleteShift.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popup.dismiss();
+                                Functions.DeleteMemberShift();
+                            }
+                        });
+                    }
                     Intent calendar = new Intent();
                     ComponentName cn
                             = new ComponentName("com.google.android.calendar", "com.android.calendar.LaunchActivity");
@@ -76,7 +101,24 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
                 }
             });
         }
-    }
 
+        public String getShiftId(String userEmail,String GroupId){
+            db.addListenerForSingleValueEvent(new ValueEventListener() {
+                String shiftId = "";
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    WGToShiftID s = dataSnapshot.child("Members").child(userEmail).child(GroupId).getValue(WGToShiftID.class);
+                    shiftId = s.getShiftID();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+
+            });
+        }
+    }
 
 }

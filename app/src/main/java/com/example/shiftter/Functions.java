@@ -33,6 +33,12 @@ public class Functions {
                 .child(workGroup.getGroupKey()).removeValue();
     }
 
+    public static void DeleteMemberShift(String ShiftId, String Date){
+        db.child("Shifts")
+                .child(ShiftId)
+                .child(Date).removeValue();
+    }
+
 
     public static String encodeUserEmail(String userEmail) {
         return userEmail.replace(".", ",");
