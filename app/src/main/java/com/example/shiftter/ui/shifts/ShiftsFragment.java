@@ -39,22 +39,39 @@ public class ShiftsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         shiftsViewModel =
                 ViewModelProviders.of(this).get(ShiftsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_shifts, container, false);
+        if(CurrentUser.getUserEmail().equals(CurrentGroup.getGroupManagerID())){
+            View root = inflater.inflate(R.layout.fragment_shifts_mamager, container, false);
 
-        //start Code
-
-        db = FirebaseDatabase.getInstance().getReference();
+            db = FirebaseDatabase.getInstance().getReference();
 
 
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerView_Shifts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ad_recyclerView = new Ad_RecyclerView_Shifts(getActivity(), list);
-        recyclerView.setAdapter(ad_recyclerView);
+            RecyclerView recyclerView = root.findViewById(R.id.recyclerView_Shifts);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            ad_recyclerView = new Ad_RecyclerView_Shifts(getActivity(), list);
+            recyclerView.setAdapter(ad_recyclerView);
 
-        //View List on recycleView
-        getListOnPageCreate();
+            //View List on recycleView
+            getListOnPageCreate();
 
-        return root;
+            return root;
+        }else {
+            View root = inflater.inflate(R.layout.fragment_shifts, container, false);
+
+            //start Code
+
+            db = FirebaseDatabase.getInstance().getReference();
+
+
+            RecyclerView recyclerView = root.findViewById(R.id.recyclerView_Shifts);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            ad_recyclerView = new Ad_RecyclerView_Shifts(getActivity(), list);
+            recyclerView.setAdapter(ad_recyclerView);
+
+            //View List on recycleView
+            getListOnPageCreate();
+
+            return root;
+        }
     }
     public void getListOnPageCreate(){
 
@@ -65,12 +82,14 @@ public class ShiftsFragment extends Fragment {
                 if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
                     list.clear();
                     WGToShiftID wgToShiftID = dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).child(CurrentGroup.getGroupID()).getValue(WGToShiftID.class);
-
+                    int i = 0;
                     for (DataSnapshot ds : dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).getChildren()){
                         Shift shift = ds.getValue(Shift.class);
                         list.add(shift);
-
+                        i++;
                     }
+                    Toast.makeText(getActivity(),""+i,Toast.LENGTH_SHORT).show();
+
                     ad_recyclerView.notifyDataSetChanged();
 
                 }else{

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/group_title_shifts_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorGray"
+        android:text="balagan"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="40dp" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/recyclerViewRelative_Shifts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Main content -->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/fab"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="vertical">
+
+            <!-- <Spinner
+                android:id="@+id/spinner_shift"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_constraintLeft_toLeftOf="parent"
+                android:layout_constraintRight_toRightOf="parent"
+                android:layout_constraintTop_toTopOf="parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp" />-->
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:background="@color/colorGray"
+                    android:gravity="center"
+                    android:text="Date:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:background="@color/colorGray"
+                    android:gravity="center"
+                    android:text="Clock in:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:background="@color/colorGray"
+                    android:gravity="center"
+                    android:text="Clock out:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:background="@color/colorGray"
+                    android:gravity="center"
+                    android:text="Hours:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="@color/colorBlue"
+                android:padding="10dp">
+
+            </View>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_Shifts"
+                android:layout_width="match_parent"
+                android:layout_height="440dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                app:reverseLayout="false" />
+
+        </LinearLayout>
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="@color/colorBlue"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:src="@android:drawable/ic_input_add" />
+
+    </RelativeLayout>
+</LinearLayout>
