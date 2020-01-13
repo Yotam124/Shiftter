@@ -203,7 +203,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                                         .child("ListOfMembers").getChildren()){
 
                                     Functions.DeleteGroupMember(workGroup, ds.getKey());
-                                    recyclerView.notifyAll();
                                 }
                                 db.child("WorkGroups").child(CurrentUser.getCurrentGroup().getGroupKey()).removeValue();
                             }
@@ -236,7 +235,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                         String memberEmail = Functions.decodeUserEmail(ds.getKey());
                         if (!memberEmail.equals(workGroup.getManagerEmail())){
                             list.add(ds.getValue(GroupMember.class));
-                            //list.add(memberEmail);
                         }
                     }
                     ad_recyclerView.notifyDataSetChanged();
