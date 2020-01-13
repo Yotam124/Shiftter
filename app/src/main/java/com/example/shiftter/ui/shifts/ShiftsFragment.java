@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class ShiftsFragment extends Fragment {
 
 
     Ad_RecyclerView_Shifts ad_recyclerView;
+    TextView groupName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +73,6 @@ public class ShiftsFragment extends Fragment {
                 }
             });
             retrieveDataForSpinner();
-
 
             RecyclerView recyclerView = root.findViewById(R.id.recyclerView_Shifts);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
