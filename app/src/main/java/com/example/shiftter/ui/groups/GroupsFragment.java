@@ -111,6 +111,7 @@ public class GroupsFragment extends Fragment {
                 Toast.makeText(getActivity(), "WorkGroup Created Successfully", Toast.LENGTH_SHORT).show();
                 // TODO: 12/23/2019 add increment func to numOfMembers in a group
                 ad_recyclerView.notifyDataSetChanged();
+                getListOnPageCreate();
 
             }
         });
