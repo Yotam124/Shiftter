@@ -87,6 +87,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                     editSalary = (EditText) popup.findViewById(R.id.edit_salary);
                     String memberEmail = email.getText().toString();
                     String codedMemberEmail = Functions.encodeUserEmail(memberEmail);
+
                     // TODO: 12/22/2019 continue after dealing with add user
                     deleteMember.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -113,12 +114,11 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),Functions.encodeUserEmail(memberEmail));
-                                        User mUser = dataSnapshot.child("Users").child(Functions.encodeUserEmail(memberEmail)).getValue(User.class);
+                                        User mUser = dataSnapshot.child("Users").child(codedMemberEmail).getValue(User.class);
                                         Functions.AddGroupMember(CurrentUser.getCurrentGroup().getGroupKey(), mUser,editPositionS,editSalaryS);
                                         popup.dismiss();
                                         Toast.makeText(mContext,"Member data changed", Toast.LENGTH_SHORT).show();
                                     }
-
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
