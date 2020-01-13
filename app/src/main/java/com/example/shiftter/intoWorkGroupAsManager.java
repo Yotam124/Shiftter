@@ -235,7 +235,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                         String memberEmail = Functions.decodeUserEmail(ds.getKey());
                         if (!memberEmail.equals(workGroup.getManagerEmail())){
                             list.add(ds.getValue(GroupMember.class));
-                            //list.add(memberEmail);
                         }
                     }
                     ad_recyclerView.notifyDataSetChanged();
