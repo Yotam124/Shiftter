@@ -16,10 +16,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.2"
                 android:text="date"
                 android:textColor="@color/colorBlack"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="center"
                 android:id="@+id/TextViewDate"
                 ></TextView>
@@ -28,10 +28,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.2"
                 android:text="clock in"
                 android:textColor="@color/colorBlack"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="center"
                 android:id="@+id/TextViewClockIn"
                 ></TextView>
@@ -39,10 +39,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.2"
                 android:text="clock out"
                 android:textColor="@color/colorBlack"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="center"
                 android:id="@+id/TextViewClockOut"
                 ></TextView>
@@ -50,12 +50,23 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.2"
                 android:text="hours"
                 android:textColor="@color/colorBlack"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="center"
                 android:id="@+id/TextViewHours"
+                ></TextView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:text="wage"
+                android:textColor="@color/colorBlack"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:id="@+id/TextViewWage"
                 ></TextView>
         </LinearLayout>
 

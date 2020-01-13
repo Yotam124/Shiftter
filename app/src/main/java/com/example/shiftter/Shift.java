@@ -6,15 +6,17 @@ public class Shift {
     private String clockIn;
     private String clockOut;
     private String hoursForShift;
+    private double wage;
 
     public Shift(){
     }
-    public Shift(String email, String date, String clockIn, String clockOut, String hoursForShift){
+    public Shift(String email, String date, String clockIn, String clockOut, String hoursForShift,double wage){
         this.email = email;
         this.date = date;
         this.clockIn = clockIn;
         this.clockOut = clockOut;
         this.hoursForShift = hoursForShift;
+        this.wage = wage;
     }
 
     public String getEmail() {
@@ -55,5 +57,13 @@ public class Shift {
 
     public void setHoursForShift(String hoursForShift) {
         this.hoursForShift = hoursForShift;
+    }
+
+    public double getWage() {
+        return wage;
+    }
+
+    public void setWage(double wage) {
+        this.wage = wage;
     }
 }
