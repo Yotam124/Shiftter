@@ -111,6 +111,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
                                     Functions.AddGroupMember(groupID,CurrentUser.getUser(),stManagerPosition,stManagerSalary);
+                                    recyclerView.notifyAll();
                                     popup.dismiss();
                                     Toast.makeText(intoWorkGroupAsManager.this, "Manager data changed", Toast.LENGTH_SHORT).show();
                                 }
@@ -163,7 +164,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                     if (dataSnapshot.child("Users").child(codedEmail).exists()) {
                                         User user = dataSnapshot.child("Users").child(codedEmail).getValue(User.class);
                                         Functions.AddGroupMember(groupID, user, position, salary);
-
+                                        recyclerView.notifyAll();
                                         popup.dismiss();
                                         Toast.makeText(intoWorkGroupAsManager.this, "Member Added Successfully", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -203,6 +204,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                                         .child("ListOfMembers").getChildren()){
 
                                     Functions.DeleteGroupMember(workGroup, ds.getKey());
+                                    recyclerView.notifyAll();
                                 }
                                 db.child("WorkGroups").child(CurrentUser.getCurrentGroup().getGroupKey()).removeValue();
                             }
