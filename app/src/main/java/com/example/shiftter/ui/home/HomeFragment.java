@@ -157,7 +157,6 @@ public class HomeFragment extends Fragment {
                             hoursForShift = hours + ":" + min;
                         }
                     }
-                    //Toast.makeText(getActivity(), "fck", Toast.LENGTH_LONG).show();
                     db.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -172,7 +171,7 @@ public class HomeFragment extends Fragment {
                         }
                     });
                     wage = (wage/60*min) + (wage*hours);
-                    Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
                     addShift(clockIn, clockOut, dateString,hoursForShift,wage);
 
@@ -278,7 +277,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-}
     public void showNotification(Context context, int reqCode) {
 
         Intent intent = new Intent(getActivity(), MainActivity.class);

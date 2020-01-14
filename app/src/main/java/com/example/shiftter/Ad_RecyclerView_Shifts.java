@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,6 +63,7 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         TextView date,clockIn,clockOut,hours,wage;
+        String CurrShiftId = "";
 
         private Dialog popup = new Dialog(mContext);
 
@@ -77,6 +79,10 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
                 @Override
                 public void onClick(View v) {
 
+                    String lol =date.getText().toString();
+
+                    Toast.makeText(mContext,lol + "",Toast.LENGTH_LONG).show();
+
                     if (CurrentGroup.getGroupManagerID() == CurrentUser.getUser().getUserID()){
                         popup.setContentView(R.layout.edit_members_shifts_details);
                         Button SaveChanges = (Button) popup.findViewById(R.id.editMembersShiftDetails_SaveChanges);
@@ -89,7 +95,8 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
                             @Override
                             public void onClick(View v) {
                                 popup.dismiss();
-                                Functions.DeleteMemberShift();
+                                getShiftId(CurrentUser.getUserCodedEmail(),CurrentGroup.getGroupID());
+                                //Functions.DeleteMemberShift(CurrShiftId,);
                             }
                         });
                     }
@@ -102,19 +109,15 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
             });
         }
 
-        public String getShiftId(String userEmail,String GroupId){
+        public void getShiftId(String userEmail,String GroupId){
             db.addListenerForSingleValueEvent(new ValueEventListener() {
-                String shiftId = "";
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     WGToShiftID s = dataSnapshot.child("Members").child(userEmail).child(GroupId).getValue(WGToShiftID.class);
-                    shiftId = s.getShiftID();
-
+                    CurrShiftId = s.getShiftID();
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 }
 
             });
