@@ -27,8 +27,8 @@
                 android:layout_alignParentEnd="true"
                 android:text="TextView"
                 android:textAlignment="center"
-                android:background="@color/colorGray"
-                android:textColor="@color/colorAccent"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorWhite"
                 android:textSize="40dp" />
 
             <LinearLayout
@@ -44,7 +44,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="17dp"
                     android:gravity="center"
-                    android:background="@color/colorGray"
+                    android:background="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     ></TextView>
 
@@ -56,7 +56,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="17dp"
                     android:gravity="center"
-                    android:background="@color/colorGray"
+                    android:background="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     ></TextView>
 
@@ -68,7 +68,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="17dp"
                     android:gravity="center"
-                    android:background="@color/colorGray"
+                    android:background="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     ></TextView>
 
@@ -80,7 +80,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="17dp"
                     android:gravity="center"
-                    android:background="@color/colorGray"
+                    android:background="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     ></TextView>
 
@@ -92,7 +92,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="17dp"
                     android:gravity="center"
-                    android:background="@color/colorGray"
+                    android:background="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     ></TextView>
             </LinearLayout>

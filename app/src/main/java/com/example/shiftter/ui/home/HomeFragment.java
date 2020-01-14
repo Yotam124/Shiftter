@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
 
     private DatabaseReference db;
-    private String clockIn, clockOut, dateString,hoursForShift;
+    private String clockIn, clockOut, dateString, hoursForShift;
     private double wage;
 
 
@@ -99,7 +99,8 @@ public class HomeFragment extends Fragment {
         retrieveDataForSpinner();
 
         fingerPrintBtn.setOnClickListener(new View.OnClickListener() {
-            Date startDate,endDate;
+            Date startDate, endDate;
+
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
                     }
                     dateString = formatDate.format(date);
 
-                    showNotification(getContext(),001);
+                    showNotification(getContext(), 001);
                     Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
 
                 } else {
@@ -130,31 +131,30 @@ public class HomeFragment extends Fragment {
                         e.printStackTrace();
                     }
                     long difference = endDate.getTime() - startDate.getTime();
-                    if(difference<0)
-                    {
+                    if (difference < 0) {
 
-                        Date dateMin = null,dateMax = null;
+                        Date dateMin = null, dateMax = null;
                         try {
                             dateMin = format.parse("00:00");
                             dateMax = format.parse("24:00");
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        difference=(dateMax.getTime() -startDate.getTime() )+(endDate.getTime()-dateMin.getTime());
+                        difference = (dateMax.getTime() - startDate.getTime()) + (endDate.getTime() - dateMin.getTime());
                     }
-                    int days = (int) (difference / (1000*60*60*24));
-                    int hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
-                    int min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
-                    if (hours < 10){
-                        if (min <10){
+                    int days = (int) (difference / (1000 * 60 * 60 * 24));
+                    int hours = (int) ((difference - (1000 * 60 * 60 * 24 * days)) / (1000 * 60 * 60));
+                    int min = (int) (difference - (1000 * 60 * 60 * 24 * days) - (1000 * 60 * 60 * hours)) / (1000 * 60);
+                    if (hours < 10) {
+                        if (min < 10) {
                             hoursForShift = "0" + hours + ":0" + min;
-                        }else{
+                        } else {
                             hoursForShift = "0" + hours + ":" + min;
                         }
-                    }else{
-                        if (min <10){
+                    } else {
+                        if (min < 10) {
                             hoursForShift = hours + ":0" + min;
-                        }else{
+                        } else {
                             hoursForShift = hours + ":" + min;
                         }
                     }
@@ -172,10 +172,10 @@ public class HomeFragment extends Fragment {
 
                         }
                     });
-                    wage = (wage/60*min) + (wage*hours);
+                    wage = (wage / 60 * min) + (wage * hours);
                     Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
                     pauseChronometer(v);
-                    addShift(clockIn, clockOut, dateString,hoursForShift,wage);
+                    addShift(clockIn, clockOut, dateString, hoursForShift, wage);
 
                 }
             }
@@ -185,13 +185,13 @@ public class HomeFragment extends Fragment {
 
 
     // TODO: 12/19/2019 Fixing the function after the new database (retrieveDataForSpinner).
-    public void retrieveDataForSpinner(){
+    public void retrieveDataForSpinner() {
 
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).exists()) {
-                    for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
+                    for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()) {
                         String groupID = ds.getKey();
                         WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(groupID).getValue(WorkGroup.class);
                         spinnerDataList.add(workGroup.getGroupName());
@@ -210,16 +210,16 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     //Chronometer functions
-    public void startChronometer(View v){
+    public void startChronometer(View v) {
         if (!running) {
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
             running = true;
         }
     }
-    public void pauseChronometer(View v){
+
+    public void pauseChronometer(View v) {
         if (running) {
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
@@ -230,45 +230,44 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void updateCurrGroup(String groupNameSelected){
+    public void updateCurrGroup(String groupNameSelected) {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()){
-                            WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(ds.getKey()).getValue(WorkGroup.class);
-                            if (workGroup.getGroupName().equals(groupNameSelected)){
-                                CurrentGroup.setGroupID(workGroup.getGroupKey());
-                                CurrentGroup.setGroupMame(groupNameSelected);
-                                CurrentGroup.setGroupManagerID(workGroup.getManagerEmail());
-                            }
-                        }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.child("Members").child(CurrentUser.getUserCodedEmail()).getChildren()) {
+                    WorkGroup workGroup = dataSnapshot.child("WorkGroups").child(ds.getKey()).getValue(WorkGroup.class);
+                    if (workGroup.getGroupName().equals(groupNameSelected)) {
+                        CurrentGroup.setGroupID(workGroup.getGroupKey());
+                        CurrentGroup.setGroupMame(groupNameSelected);
+                        CurrentGroup.setGroupManagerID(workGroup.getManagerEmail());
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            }
 
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
 
-
-
     // TODO: 12/19/2019 Fixing the function after the new database (addShifts).
-    public void addShift(String clockIn, String clockOut, String dateString, String hoursForShift,double wage){
-        Shift shift = new Shift(CurrentUser.getUserEmail(), dateString, clockIn, clockOut, hoursForShift,wage);
+    public void addShift(String clockIn, String clockOut, String dateString, String hoursForShift, double wage) {
+        Shift shift = new Shift(CurrentUser.getUserEmail(), dateString, clockIn, clockOut, hoursForShift, wage);
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 WGToShiftID wgToShiftID = dataSnapshot.child("Members")
                         .child(CurrentUser.getUserCodedEmail())
                         .child(CurrentGroup.getGroupID()).getValue(WGToShiftID.class);
-                if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).exists()){
+                if (!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).exists()) {
                     db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).setValue(shift);
-                }else if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").exists()){
-                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").setValue(shift);
-                }else{
-                    Toast.makeText(getActivity(),"To many shifts today", Toast.LENGTH_SHORT).show();
+                } else if (!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString + "NO2").exists()) {
+                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString + "NO2").setValue(shift);
+                } else {
+                    Toast.makeText(getActivity(), "To many shifts today", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -278,8 +277,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
-}
     public void showNotification(Context context, int reqCode) {
 
         Intent intent = new Intent(getActivity(), MainActivity.class);

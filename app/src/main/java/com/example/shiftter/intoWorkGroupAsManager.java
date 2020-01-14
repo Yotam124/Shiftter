@@ -108,9 +108,9 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                             db.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
-                                    Functions.AddGroupMember(groupID,CurrentUser.getUser(),stManagerPosition,stManagerSalary);
-                                    recyclerView.notifyAll();
+                                    /*Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
+                                    Functions.AddGroupMember(groupID,CurrentUser.getUser(),stManagerPosition,stManagerSalary);*/
+                                    Functions.UpdateMember(groupID, CurrentUser.getUserCodedEmail(), stManagerPosition, stManagerSalary);
                                     popup.dismiss();
                                     Toast.makeText(intoWorkGroupAsManager.this, "Manager data changed", Toast.LENGTH_SHORT).show();
                                 }
@@ -163,7 +163,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                     if (dataSnapshot.child("Users").child(codedEmail).exists()) {
                                         User user = dataSnapshot.child("Users").child(codedEmail).getValue(User.class);
                                         Functions.AddGroupMember(groupID, user, position, salary);
-                                        recyclerView.notifyAll();
+                                        getListOnPageCreate();
                                         popup.dismiss();
                                         Toast.makeText(intoWorkGroupAsManager.this, "Member Added Successfully", Toast.LENGTH_SHORT).show();
                                     } else {
@@ -249,47 +249,4 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
 
     }
 
-
-// TODO: 12/19/2019 fixing the function "ShowAddPopup" (intoWorkGroupAsManager)
-
-    /*public void ShowDeletePopup(View v){
-        Button deletePopup;
-        popup.setContentView(R.layout.delete_group_popup);
-        deletePopup = (Button) popup.findViewById(R.id.DeleteGroupPopup);
-        deletePopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                popup.dismiss();
-                db.child("WorkGroups").child(CurrentUser.getEmail()).child(CurrentUser.getCurrentJob()).removeValue();
-                Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
-                startActivity(WorkgroupActivity);
-            }
-        });
-        popup.show();
-
-    }
-
-    public void getMembersListOnPageCreate(){
-
-        //Fill list
-        db.child("WorkGroups").child(CurrentUser.getEmail())
-                .child(CurrentUser.getCurrentJob())
-                .child("Members").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    list.clear();
-                    for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        list.addUser(ds.getKey());
-                    }
-                    ad_recyclerView.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 }
