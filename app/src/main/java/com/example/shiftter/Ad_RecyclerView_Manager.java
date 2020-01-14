@@ -113,9 +113,10 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                                 db.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),Functions.encodeUserEmail(memberEmail));
+                                        /*Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),Functions.encodeUserEmail(memberEmail));
                                         User mUser = dataSnapshot.child("Users").child(codedMemberEmail).getValue(User.class);
-                                        Functions.AddGroupMember(CurrentUser.getCurrentGroup().getGroupKey(), mUser,editPositionS,editSalaryS);
+                                        Functions.AddGroupMember(CurrentUser.getCurrentGroup().getGroupKey(), mUser, editPositionS, editSalaryS);*/
+                                        Functions.UpdateMember(CurrentUser.getCurrentGroup().getGroupKey(), codedMemberEmail, editPositionS, editSalaryS);
                                         popup.dismiss();
                                         Toast.makeText(mContext,"Member data changed", Toast.LENGTH_SHORT).show();
                                     }

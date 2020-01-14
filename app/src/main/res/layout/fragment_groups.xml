@@ -25,11 +25,13 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:backgroundTint="@color/colorBlue"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|end"
-            android:layout_margin="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/colorBlue"
             android:src="@android:drawable/ic_input_add" />
 
     </RelativeLayout>
