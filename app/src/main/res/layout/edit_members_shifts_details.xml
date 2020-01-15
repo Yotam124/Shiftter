@@ -16,43 +16,6 @@
     android:textStyle="bold">
 
     </TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold">
-
-    </TextView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editMembersShiftDetails_TextView_Date"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editMembersShiftDetails_TextView_ClockIn"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editMembersShiftDetails_TextView_ClockOut"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold">
-
-    </TextView>
-
     <EditText
         android:id="@+id/editMembersShiftDetails_Date"
         android:layout_width="match_parent"

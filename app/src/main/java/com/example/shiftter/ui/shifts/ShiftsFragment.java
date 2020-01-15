@@ -44,14 +44,20 @@ public class ShiftsFragment extends Fragment {
 
 
     Ad_RecyclerView_Shifts ad_recyclerView;
-    TextView groupName;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         shiftsViewModel =
                 ViewModelProviders.of(this).get(ShiftsViewModel.class);
+
+        //As manager
         if(CurrentUser.getUserEmail().equals(CurrentGroup.getGroupManagerID())){
             View root = inflater.inflate(R.layout.fragment_shifts_mamager, container, false);
+
+            TextView groupName = root.findViewById(R.id.group_title_shifts_manager);
+            groupName.setText(CurrentGroup.getGroupMame());
+
 
             db = FirebaseDatabase.getInstance().getReference();
             spinner = root.findViewById(R.id.shift_spinner);
@@ -62,8 +68,8 @@ public class ShiftsFragment extends Fragment {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                   String membersShifts = parent.getItemAtPosition(position).toString();
 
+                   String membersShifts = parent.getItemAtPosition(position).toString();
                    getOnCreateAsManager(membersShifts);
                 }
 
@@ -83,10 +89,13 @@ public class ShiftsFragment extends Fragment {
             getListOnPageCreate();
 
             return root;
-        }else {
+
+        }else { //As Member
             View root = inflater.inflate(R.layout.fragment_shifts, container, false);
 
             //start Code
+            TextView groupName = root.findViewById(R.id.group_title_shifts);
+            groupName.setText(CurrentGroup.getGroupMame());
 
             db = FirebaseDatabase.getInstance().getReference();
 

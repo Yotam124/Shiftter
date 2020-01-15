@@ -120,7 +120,6 @@ public class Functions {
                     }
                 }
                 shift.setHoursForShift(hoursForShift+"");
-
                 db.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
