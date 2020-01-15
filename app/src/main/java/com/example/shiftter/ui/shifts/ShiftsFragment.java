@@ -177,6 +177,7 @@ public class ShiftsFragment extends Fragment {
                         String member = ds.getKey();
                         spinnerDataList.add(Functions.decodeUserEmail(member));
                     }
+                    Toast.makeText(getActivity(),"???????",Toast.LENGTH_SHORT).show();
                 }
                 adapter.notifyDataSetChanged();
             }
