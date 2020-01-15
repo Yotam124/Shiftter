@@ -97,6 +97,7 @@ public class Ad_RecyclerView_Manager extends RecyclerView.Adapter<Ad_RecyclerVie
                         }
                     });
 
+
                     editMember.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

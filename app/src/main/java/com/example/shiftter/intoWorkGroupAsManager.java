@@ -164,8 +164,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                     if (dataSnapshot.child("Users").child(codedEmail).exists()) {
                                         User user = dataSnapshot.child("Users").child(codedEmail).getValue(User.class);
                                         Functions.AddGroupMember(groupID, user, position, salary);
-                                        recyclerView.notifyAll();
-                                        popup.dismiss();
+                                        getListOnPageCreate();                                        popup.dismiss();
                                         Toast.makeText(intoWorkGroupAsManager.this, "Member Added Successfully", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(intoWorkGroupAsManager.this, "The User Does Not Exist ", Toast.LENGTH_SHORT).show();
@@ -204,7 +203,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                                         .child("ListOfMembers").getChildren()){
 
                                     Functions.DeleteGroupMember(workGroup, ds.getKey());
-                                    recyclerView.notifyAll();
                                 }
                                 db.child("WorkGroups").child(CurrentUser.getCurrentGroup().getGroupKey()).removeValue();
                             }
@@ -216,7 +214,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                         });
                         popup.dismiss();
 
-                        Intent groupFragment = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent groupFragment = new Intent(getApplication(), MainActivity.class);
                         startActivity(groupFragment);
                     }
                 });
