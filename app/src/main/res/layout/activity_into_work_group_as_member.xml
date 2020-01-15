@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -47,9 +48,10 @@
             android:id="@+id/first"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/group_title"
+            android:layout_marginTop="100dp"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:layout_below="@+id/group_title">
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/manager_name_title"
@@ -59,6 +61,7 @@
                 android:gravity="center"
                 android:text="Manager email"
                 android:textColor="@color/colorBlack" />
+
             <TextView
                 android:id="@+id/manager_name"
                 android:layout_width="fill_parent"
@@ -72,9 +75,9 @@
             android:id="@+id/second"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/first"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:layout_below="@+id/first">
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/position_title"
@@ -84,6 +87,7 @@
                 android:gravity="center"
                 android:text="Position"
                 android:textColor="@color/colorBlack" />
+
             <TextView
                 android:id="@+id/member_position"
                 android:layout_width="fill_parent"
@@ -97,10 +101,10 @@
             android:id="@+id/third"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1"
+            android:layout_above="@+id/add_user_fab"
             android:layout_below="@+id/second"
-            android:layout_above="@+id/add_user_fab">
+            android:orientation="horizontal"
+            android:weightSum="1">
 
             <TextView
                 android:id="@+id/salary_title"
@@ -110,6 +114,7 @@
                 android:gravity="center"
                 android:text="Salary"
                 android:textColor="@color/colorBlack" />
+
             <TextView
                 android:id="@+id/member_salary"
                 android:layout_width="fill_parent"
