@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 updateCurrGroup(selectedItem);
             }
@@ -110,6 +111,7 @@ public class HomeFragment extends Fragment {
                     Date date = new Date();
                     clockIn = format.format(time);
                     try {
+                        //Toast.makeText(getContext(),clockIn+"",Toast.LENGTH_LONG).show();
                         startDate = format.parse(clockIn);
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -123,12 +125,15 @@ public class HomeFragment extends Fragment {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
                     Date time = new Date();
                     clockOut = format.format(time);
+
                     try {
                         endDate = format.parse(clockOut);
+                        //Toast.makeText(getContext(),clockOut+"",Toast.LENGTH_LONG).show();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     long difference = endDate.getTime() - startDate.getTime();
+
                     if(difference<0)
                     {
 
@@ -163,6 +168,10 @@ public class HomeFragment extends Fragment {
                             GroupMember gm = dataSnapshot.child("WorkGroups").child(CurrentGroup.getGroupID())
                                     .child("ListOfMembers").child(CurrentUser.getUserCodedEmail()).getValue(GroupMember.class);
                             wage = Double.parseDouble(gm.getSalary());
+                            wage = (wage / 60 * min) + (wage * hours);
+                            Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
+                            pauseChronometer(v);
+                            addShift(clockIn, clockOut, dateString,hoursForShift,wage);
                         }
 
                         @Override
@@ -170,11 +179,6 @@ public class HomeFragment extends Fragment {
 
                         }
                     });
-                    wage = (wage/60*min) + (wage*hours);
-                    //Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
-                    pauseChronometer(v);
-                    addShift(clockIn, clockOut, dateString,hoursForShift,wage);
-
                 }
             }
         });
@@ -264,7 +268,8 @@ public class HomeFragment extends Fragment {
                 if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).exists()){
                     db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString).setValue(shift);
                 }else if(!dataSnapshot.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").exists()){
-                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(dateString+"NO2").setValue(shift);
+                    shift.setDate(dateString+"NO2");
+                    db.child("Shifts").child(wgToShiftID.getShiftID()).child(shift.getDate() ).setValue(shift);
                 }else{
                     Toast.makeText(getActivity(),"To many shifts today", Toast.LENGTH_SHORT).show();
                 }
@@ -276,6 +281,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
 
     public void showNotification(Context context, int reqCode) {
 

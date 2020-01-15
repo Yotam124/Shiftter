@@ -19,7 +19,7 @@
                 android:layout_weight="0.2"
                 android:text="date"
                 android:textColor="@color/colorBlack"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:gravity="center"
                 android:id="@+id/TextViewDate"
                 ></TextView>
@@ -31,7 +31,7 @@
                 android:layout_weight="0.2"
                 android:text="clock in"
                 android:textColor="@color/colorBlack"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:gravity="center"
                 android:id="@+id/TextViewClockIn"
                 ></TextView>
@@ -42,7 +42,7 @@
                 android:layout_weight="0.2"
                 android:text="clock out"
                 android:textColor="@color/colorBlack"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:gravity="center"
                 android:id="@+id/TextViewClockOut"
                 ></TextView>
@@ -53,7 +53,7 @@
                 android:layout_weight="0.2"
                 android:text="hours"
                 android:textColor="@color/colorBlack"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:gravity="center"
                 android:id="@+id/TextViewHours"
                 ></TextView>
@@ -64,7 +64,7 @@
                 android:layout_weight="0.2"
                 android:text="wage"
                 android:textColor="@color/colorBlack"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:gravity="center"
                 android:id="@+id/TextViewWage"
                 ></TextView>

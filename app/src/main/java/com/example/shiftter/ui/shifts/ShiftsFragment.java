@@ -62,9 +62,9 @@ public class ShiftsFragment extends Fragment {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                    String membersShifts = parent.getItemAtPosition(position).toString();
-                    getOnCreateAsManager(membersShifts);
+
+                   getOnCreateAsManager(membersShifts);
                 }
 
                 @Override

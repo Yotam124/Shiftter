@@ -3,15 +3,24 @@
     android:orientation="vertical"
     android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:background="@color/colorWhite"
+    android:background="@color/colorPrimaryDark"
     android:padding="5dp"
     android:layout_gravity="center">
 
     <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="Edit shift"
+    android:textSize="20dp"
+    android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Edit manager details"
         android:textSize="20dp"
         android:textStyle="bold">
 
@@ -20,17 +29,24 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/TextViewManagerCurrentPosition"
+        android:id="@+id/editMembersShiftDetails_TextView_Date"
         android:gravity="center"
         android:textSize="20dp"
-        android:textStyle="bold">
-
-    </TextView>
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/TextViewManagerCurrentSalary"
+        android:id="@+id/editMembersShiftDetails_TextView_ClockIn"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editMembersShiftDetails_TextView_ClockOut"
         android:gravity="center"
         android:textSize="20dp"
         android:textStyle="bold">
@@ -38,29 +54,42 @@
     </TextView>
 
     <EditText
-        android:id="@+id/ManagerPosition"
+        android:id="@+id/editMembersShiftDetails_Date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="center"
-        android:hint="Enter manager new position"
-        android:inputType="textPersonName"
+        android:hint="Date"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <EditText
-        android:id="@+id/ManagerSalary"
+        android:id="@+id/editMembersShiftDetails_ClockIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:gravity="center"
-        android:hint="Enter manager new salary"
-        android:inputType="numberDecimal"
+        android:hint="Clock in"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+    <EditText
+        android:id="@+id/editMembersShiftDetails_ClockOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Clock out"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <Button
-        android:id="@+id/EditManagerDetailsBtn"
+        android:id="@+id/editMembersShiftDetails_SaveChanges"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
         android:text="Save changes" />
+    <Button
+        android:id="@+id/editMembersShiftDetails_DeleteShift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Delete shift" />
 </LinearLayout>
