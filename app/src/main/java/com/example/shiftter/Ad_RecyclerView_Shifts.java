@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView_Shifts.ViewHolderShifts> {
@@ -39,10 +40,11 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     @Override
     public void onBindViewHolder(@NonNull ViewHolderShifts holder, int position) {
         Shift order = mData.get(position);
-        holder.email.setText(order.getEmail());
         holder.date.setText(order.getDate());
         holder.clockIn.setText(order.getClockIn());
         holder.clockOut.setText(order.getClockOut());
+        holder.hours.setText(order.getHoursForShift());
+        holder.wage.setText(new DecimalFormat("##.##").format(order.getWage()));
     }
 
     @Override
@@ -53,14 +55,15 @@ public class Ad_RecyclerView_Shifts extends RecyclerView.Adapter<Ad_RecyclerView
     public class ViewHolderShifts extends RecyclerView.ViewHolder {
 
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        TextView email, date,clockIn,clockOut;
+        TextView date,clockIn,clockOut,hours,wage;
 
         public ViewHolderShifts(@NonNull View itemView) {
             super(itemView);
-            email = itemView.findViewById(R.id.TextView1);
-            date = itemView.findViewById(R.id.TextView2);
-            clockIn = itemView.findViewById(R.id.TextView3);
-            clockOut = itemView.findViewById(R.id.TextView4);
+            date = itemView.findViewById(R.id.TextViewDate);
+            clockIn = itemView.findViewById(R.id.TextViewClockIn);
+            clockOut = itemView.findViewById(R.id.TextViewClockOut);
+            hours = itemView.findViewById(R.id.TextViewHours);
+            wage = itemView.findViewById(R.id.TextViewWage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

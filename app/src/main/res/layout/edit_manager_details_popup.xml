@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorWhite"
     android:padding="5dp"
     android:layout_gravity="center">
 
@@ -44,7 +44,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="Enter manager new salary"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <Button

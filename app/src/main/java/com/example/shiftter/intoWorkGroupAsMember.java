@@ -1,6 +1,10 @@
 package com.example.shiftter;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +25,9 @@ public class intoWorkGroupAsMember extends AppCompatActivity {
     private WorkGroup wgForManagerName;
     private GroupMember gmForDetails;
 
+    private Dialog popup;
+    private FloatingActionButton leaveFab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,10 @@ public class intoWorkGroupAsMember extends AppCompatActivity {
         setContentView(R.layout.activity_into_work_group_as_member);
 
         db = FirebaseDatabase.getInstance().getReference();
+
+        popup = new Dialog(this);
+
+        leaveFab = findViewById(R.id.exit_group_fab);
 
         TextView title = findViewById(R.id.group_title);
         title.setText(CurrentGroup.getGroupMame());
@@ -55,5 +66,24 @@ public class intoWorkGroupAsMember extends AppCompatActivity {
             }
         });
 
+        leaveFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button deletePopup;
+                popup.setContentView(R.layout.delete_group_popup);
+                deletePopup = (Button) popup.findViewById(R.id.DeleteGroupPopup);
+                deletePopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
+                        popup.dismiss();
+
+                        Intent groupFragment = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(groupFragment);
+                    }
+                });
+                popup.show();
+            }
+        });
     }
 }

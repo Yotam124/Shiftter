@@ -83,7 +83,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         GroupMember gm = dataSnapshot.getValue(GroupMember.class);
-                        Toast.makeText(intoWorkGroupAsManager.this, gm.getPosition() + " " + gm.getSalary(), Toast.LENGTH_SHORT).show();
                         TextViewManagerCurrentPosition.setText("Position: " + gm.getPosition());
                         TextViewManagerCurrentSalary.setText("Salary: " + gm.getSalary());
                     }
@@ -109,9 +108,9 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                             db.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
-                                    Functions.AddGroupMember(groupID,CurrentUser.getUser(),stManagerPosition,stManagerSalary);
-                                    recyclerView.notifyAll();
+                                    /*Functions.DeleteGroupMember(CurrentUser.getCurrentGroup(),CurrentUser.getUserCodedEmail());
+                                    Functions.AddGroupMember(groupID,CurrentUser.getUser(),stManagerPosition,stManagerSalary);*/
+                                    Functions.UpdateMember(groupID, CurrentUser.getUserCodedEmail(), stManagerPosition, stManagerSalary);
                                     popup.dismiss();
                                     Toast.makeText(intoWorkGroupAsManager.this, "Manager data changed", Toast.LENGTH_SHORT).show();
                                 }
@@ -164,7 +163,8 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                                     if (dataSnapshot.child("Users").child(codedEmail).exists()) {
                                         User user = dataSnapshot.child("Users").child(codedEmail).getValue(User.class);
                                         Functions.AddGroupMember(groupID, user, position, salary);
-                                        getListOnPageCreate();                                        popup.dismiss();
+                                        getListOnPageCreate();
+                                        popup.dismiss();
                                         Toast.makeText(intoWorkGroupAsManager.this, "Member Added Successfully", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Toast.makeText(intoWorkGroupAsManager.this, "The User Does Not Exist ", Toast.LENGTH_SHORT).show();
@@ -214,7 +214,7 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                         });
                         popup.dismiss();
 
-                        Intent groupFragment = new Intent(getApplication(), MainActivity.class);
+                        Intent groupFragment = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(groupFragment);
                     }
                 });
@@ -235,7 +235,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                         String memberEmail = Functions.decodeUserEmail(ds.getKey());
                         if (!memberEmail.equals(workGroup.getManagerEmail())){
                             list.add(ds.getValue(GroupMember.class));
-                            //list.add(memberEmail);
                         }
                     }
                     ad_recyclerView.notifyDataSetChanged();
@@ -250,47 +249,4 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
 
     }
 
-
-// TODO: 12/19/2019 fixing the function "ShowAddPopup" (intoWorkGroupAsManager)
-
-    /*public void ShowDeletePopup(View v){
-        Button deletePopup;
-        popup.setContentView(R.layout.delete_group_popup);
-        deletePopup = (Button) popup.findViewById(R.id.DeleteGroupPopup);
-        deletePopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                popup.dismiss();
-                db.child("WorkGroups").child(CurrentUser.getEmail()).child(CurrentUser.getCurrentJob()).removeValue();
-                Intent WorkgroupActivity = new Intent(getApplicationContext(), WorkGroupsActivity.class);
-                startActivity(WorkgroupActivity);
-            }
-        });
-        popup.show();
-
-    }
-
-    public void getMembersListOnPageCreate(){
-
-        //Fill list
-        db.child("WorkGroups").child(CurrentUser.getEmail())
-                .child(CurrentUser.getCurrentJob())
-                .child("Members").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    list.clear();
-                    for (DataSnapshot ds : dataSnapshot.getChildren()){
-                        list.addUser(ds.getKey());
-                    }
-                    ad_recyclerView.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 }
