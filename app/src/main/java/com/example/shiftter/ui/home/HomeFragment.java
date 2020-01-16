@@ -83,7 +83,6 @@ public class HomeFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 String selectedItem = parent.getItemAtPosition(position).toString();
                 updateCurrGroup(selectedItem);
             }
@@ -103,83 +102,89 @@ public class HomeFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                if (!running) {
-                    startChronometer(v);
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-                    Date time = new Date();
-                    Date date = new Date();
-                    clockIn = format.format(time);
-                    try {
-                        //Toast.makeText(getContext(),clockIn+"",Toast.LENGTH_LONG).show();
-                        startDate = format.parse(clockIn);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    dateString = formatDate.format(date);
-
-                    showNotification(getContext(),001);
-                    Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
-
-                } else {
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                    Date time = new Date();
-                    clockOut = format.format(time);
-
-                    try {
-                        endDate = format.parse(clockOut);
-                        //Toast.makeText(getContext(),clockOut+"",Toast.LENGTH_LONG).show();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    long difference = endDate.getTime() - startDate.getTime();
-
-                    if(difference<0)
-                    {
-
-                        Date dateMin = null,dateMax = null;
+                if (!spinnerDataList.isEmpty()){
+                    if (!running) {
+                        startChronometer(v);
+                        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                        Date time = new Date();
+                        Date date = new Date();
+                        clockIn = format.format(time);
                         try {
-                            dateMin = format.parse("00:00");
-                            dateMax = format.parse("24:00");
+                            //Toast.makeText(getContext(),clockIn+"",Toast.LENGTH_LONG).show();
+                            startDate = format.parse(clockIn);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        difference=(dateMax.getTime() -startDate.getTime() )+(endDate.getTime()-dateMin.getTime());
-                    }
-                    int days = (int) (difference / (1000*60*60*24));
-                    int hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
-                    int min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
-                    if (hours < 10){
-                        if (min <10){
-                            hoursForShift = "0" + hours + ":0" + min;
-                        }else{
-                            hoursForShift = "0" + hours + ":" + min;
-                        }
-                    }else{
-                        if (min <10){
-                            hoursForShift = hours + ":0" + min;
-                        }else{
-                            hoursForShift = hours + ":" + min;
-                        }
-                    }
-                    db.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            GroupMember gm = dataSnapshot.child("WorkGroups").child(CurrentGroup.getGroupID())
-                                    .child("ListOfMembers").child(CurrentUser.getUserCodedEmail()).getValue(GroupMember.class);
-                            wage = Double.parseDouble(gm.getSalary());
-                            wage = (wage / 60 * min) + (wage * hours);
-                            Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
-                            pauseChronometer(v);
-                            addShift(clockIn, clockOut, dateString,hoursForShift,wage);
-                        }
+                        dateString = formatDate.format(date);
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        showNotification(getContext(),001);
+                        Toast.makeText(getActivity(), dateString + clockIn, Toast.LENGTH_LONG).show();
 
+                    } else {
+                        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+                        Date time = new Date();
+                        clockOut = format.format(time);
+
+                        try {
+                            endDate = format.parse(clockOut);
+                            //Toast.makeText(getContext(),clockOut+"",Toast.LENGTH_LONG).show();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
-                    });
+                        long difference = endDate.getTime() - startDate.getTime();
+
+                        if(difference<0)
+                        {
+
+                            Date dateMin = null,dateMax = null;
+                            try {
+                                dateMin = format.parse("00:00:00");
+                                dateMax = format.parse("24:00:00");
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            difference=(dateMax.getTime() -startDate.getTime() )+(endDate.getTime()-dateMin.getTime());
+                        }
+                        int days = (int) (difference / (1000*60*60*24));
+                        int hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
+                        int min = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
+                        if (hours < 10){
+                            if (min <10){
+                                hoursForShift = "0" + hours + ":0" + min;
+                            }else{
+                                hoursForShift = "0" + hours + ":" + min;
+                            }
+                        }else{
+                            if (min <10){
+                                hoursForShift = hours + ":0" + min;
+                            }else{
+                                hoursForShift = hours + ":" + min;
+                            }
+                        }
+                        db.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                GroupMember gm = dataSnapshot.child("WorkGroups").child(CurrentGroup.getGroupID())
+                                        .child("ListOfMembers").child(CurrentUser.getUserCodedEmail()).getValue(GroupMember.class);
+                                wage = Double.parseDouble(gm.getSalary());
+                                wage = (wage / 60 * min) + (wage * hours);
+                                Toast.makeText(getActivity(), dateString + clockOut, Toast.LENGTH_LONG).show();
+                                pauseChronometer(v);
+                                addShift(clockIn, clockOut, dateString,hoursForShift,wage);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                }else{
+                    Toast.makeText(getContext(),"Work group is not exists",Toast.LENGTH_LONG).show();
                 }
+
+
             }
         });
         return root;

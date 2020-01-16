@@ -213,7 +213,6 @@ public class intoWorkGroupAsManager extends AppCompatActivity {
                             }
                         });
                         popup.dismiss();
-
                         Intent groupFragment = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(groupFragment);
                     }
