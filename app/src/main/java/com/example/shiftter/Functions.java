@@ -91,16 +91,18 @@ public class Functions {
                     e.printStackTrace();
                 }
                 long difference = endDate.getTime() - startDate.getTime();
+
                 if(difference<0)
                 {
                     Date dateMin = null,dateMax = null;
                     try {
-                        dateMin = format.parse("00:00");
-                        dateMax = format.parse("24:00");
+                        dateMin = format.parse("00:00:00");
+                        dateMax = format.parse("24:00:00");
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    difference=(dateMax.getTime() -startDate.getTime() )+(endDate.getTime()-dateMin.getTime());
+                    difference=(dateMax.getTime()-startDate.getTime())+(endDate.getTime()-dateMin.getTime());
+
                 }
                 int days = (int) (difference / (1000*60*60*24));
                 int hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60));
